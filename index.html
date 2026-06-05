@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Analytics Workspace - Elite Edition</title>
+    <!-- Tailwind CSS (V4) CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kanit:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --bg-body: #f8fafc;
+            --bg-card-from: #ffffff;
+            --bg-card-to: #f8fafc;
+            --bg-inner: #f1f5f9;
+            --bg-bead-empty: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-strength: rgba(15, 23, 42, 0.04);
+            --grid-line: #cbd5e1;
+        }
+
+        .dark {
+            --bg-body: #030712;
+            --bg-card-from: #0f172a;
+            --bg-card-to: #0b0f19;
+            --bg-inner: #020617;
+            --bg-bead-empty: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --shadow-strength: rgba(0, 0, 0, 0.5);
+            --grid-line: #111827;
+        }
+
+        body {
+            font-family: 'Inter', 'Kanit', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            transition: background-color 0.25s ease, color 0.25s ease;
+            letter-spacing: -0.01em;
+        }
+
+        .custom-card {
+            background: linear-to-b from-[var(--bg-card-from)] to-[var(--bg-card-to)];
+            border: 1px solid var(--border-color);
+            box-shadow: 0 12px 30px -10px var(--shadow-strength);
+        }
+
+        .custom-inner {
+            background-color: var(--bg-inner);
+            border: 1px solid var(--border-color);
+        }
+
+        .heading-track { letter-spacing: 0.05em; text-transform: uppercase; }
+        .num-track { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+
+        ::-webkit-scrollbar { height: 5px; width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg-inner); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 99px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500/20 selection:text-amber-300 antialiased">
+
+    <!-- LOGIN GATEWAY (หน้าต่างตรวจสอบสิทธิ์ความปลอดภัย) -->
+    <div id="loginGateway" class="fixed inset-0 z-[100] bg-[#030712] flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-[#0f172a] border border-[#1e293b] rounded-3xl p-6 text-center shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl"></div>
+            
+            <div class="inline-flex bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 p-3 rounded-2xl shadow-xl shadow-amber-500/10 mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+            </div>
+            
+            <h1 class="text-xl font-bold tracking-wider text-amber-500 uppercase heading-track">Quantum Analytics</h1>
+            <p class="text-xs font-medium text-slate-400 mt-1">ระบบวิเคราะห์ข้อมูลสถิติความปลอดภัยสูง</p>
+            
+            <div class="mt-6 space-y-4">
+                <div>
+                    <label class="block text-left text-[10px] font-bold text-slate-400 mb-1.5 uppercase tracking-wider">กรอกรหัสเปิดสิทธิ์การใช้งาน (License Key)</label>
+                    <input type="text" id="licenseInput" placeholder="รหัสทดสอบ เช่น DEMO-080626" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl p-3 text-sm text-center text-slate-200 font-semibold uppercase focus:outline-none focus:border-amber-500 tracking-widest transition-colors">
+                </div>
+                
+                <div id="loginAlert" class="hidden text-xs font-medium text-rose-400 bg-rose-500/10 border border-rose-500/20 p-2.5 rounded-xl">
+                    รหัสไม่ถูกต้อง หรือหมดอายุความปลอดภัยแล้ว!
+                </div>
+
+                <button onclick="validateLicenseKey()" class="w-full cursor-pointer bg-gradient-to-r from-amber-500 to-amber-600 hover:opacity-90 text-slate-950 font-bold py-3 rounded-xl shadow-md transition-all active:scale-[0.98] text-sm">
+                    ตรวจสอบสิทธิ์เข้าใช้งาน
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP WORKSPACE (ซ่อนไว้ก่อนผ่านการตรวจสอบ) -->
+    <div id="mainWorkspace" class="hidden flex-1 flex flex-col justify-between">
+        <!-- Header -->
+        <header class="border-b border-[var(--border-color)] bg-[var(--bg-card-from)]/80 backdrop-blur-md sticky top-0 z-50 transition-colors">
+            <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 p-2 rounded-xl shadow-lg shadow-amber-500/10">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-bold text-sm tracking-wider text-amber-500 uppercase heading-track block">Quantum Analytics</span>
+                        <span class="text-[10px] font-medium block text-[var(--text-muted)] -mt-0.5 tracking-wider">CLOSED-LOOP DUAL ENGINE</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="soundToggle" onclick="toggleSound()" class="flex items-center gap-1.5 bg-[var(--bg-inner)] hover:opacity-80 px-3 py-1.5 rounded-xl border border-[var(--border-color)] transition-all text-xs font-medium text-[var(--text-muted)] cursor-pointer">
+                        <span id="soundDot" class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                        <span id="soundText" class="hidden sm:inline">เปิดเสียง</span>
+                    </button>
+                    <button onclick="toggleTheme()" class="bg-[var(--bg-inner)] hover:opacity-80 p-2 rounded-xl border border-[var(--border-color)] text-[var(--text-muted)] cursor-pointer transition-all">
+                        <svg id="themeSun" class="w-4 h-4 text-amber-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                        <svg id="themeMoon" class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Grid Workspace -->
+        <main class="max-w-5xl mx-auto w-full px-4 py-5 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <section class="lg:col-span-5 space-y-5">
+                <div class="custom-card rounded-2xl p-4.5 relative overflow-hidden">
+                    <h2 class="text-[11px] font-bold text-amber-500 uppercase tracking-widest mb-3 flex items-center gap-1.5 heading-track">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                        ระบบประมวลผลกลยุทธ์
+                    </h2>
+                    <select id="strategySelect" onchange="changeStrategy()" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] rounded-xl p-2.5 text-xs font-medium text-[var(--text-main)] focus:outline-none focus:border-amber-500 transition-colors cursor-pointer">
+                        <option value="strat1">Alpha Engine (ตามกระแสสั้น + ตัดมังกรยาว)</option>
+                        <option value="strat2">Beta Engine (เกาะกระแสมังกรไหลต่อเนื่อง)</option>
+                    </select>
+                </div>
+
+                <div class="custom-card rounded-2xl p-4.5 space-y-3.5">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-[11px] font-bold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 heading-track">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            บันทึกผลการออกหน้างาน
+                        </h2>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="recordHand('B')" class="cursor-pointer relative overflow-hidden group bg-gradient-to-b from-red-500 to-red-600 dark:from-red-600 dark:to-rose-700 text-white font-bold py-4 rounded-xl shadow-md active:scale-[0.98] transition-all flex flex-col items-center">BANKER (แดง)</button>
+                        <button onclick="recordHand('P')" class="cursor-pointer relative overflow-hidden group bg-gradient-to-b from-blue-500 to-blue-600 dark:from-blue-600 dark:to-indigo-700 text-white font-bold py-4 rounded-xl shadow-md active:scale-[0.98] transition-all flex flex-col items-center">PLAYER (น้ำเงิน)</button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2.5 pt-0.5">
+                        <button onclick="popLastRecord()" class="cursor-pointer bg-[var(--bg-inner)] text-[var(--text-main)] font-semibold py-2.5 rounded-xl border border-[var(--border-color)] text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95">ย้อนกลับ (Undo)</button>
+                        <button onclick="resetSystem()" class="cursor-pointer bg-[var(--bg-inner)] text-rose-500 font-semibold py-2.5 rounded-xl border border-[var(--border-color)] text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95">ล้างกระดาน (Reset)</button>
+                    </div>
+                </div>
+
+                <div class="custom-inner rounded-xl p-3.5 grid grid-cols-2 gap-2 text-center">
+                    <div>
+                        <span class="text-[9px] font-bold text-[var(--text-muted)] block uppercase tracking-wider">อัตราชนะของสูตร</span>
+                        <span id="winRateDisplay" class="num-font text-xl font-bold text-amber-500 num-track">0.0%</span>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-bold text-[var(--text-muted)] block uppercase tracking-wider">เสียติดต่อกันสูงสุด</span>
+                        <span id="maxLossStreakDisplay" class="num-font text-xl font-bold text-rose-500 num-track">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT VISUALIZATION -->
+            <section class="lg:col-span-7 flex flex-col justify-between space-y-5">
+                <div class="custom-card rounded-2xl p-4.5 flex flex-col justify-between min-h-[170px] relative overflow-hidden">
+                    <div class="flex justify-between items-center border-b border-[var(--border-color)] pb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400" id="enginePulse"></span>
+                            <span class="text-xs text-[var(--text-muted)] font-medium tracking-wide" id="engineStatus">รอตรวจจับรูปแบบไพ่</span>
+                        </div>
+                        <span id="stepBadge" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-[var(--text-muted)] text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase num-font tracking-widest">Idle</span>
+                    </div>
+                    <div id="emptyEngineState" class="text-center py-4 flex flex-col items-center justify-center my-auto">
+                        <h3 class="text-xs font-bold text-[var(--text-main)]">ระบบสแตนด์บายตรวจจับสัญญาณ</h3>
+                    </div>
+                    <div id="activeEnginePanel" class="hidden text-center py-2 my-auto">
+                        <span class="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest block heading-track">เป้าหมายที่ต้องเดิมพันในตาถัดไป</span>
+                        <div id="predictionTarget" class="text-4xl font-extrabold my-1 tracking-wider uppercase">-</div>
+                        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[var(--bg-inner)] border border-[var(--border-color)]">
+                            <span id="fiboValue" class="text-[11px] text-emerald-500 font-semibold tracking-wide">รอบสู้ตาถัดไป</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center bg-[var(--bg-inner)] px-3 py-1.5 rounded-xl border border-[var(--border-color)]">
+                        <span class="text-[10px] font-medium text-[var(--text-muted)] tracking-wider">ชุดข้อมูลตรวจจับรูปแบบ</span>
+                        <div class="flex gap-1.5" id="dataStreamDots"></div>
+                    </div>
+                </div>
+
+                <!-- Bead Road -->
+                <div class="custom-card rounded-2xl p-4">
+                    <div id="beadBoard" class="grid grid-flow-col auto-cols-max grid-rows-6 gap-1.5 bg-[var(--bg-inner)] p-2.5 rounded-xl border border-[var(--border-color)] overflow-x-auto min-h-[92px]"></div>
+                </div>
+
+                <!-- Graph -->
+                <div class="custom-card rounded-2xl p-4.5 space-y-1.5">
+                    <canvas id="trendCanvas" class="w-full h-[120px] block"></canvas>
+                </div>
+
+                <!-- Step Metrics Info -->
+                <div class="custom-card rounded-2xl p-4.5 space-y-3">
+                    <div class="flex justify-between items-center border-b border-[var(--border-color)] pb-2">
+                        <h3 class="text-[10px] font-bold text-amber-500 uppercase tracking-widest heading-track">สถิติสัดส่วนความสำเร็จแยกไม้</h3>
+                        <span class="text-[10px] text-[var(--text-muted)]">สแกนรวม: <span id="totalCyclesDisplay" class="text-[var(--text-main)] font-bold">0</span> รอบ</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2.5 text-xs">
+                        <!-- Bars are handled dynamically via Javascript loop -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]"><span>ชนะไม้ 1</span><span class="num-font font-bold text-emerald-500" id="step1Percent">0.0%</span></div>
+                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)]"><div id="step1Bar" class="bg-emerald-500 h-full transition-all" style="width: 0%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]"><span>ชนะไม้ 2</span><span class="num-font font-bold text-teal-500" id="step2Percent">0.0%</span></div>
+                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)]"><div id="step2Bar" class="bg-teal-500 h-full transition-all" style="width: 0%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]"><span>ชนะไม้ 3</span><span class="num-font font-bold text-cyan-500" id="step3Percent">0.0%</span></div>
+                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)]"><div id="step3Bar" class="bg-cyan-500 h-full transition-all" style="width: 0%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]"><span>ชนะไม้ 4</span><span class="num-font font-bold text-sky-500" id="step4Percent">0.0%</span></div>
+                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)]"><div id="step4Bar" class="bg-sky-500 h-full transition-all" style="width: 0%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]"><span>ชนะไม้ 5</span><span class="num-font font-bold text-amber-500" id="step5Percent">0.0%</span></div>
+                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)]"><div id="step5Bar" class="bg-amber-500 h-full transition-all" style="width: 0%"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]"><span>ชนะไม้ 6</span><span class="num-font font-bold text-orange-500" id="step6Percent">0.0%</span></div>
+                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)]"><div id="step6Bar" class="bg-orange-500 h-full transition-all" style="width: 0%"></div></div>
+                        </div>
+                        <div class="space-y-1 sm:col-span-2 pt-2 border-t border-[var(--border-color)]">
+                            <div class="flex justify-between text-[11px] font-semibold"><span class="text-rose-500">หลุดรอบเดินสูตร (เสีย 6 ไม้)</span><span class="num-font font-bold text-rose-500" id="stopLossPercent">0.0%</span></div>
+                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)]"><div id="stopLossBar" class="bg-rose-600 h-full transition-all" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="border-t border-[var(--border-color)] bg-[var(--bg-card-from)]/60 py-3.5 text-center text-[10px] text-[var(--text-muted)] font-medium heading-track">
+            <p>Secured Workstation © 2026 Quantum Analytics Inc.</p>
+        </footer>
+    </div>
+
+    <script>
+        // ====================================================================
+        // TIME-LOCKED LICENSE VALIDATOR (ระบบล็อกเวลาอัตโนมัติความปลอดภัยสูง)
+        // ====================================================================
+        async function validateLicenseKey() {
+            const input = document.getElementById('licenseInput').value.trim().toUpperCase();
+            const alertBox = document.getElementById('loginAlert');
+            
+            // แยกส่วนประกอบรหัส ตัวอย่าง: DEMO-080626 -> prefixคือ DEMO- / วันหมดอายุคือ 080626
+            const parts = input.split('-');
+            if (parts.length !== 2 || parts[0] !== 'DEMO' || parts[1].length !== 6) {
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            const dateStr = parts[1]; // ดึงข้อความวันที่ "080626"
+            const targetDay = parseInt(dateStr.substring(0, 2));
+            const targetMonth = parseInt(dateStr.substring(2, 4)) - 1; // เดือนในระบบ JS เริ่มจาก 0
+            const targetYear = 2000 + parseInt(dateStr.substring(4, 6)); // ปี ค.ศ.
+            
+            const expireDate = new Date(targetYear, targetMonth, targetDay, 23, 59, 59);
+
+            try {
+                // ยิงไปดึงเวลาสากลจริงจากอินเทอร์เน็ต เพื่อป้องกันผู้ใช้แอบโกงหมุนเวลาเครื่องคอมพิวเตอร์หลอกระบบ
+                const response = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC');
+                const timeData = await response.json();
+                var currentDate = new Date(timeData.utc_datetime);
+            } catch (err) {
+                // หากดึงเวลาอินเทอร์เน็ตไม่ได้ ให้ใช้ระบบเวลามาตรฐานตัวสำรอง
+                var currentDate = new Date();
+            }
+
+            // ตรวจสอบเงื่อนไขอายุกาลเวลา
+            if (currentDate.getTime() > expireDate.getTime()) {
+                alertBox.textContent = "รหัสทดลองนี้หมดเวลา 24 ชั่วโมงแล้ว! กรุณาติดต่อแอดมิน";
+                alertBox.classList.remove('hidden');
+                playTone('cycleLost');
+            } else {
+                // ผ่านการอนุมัติ -> ปลดล็อกหน้าแอปพลิเคชันหลัก
+                alertBox.classList.add('hidden');
+                document.getElementById('loginGateway').classList.add('hidden');
+                document.getElementById('mainWorkspace').classList.remove('hidden');
+                playTone('win');
+                // อัปเดตกราฟและตารางความละเอียดสูง
+                setTimeout(() => { drawTrendChart(); }, 100);
+            }
+        }
+
+        // --- CORE APPLICATION ENGINE (ตรรกะเดิมทั้งหมดของคุณ) ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeSun = document.getElementById('themeSun');
+            const themeMoon = document.getElementById('themeMoon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark'); themeSun.classList.remove('hidden'); themeMoon.classList.add('hidden');
+            } else {
+                html.classList.add('dark'); themeSun.classList.add('hidden'); themeMoon.classList.remove('hidden');
+            }
+            playTone('click'); drawTrendChart();
+        }
+
+        let audioCtx = null, soundEnabled = false;
+        function playTone(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(650, audioCtx.currentTime); gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08); osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+                } else if (type === 'win') {
+                    osc.type = 'triangle'; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.04, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25); osc.start(); osc.stop(audioCtx.currentTime + 0.25);
+                } else if (type === 'lose') {
+                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(180, audioCtx.currentTime); gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2); osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+                } else if (type === 'cycleLost') {
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(120, audioCtx.currentTime); osc.frequency.setValueAtTime(80, audioCtx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.07, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.45); osc.start(); osc.stop(audioCtx.currentTime + 0.45);
+                }
+            } catch (err) {}
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const dot = document.getElementById('soundDot'), txt = document.getElementById('soundText');
+            if (soundEnabled) { dot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400"; txt.textContent = "ปิดเสียง"; playTone('click'); }
+            else { dot.className = "w-1.5 h-1.5 rounded-full bg-rose-500"; txt.textContent = "เปิดเสียง"; }
+        }
+
+        const QUANT_STRATEGIES = {
+            strat1: { 'BBB': ['B', 'P', 'P', 'B', 'B', 'P'], 'PPP': ['P', 'B', 'B', 'P', 'P', 'B'], 'BBP': ['B', 'P', 'B', 'P', 'B', 'P'], 'PPB': ['P', 'B', 'P', 'B', 'P', 'B'], 'BPB': ['P', 'B', 'P', 'B', 'P', 'B'], 'PBP': ['B', 'P', 'B', 'P', 'B', 'P'], 'BPP': ['P', 'B', 'B', 'P', 'P', 'B'], 'PBB': ['B', 'P', 'P', 'B', 'B', 'P'] },
+            strat2: { 'BBB': ['B', 'B', 'B', 'B', 'P', 'P'], 'PPP': ['P', 'P', 'P', 'P', 'B', 'B'], 'BPP': ['P', 'P', 'P', 'B', 'B', 'B'], 'PBB': ['B', 'B', 'B', 'P', 'P', 'P'], 'BBP': ['P', 'P', 'B', 'B', 'P', 'P'], 'PPB': ['B', 'B', 'P', 'P', 'B', 'B'], 'BPB': ['B', 'B', 'P', 'P', 'B', 'B'], 'PBP': ['P', 'P', 'B', 'B', 'P', 'P'] }
+        };
+
+        const fibonacciSequence = [1, 1, 2, 3, 5, 8];
+        let rawRecordHistory = [], beadRecord = [];
+        let consecutiveLosses = 0, maxLossStreak = 0, winCount = 0, loseCount = 0;
+        let stepWins = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, stopLossCount = 0, totalCycleCount = 0;
+        let isBettingMode = false, currentPatternKey = "", currentStep = 0, currentBetTarget = "";
+        let trendHistory = [0];
+
+        const strategySelect = document.getElementById('strategySelect');
+        const enginePulse = document.getElementById('enginePulse');
+        const engineStatus = document.getElementById('engineStatus');
+        const stepBadge = document.getElementById('stepBadge');
+        const emptyEngineState = document.getElementById('emptyEngineState');
+        const activeEnginePanel = document.getElementById('activeEnginePanel');
+        const predictionTarget = document.getElementById('predictionTarget');
+        const fiboValue = document.getElementById('fiboValue');
+        const dataStreamDots = document.getElementById('dataStreamDots');
+        const winRateDisplay = document.getElementById('winRateDisplay');
+        const maxLossStreakDisplay = document.getElementById('maxLossStreakDisplay');
+        const beadBoard = document.getElementById('beadBoard');
+        const totalCyclesDisplay = document.getElementById('totalCyclesDisplay');
+
+        function changeStrategy() { playTone('click'); resetSystem(); }
+        function recordHand(side) { playTone('click'); rawRecordHistory.push(side); recalculateEverything(); }
+
+        function recalculateEverything() {
+            consecutiveLosses = 0; maxLossStreak = 0; winCount = 0; loseCount = 0;
+            stepWins = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }; stopLossCount = 0; totalCycleCount = 0;
+            isBettingMode = false; currentPatternKey = ""; currentStep = 0; currentBetTarget = "";
+            trendHistory = [0]; beadRecord = [];
+
+            for (let i = 0; i < rawRecordHistory.length; i++) {
+                const side = rawRecordHistory[i]; beadRecord.push({ side });
+                if (isBettingMode) { processOutcomeState(side === currentBetTarget); } 
+                else { evaluatePatternState(i); }
+            }
+            renderLiveBeadBoard();
+            if (isBettingMode) renderPrediction(); else renderWaitingState();
+            updateStatsUI(); updateStepStatsUI(); drawTrendChart();
+        }
+
+        function evaluatePatternState(currentIndex) {
+            if (currentIndex >= 2) {
+                const lastThree = rawRecordHistory.slice(currentIndex - 2, currentIndex + 1).join('');
+                const patternSequence = QUANT_STRATEGIES[strategySelect.value][lastThree];
+                if (patternSequence) {
+                    isBettingMode = true; currentPatternKey = lastThree; currentStep = 0; currentBetTarget = patternSequence[0];
+                }
+            }
+        }
+
+        function processOutcomeState(isWin) {
+            const prevTrend = trendHistory[trendHistory.length - 1];
+            if (isWin) {
+                winCount++; trendHistory.push(prevTrend + 1);
+                stepWins[currentStep + 1]++; totalCycleCount++;
+                consecutiveLosses = 0; currentStep = 0; isBettingMode = false;
+                if (rawRecordHistory.length === trendHistory.length - 1) playTone('win');
+                evaluatePatternState(rawRecordHistory.length - 1);
+            } else {
+                loseCount++; trendHistory.push(prevTrend - 1); consecutiveLosses++;
+                if (consecutiveLosses > maxLossStreak) maxLossStreak = consecutiveLosses;
+                if (rawRecordHistory.length === trendHistory.length - 1) playTone('lose');
+                if (currentStep >= 5) {
+                    stopLossCount++; totalCycleCount++; consecutiveLosses = 0; currentStep = 0; isBettingMode = false;
+                    if (rawRecordHistory.length === trendHistory.length - 1) playTone('cycleLost');
+                    evaluatePatternState(rawRecordHistory.length - 1);
+                } else {
+                    currentStep++;
+                    const patternSequence = QUANT_STRATEGIES[strategySelect.value][currentPatternKey];
+                    if (patternSequence) currentBetTarget = patternSequence[currentStep];
+                }
+            }
+        }
+
+        function renderPrediction() {
+            const patternSequence = QUANT_STRATEGIES[strategySelect.value][currentPatternKey];
+            if (!patternSequence) return;
+            const targetSide = patternSequence[currentStep];
+            emptyEngineState.classList.add('hidden'); activeEnginePanel.classList.remove('hidden');
+            enginePulse.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
+            engineStatus.textContent = "จับคู่รูปแบบสำเร็จ";
+            stepBadge.textContent = `ไม้สู้ที่ ${currentStep + 1} / 6`;
+            stepBadge.className = "bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-widest";
+            predictionTarget.textContent = targetSide === 'B' ? 'BANKER' : 'PLAYER';
+            predictionTarget.className = `text-4xl font-extrabold my-2 tracking-wider ${targetSide === 'B' ? 'text-rose-500' : 'text-blue-500'}`;
+            fiboValue.textContent = `รอบสู้ไม้ที่ ${currentStep + 1} (Fibo x${fibonacciSequence[currentStep]})`;
+            updateStreamDots();
+        }
+
+        function renderWaitingState() {
+            activeEnginePanel.classList.add('hidden'); emptyEngineState.classList.remove('hidden');
+            enginePulse.className = "w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-600";
+            engineStatus.textContent = "รอจับคู่หน้าไพ่"; stepBadge.textContent = "Idle";
+            stepBadge.className = "bg-[var(--bg-inner)] border border-[var(--border-color)] text-[var(--text-muted)] text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-widest";
+            updateStreamDots();
+        }
+
+        function popLastRecord() { if (rawRecordHistory.length > 0) { playTone('click'); rawRecordHistory.pop(); recalculateEverything(); } }
+        function resetSystem() { playTone('click'); rawRecordHistory = []; recalculateEverything(); }
+
+        function updateStreamDots() {
+            dataStreamDots.innerHTML = ''; const fill = Math.min(3, rawRecordHistory.length);
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('span');
+                dot.className = i < fill ? "w-1.5 h-1.5 rounded-full bg-emerald-500 border border-emerald-400/45 shadow-md shadow-emerald-500/20" : "w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-800 border border-[var(--border-color)]";
+                dataStreamDots.appendChild(dot);
+            }
+        }
+
+        function updateStatsUI() {
+            const total = winCount + loseCount; winRateDisplay.textContent = total > 0 ? `${((winCount / total) * 100).toFixed(1)}%` : "0.0%";
+            maxLossStreakDisplay.textContent = maxLossStreak;
+        }
+
+        function updateStepStatsUI() {
+            totalCyclesDisplay.textContent = totalCycleCount;
+            const calcP = (count) => totalCycleCount === 0 ? "0.0" : ((count / totalCycleCount) * 100).toFixed(1);
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`step${i}Percent`).innerHTML = `${calcP(stepWins[i])}% <span class='text-[var(--text-muted)] font-normal text-[10px]'>(${stepWins[i]})</span>`;
+                document.getElementById(`step${i}Bar`).style.width = `${calcP(stepWins[i])}%`;
+            }
+            document.getElementById(`stopLossPercent`).innerHTML = `${calcP(stopLossCount)}% <span class='text-[var(--text-muted)] font-normal text-[10px]'>(${stopLossCount})</span>`;
+            document.getElementById(`stopLossBar`).style.width = `${calcP(stopLossCount)}%`;
+        }
+
+        function drawTrendChart() {
+            const canvas = document.getElementById('trendCanvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d'), dpr = window.devicePixelRatio || 1, rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr; canvas.height = rect.height * dpr; ctx.scale(dpr, dpr);
+            const width = rect.width, height = rect.height; ctx.clearRect(0, 0, width, height);
+            const isDark = document.documentElement.classList.contains('dark');
+            ctx.strokeStyle = isDark ? '#111827' : '#e2e8f0'; ctx.lineWidth = 1;
+            for (let i = 1; i <= 3; i++) { ctx.beginPath(); ctx.moveTo(0, (height / 4) * i); ctx.lineTo(width, (height / 4) * i); ctx.stroke(); }
+            if (trendHistory.length < 2) {
+                ctx.fillStyle = isDark ? '#475569' : '#94a3b8'; ctx.font = '500 11px Kanit'; ctx.textAlign = 'center';
+                ctx.fillText('ป้อนข้อมูลเพื่อเริ่มต้นการแสดงเทรนความสำเร็จ', width / 2, height / 2 + 3); return;
+            }
+            let minVal = Math.min(...trendHistory), maxVal = Math.max(...trendHistory);
+            if (maxVal === minVal) { maxVal += 2; minVal -= 2; } else { const b = (maxVal - minVal) * 0.15; maxVal += b; minVal -= b; }
+            const getX = (index) => (width / (trendHistory.length - 1)) * index, getY = (val) => height - ((val - minVal) / (maxVal - minVal)) * height;
+            ctx.fillStyle = isDark ? '#475569' : '#94a3b8'; ctx.font = '600 9px Inter'; ctx.textAlign = 'right';
+            ctx.fillText(`+${maxVal.toFixed(0)} U`, width - 8, 12); ctx.fillText(`${minVal.toFixed(0)} U`, width - 8, height - 6);
+            const grad = ctx.createLinearGradient(0, 0, width, 0); grad.addColorStop(0, '#38bdf8'); grad.addColorStop(0.5, '#10b981'); grad.addColorStop(1, '#f59e0b');
+            ctx.beginPath(); ctx.moveTo(getX(0), getY(trendHistory[0])); for (let i = 1; i < trendHistory.length; i++) ctx.lineTo(getX(i), getY(trendHistory[i]));
+            ctx.strokeStyle = grad; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(getX(0), height); ctx.lineTo(getX(0), getY(trendHistory[0])); for (let i = 1; i < trendHistory.length; i++) ctx.lineTo(getX(i), getY(trendHistory[i]));
+            ctx.lineTo(getX(trendHistory.length - 1), height); ctx.closePath();
+            const fGrad = ctx.createLinearGradient(0, 0, 0, height); fGrad.addColorStop(0, 'rgba(16, 185, 129, 0.12)'); fGrad.addColorStop(1, 'rgba(16, 185, 129, 0)');
+            ctx.fillStyle = fGrad; ctx.fill();
+            const lIdx = trendHistory.length - 1, lX = getX(lIdx), lY = getY(trendHistory[lIdx]);
+            ctx.beginPath(); ctx.arc(lX, lY, 4, 0, 2 * Math.PI); ctx.fillStyle = trendHistory[lIdx] >= trendHistory[Math.max(0, lIdx - 1)] ? '#10b981' : '#f43f5e';
+            ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = '#ffffff'; ctx.stroke();
+        }
+
+        function buildBeadBoardPlaceholder() {
+            beadBoard.innerHTML = '';
+            for (let i = 0; i < 36; i++) {
+                const b = document.createElement('div'); b.className = "w-7 h-7 rounded-full bg-[var(--bg-bead-empty)]/40 border border-[var(--border-color)] flex items-center justify-center";
+                beadBoard.appendChild(b);
+            }
+        }
+        function renderLiveBeadBoard() {
+            beadBoard.innerHTML = ''; const maxB = Math.max(36, Math.ceil(beadRecord.length / 6) * 6);
+            for (let i = 0; i < maxB; i++) {
+                const item = beadRecord[i], b = document.createElement('div');
+                if (item) {
+                    b.className = `w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold tracking-tight text-white ${item.side === 'B' ? 'bg-gradient-to-br from-red-500 to-rose-600' : 'bg-gradient-to-br from-blue-500 to-indigo-600'}`;
+                    b.textContent = item.side;
+                } else {
+                    b.className = "w-7 h-7 rounded-full bg-[var(--bg-bead-empty)]/40 border border-[var(--border-color)] flex items-center justify-center";
+                }
+                beadBoard.appendChild(b);
+            }
+            beadBoard.scrollLeft = beadBoard.scrollWidth;
+        }
+    </script>
+</body>
+</html>
