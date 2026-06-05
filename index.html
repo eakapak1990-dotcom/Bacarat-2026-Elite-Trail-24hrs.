@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="th" class="dark">
 <head>
@@ -107,7 +107,7 @@
                 <div class="mt-5 space-y-4 text-left max-w-sm mx-auto">
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase tracking-wider">กรอกรหัสเข้าใช้งาน (License Key)</label>
-                        <input type="text" id="licenseInput" placeholder="QNT-XXXX-XXXX-XXXX" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl p-3 text-sm text-center text-slate-200 font-semibold uppercase focus:outline-none focus:border-amber-500 tracking-widest transition-colors">
+                        <input type="text" id="licenseInput" placeholder="QNT-XXXX-24-XXXX-XXXX" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl p-3 text-sm text-center text-slate-200 font-semibold uppercase focus:outline-none focus:border-amber-500 tracking-widest transition-colors">
                     </div>
                     <div id="loginAlert" class="hidden text-xs font-medium text-rose-400 bg-rose-500/10 border border-rose-500/20 p-2.5 rounded-xl text-center"></div>
                     <button onclick="validateLicenseKey()" class="w-full cursor-pointer bg-gradient-to-r from-amber-500 to-amber-600 hover:opacity-90 text-slate-950 font-bold py-3 rounded-xl shadow-md transition-all text-sm uppercase">ตรวจสอบสิทธิ์เข้าใช้งาน</button>
@@ -162,29 +162,25 @@
                             <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">🔑 ออกสิทธิ์ใช้งานใหม่</h3>
                             <div class="space-y-2.5 text-xs">
                                 <div>
-                                    <label class="block text-slate-400 mb-1 text-[10px]">ชื่อลูกค้า (ภาษาอังกฤษ/ตัวเลข)</label>
+                                    <label class="block text-slate-400 mb-1 text-[10px] uppercase">ชื่อลูกค้า (ภาษาอังกฤษ/ตัวเลข)</label>
                                     <input type="text" id="adminCustName" placeholder="เช่น CLIENT01" class="w-full bg-[#020617] border border-slate-800 rounded-xl p-2.5 font-bold uppercase text-slate-200 focus:outline-none focus:border-amber-500">
                                 </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-slate-400 mb-1 text-[10px]">จำนวนเวลา</label>
-                                        <input type="number" id="adminDuration" value="24" class="w-full bg-[#020617] border border-slate-800 rounded-xl p-2 text-center font-bold text-slate-200 focus:outline-none focus:border-amber-500">
-                                    </div>
-                                    <div>
-                                        <label class="block text-slate-400 mb-1 text-[10px]">หน่วยเวลา</label>
-                                        <select id="adminUnit" class="w-full bg-[#020617] border border-slate-800 rounded-xl p-2 font-bold text-slate-200 focus:outline-none focus:border-amber-500">
-                                            <option value="hours">ชั่วโมง</option>
-                                            <option value="days" selected>วัน</option>
-                                        </select>
-                                    </div>
+                                <div>
+                                    <label class="block text-slate-400 mb-1 text-[10px] uppercase">เลือกแพ็กเกจ (ชั่วโมงทำงาน & อายุคีย์)</label>
+                                    <select id="adminPackage" class="w-full bg-[#020617] border border-slate-800 rounded-xl p-2.5 font-bold text-amber-500 focus:outline-none focus:border-amber-500 cursor-pointer">
+                                        <option value="24" data-expiry="3">24 ชั่วโมง (อายุคีย์ 72 ชม. / 3 วัน)</option>
+                                        <option value="168" data-expiry="14">7 วัน (อายุคีย์ 14 วัน)</option>
+                                        <option value="336" data-expiry="25">14 วัน (อายุคีย์ 25 วัน)</option>
+                                        <option value="720" data-expiry="45">30 วัน (อายุคีย์ 45 วัน)</option>
+                                    </select>
                                 </div>
-                                <button onclick="generateLicenseKey()" class="w-full cursor-pointer bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl transition-all text-xs uppercase">สร้างรหัสสิทธิ์</button>
+                                <button onclick="generateLicenseKey()" class="w-full cursor-pointer bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl transition-all text-xs uppercase mt-2">สร้างรหัสสิทธิ์</button>
                             </div>
                             
                             <!-- คีย์เอาต์พุต -->
                             <div id="keyOutputContainer" class="hidden bg-[#020617] border border-slate-800 rounded-xl p-2.5 space-y-2 text-xs">
                                 <div class="flex items-center justify-between bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
-                                    <span id="generatedKey" class="font-mono font-bold text-amber-400 text-[11px] tracking-wider"></span>
+                                    <span id="generatedKey" class="font-mono font-bold text-amber-400 text-[10px] tracking-wider select-all"></span>
                                     <button onclick="copyGeneratedKey()" class="text-[10px] text-slate-400 hover:text-white underline cursor-pointer">คัดลอก</button>
                                 </div>
                                 <button onclick="copyPromotionMessage()" class="w-full bg-slate-900 border border-slate-800 text-[10px] text-slate-300 py-1.5 rounded-lg font-medium cursor-pointer">📋 คัดลอกเซ็ตข้อความสำหรับแชร์</button>
@@ -215,7 +211,7 @@
                                 <!-- ระบบปฏิทินเลือกตรวจสอบย้อนหลัง -->
                                 <div class="flex items-center gap-1.5 text-xs">
                                     <span class="text-slate-500 text-[10px] uppercase">กรองวันที่:</span>
-                                    <input type="date" id="adminHistoryCalendar" onchange="renderHistoryTable()" class="bg-[#020617] border border-slate-800 rounded-lg p-1 text-slate-300 text-xs focus:outline-none focus:border-amber-500">
+                                    <input type="date" id="adminHistoryCalendar" onchange="renderHistoryTable()" class="bg-[#020617] border border-slate-800 rounded-lg p-1 text-slate-300 text-xs focus:outline-none focus:border-amber-500 cursor-pointer">
                                 </div>
                             </div>
 
@@ -243,7 +239,7 @@
         </div>
     </div>
 
-    <!-- MAIN APP WORKSPACE -->
+    <!-- MAIN APP WORKSPACE (ซ่อนอยู่จนกว่าจะป้อนกุญแจผ่านสิทธิ์) -->
     <div id="mainWorkspace" class="hidden flex-1 flex flex-col justify-between">
         <!-- Header -->
         <header class="border-b border-[var(--border-color)] bg-[var(--bg-card-from)]/80 backdrop-blur-md sticky top-0 z-50 transition-colors">
@@ -478,7 +474,7 @@
             document.getElementById('gateActiveView').classList.remove('hidden');
         }
 
-        // ข้อ 3: การล็อกความปลอดภัยแอดมินสองชั้น (Password + รหัสลับ xxxxxx)
+        // ข้อ 3: การล็อกความปลอดภัยแอดมินสองชั้น (Password + รหัสลับ 300333)
         function submitAdminPassword() {
             const pInput = document.getElementById('adminPasswordInput').value.trim();
             const faInput = document.getElementById('admin2FAInput').value.trim();
@@ -522,11 +518,12 @@
             showCustomAlert("บันทึกข้อมูลเรียบร้อย", "🛡️ รีเซ็ตรหัสผ่านระบบควบคุมแอดมินหลักเรียบร้อยแล้ว! ข้อมูลถูกบันทึกสำเร็จ", "success");
         }
 
-        // ข้อ 1 & 6: บันทึกข้อมูลลูกค้า, เช็คสถิติสะสมแต้มแถมชั่วโมงโบนัส (1,000 + 100 ชม.)
+        // --- NEW POLICY: บันทึกข้อมูลลูกค้า, สร้างคีย์แบบ 5 ส่วนฝังอายุขัยคีย์ (Key Expiration) ---
         function generateLicenseKey() {
             const rawName = document.getElementById('adminCustName').value.trim().toUpperCase();
-            const duration = parseInt(document.getElementById('adminDuration').value) || 24;
-            const unit = document.getElementById('adminUnit').value;
+            const selectPack = document.getElementById('adminPackage');
+            const duration = parseInt(selectPack.value);
+            const expiryDays = parseInt(selectPack.options[selectPack.selectedIndex].dataset.expiry);
 
             const name = rawName.replace(/[^A-Z0-9]/g, "");
             if (name.length < 2) {
@@ -535,35 +532,39 @@
             }
 
             const now = Date.now();
-            let addedHours = unit === "days" ? (duration * 24) : duration;
+            let addedHours = duration;
             
-            // ดึงข้อมูลประวัติเก่าในเครื่องเพื่อสะสมชั่วโมงโปรโมชั่น
+            // ลอจิกข้อ 6: เช็คสถิติสะสมแต้มแถมโบนัส (1,000 + 100 ชม.)
             let customerDB = JSON.parse(localStorage.getItem('qnt_customer_db'));
             let cumulativeHours = 0;
-            customerDB.forEach(item => { if (item.customerName === name && item.status !== 'REVOKED') cumulativeHours += item.hoursAwarded; });
+            customerDB.forEach(item => { if (item.customerName === name && item.status !== 'REVOKED') cumulativeHours += item.baseHours; });
             
-            // ลоจิกข้อ 6: สถิติสะสมชั่วโมงใช้งาน หากแต้มเดิม + แต้มใหม่ ครบเงื่อนไข รับโบนัสฟรี 100 ชม.
-            const projectedTotal = cumulativeHours + addedHours;
-            if (projectedTotal >= 1000) {
-                addedHours += 100; // ทบเวลาโบนัสเข้าไปในกุญแจรหัสทันที
-                showCustomAlert("🏆 แคมเปญโบนัสทำงาน", `คุณ ${name} มีสถิติสะสมชั่วโมงใช้งานครบถ้วนตามเงื่อนไขแคมเปญ ระบบแถมชั่วโมงพิเศษเพิ่มให้อัตโนมัติอีก 100 ชั่วโมงเรียบร้อย!`, "success");
+            if ((cumulativeHours + addedHours) >= 1000) {
+                addedHours += 100; // ทบเวลาโบนัสเข้าไป
+                showCustomAlert("🏆 แคมเปญโบนัสทำงาน", `คุณ ${name} มีสถิติสะสมชั่วโมงครบกำหนด ระบบเพิ่มโบนัสให้ฟรี 100 ชั่วโมงเรียบร้อย!`, "success");
             }
 
-            const expiryTime = now + (addedHours * 60 * 60 * 1000);
-            const b36Time = expiryTime.toString(36).toUpperCase();
-            const sign = generateChecksum(name, expiryTime);
-            const rawKey = `QNT-${name}-${b36Time}-${sign}`;
+            // คำนวณวันหมดอายุขัยคีย์ (Absolute Expiry Timestamp)
+            const absoluteExpiryTime = now + (expiryDays * 24 * 60 * 60 * 1000);
+            const b36Expiry = absoluteExpiryTime.toString(36).toUpperCase();
+            
+            // สร้างลายเซ็นยืนยัน
+            const sign = generateChecksum(name, absoluteExpiryTime);
+            
+            // โครงสร้าง Key ใหม่: QNT-NAME-WORKING_HOURS-EXPIRY_DATE-SIGNATURE
+            const rawKey = `QNT-${name}-${addedHours}-${b36Expiry}-${sign}`;
 
-            // บันทึก Log ลงระบบ LocalStorage รองรับปฏิทินย้อนหลัง 30 วัน
+            // บันทึก Log ลงระบบ LocalStorage
             const logEntry = {
                 id: 'ID-' + Math.random().toString(36).substring(2, 7).toUpperCase(),
                 timestamp: now,
                 dateString: new Date().toISOString().split('T')[0],
                 customerName: name,
                 licenseKey: rawKey,
-                hoursAwarded: addedHours,
-                expiryTimestamp: expiryTime,
-                status: 'ACTIVE' // คีย์ปกติ
+                baseHours: duration, // ชั่วโมงแพ็กเกจเดิม
+                hoursAwarded: addedHours, // ชั่วโมงรวมโบนัสที่นำไปใช้งาน
+                absoluteExpiryTimestamp: absoluteExpiryTime, // วันหมดอายุคีย์
+                status: 'ACTIVE'
             };
 
             customerDB.unshift(logEntry);
@@ -576,7 +577,7 @@
             renderHistoryTable();
         }
 
-        // ข้อ 1: เรนเดอร์ตารางตรวจสอบย้อนหลังในรอบ 30 วัน ควบคู่ระนาบฟิลเตอร์ปฏิทิน
+        // ข้อ 1: เรนเดอร์ตารางตรวจสอบย้อนหลัง 30 วัน โชว์อายุขัยคีย์ (Expire Date)
         function renderHistoryTable() {
             const calendarFilter = document.getElementById('adminHistoryCalendar').value;
             const tbody = document.getElementById('historyTableBody');
@@ -584,7 +585,6 @@
 
             let customerDB = JSON.parse(localStorage.getItem('qnt_customer_db'));
             
-            // กรองข้อมูลเฉพาะวันที่เลือกในปฏิทิน และมีระยะอายุไม่เกิน 30 วันย้อนหลัง
             const filteredData = customerDB.filter(item => {
                 if (!calendarFilter) return true;
                 return item.dateString === calendarFilter;
@@ -601,40 +601,45 @@
                 
                 const formattedDate = new Date(item.timestamp).toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'}) + ' น.';
                 
-                // คํานวณยอดรวมสะสมแต้มของลูกค้ารายนี้เพื่อโชว์ในวงเล็บ
+                // คำนวณยอดรวมสะสมแต้มของลูกค้ารายนี้เพื่อโชว์ในวงเล็บ
                 let totalAccum = 0;
-                customerDB.forEach(c => { if (c.customerName === item.customerName && c.status !== 'REVOKED') totalAccum += c.hoursAwarded; });
+                customerDB.forEach(c => { if (c.customerName === item.customerName && c.status !== 'REVOKED') totalAccum += c.baseHours; });
 
-                // เช็คเวลาสะสมคงเหลือจากการกดหยุด (Pause) ล่าสุด เพื่อให้แอดมินดูความเคลื่อนไหว
+                // เช็คเวลาสะสมการทำงาน (Pause Time) และ อายุขัยคีย์ (Absolute Expiry)
                 const pausedTimeStr = localStorage.getItem('qnt_paused_time_' + item.licenseKey);
-                let timeDescriptor = `${item.hoursAwarded} ชม.`;
+                const isKeyExpired = Date.now() > item.absoluteExpiryTimestamp;
+                
+                let timeDescriptor = `<span class="text-emerald-400 font-bold">${item.hoursAwarded} ชม.</span>`;
                 if (pausedTimeStr) {
                     const remainingMs = parseInt(pausedTimeStr);
                     if (remainingMs <= 0) {
-                        timeDescriptor = "หมดอายุ";
+                        timeDescriptor = `<span class="text-slate-500">ใช้ครบแล้ว</span>`;
                     } else {
                         const remHrs = Math.floor(remainingMs / (3600 * 1000));
                         const remMins = Math.floor((remainingMs % (3600 * 1000)) / (60 * 1000));
-                        timeDescriptor = `<span class="text-amber-500 font-bold">⏸️ หยุดไว้ที่: ${remHrs}ชั่วโมง ${remMins}นาที</span>`;
+                        timeDescriptor = `<span class="text-amber-500 font-bold">⏸️ เหลือ: ${remHrs}ชม. ${remMins}น.</span>`;
                     }
-                } else if (Date.now() > item.expiryTimestamp) {
-                    timeDescriptor = "หมดอายุ";
                 }
+
+                // แปลงวันหมดอายุคีย์มาแสดงในตาราง
+                const absExpiryDate = new Date(item.absoluteExpiryTimestamp).toLocaleDateString('th-TH', {day:'2-digit', month:'short', year:'2-digit'});
 
                 let statusBadge = '';
                 if (item.status === 'REVOKED') {
                     statusBadge = `<span class="bg-rose-500/15 text-rose-400 border border-rose-500/20 px-1.5 py-0.5 rounded-md text-[9px] font-bold">ยกเลิกสิทธิ์แล้ว</span>`;
-                } else if (Date.now() > item.expiryTimestamp && (!pausedTimeStr || parseInt(pausedTimeStr) <= 0)) {
-                    statusBadge = `<span class="bg-slate-850 text-slate-500 border border-slate-800 px-1.5 py-0.5 rounded-md text-[9px]">หมดอายุสิทธิ์</span>`;
+                } else if (isKeyExpired) {
+                    statusBadge = `<span class="bg-slate-850 text-slate-500 border border-slate-800 px-1.5 py-0.5 rounded-md text-[9px]">หมดอายุขัยคีย์</span>`;
+                } else if (pausedTimeStr && parseInt(pausedTimeStr) <= 0) {
+                    statusBadge = `<span class="bg-slate-850 text-slate-500 border border-slate-800 px-1.5 py-0.5 rounded-md text-[9px]">ชั่วโมงหมด</span>`;
                 } else {
-                    // ข้อ 5: สร้างปุ่มกด ยกเลิกสิทธิ์ ของลูกค้า ได้ในทุกเวลาถ้าทำผิดกฎ
+                    // ข้อ 5: สร้างปุ่มกด ยกเลิกสิทธิ์ ของลูกค้า
                     statusBadge = `<button onclick="revokeLicense('${item.id}')" class="bg-rose-600 hover:bg-rose-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-lg cursor-pointer transition-all active:scale-95">🚫 ยกเลิกสิทธิ์</button>`;
                 }
 
                 tr.innerHTML = `
                     <td class="py-2.5 px-1 font-mono text-[10px] text-slate-400">${item.dateString}<br>${formattedDate}</td>
                     <td class="py-2.5 px-1 font-bold text-slate-200">${item.customerName}<br><span class="text-slate-500 font-normal text-[9px]">สะสม: ${totalAccum} ชม.</span></td>
-                    <td class="py-2.5 px-1 font-mono text-[9px] text-slate-300 select-all">${item.licenseKey}<br><span class="text-emerald-400 text-[10px] font-sans">คงเหลือ: ${timeDescriptor}</span></td>
+                    <td class="py-2.5 px-1 font-mono text-[9px] text-slate-300 select-all">${item.licenseKey}<br><div class="flex flex-col gap-0.5 mt-0.5"><span class="text-[9px] font-sans leading-none">${timeDescriptor}</span><span class="text-rose-400 text-[9px] font-sans leading-none">หมดอายุ: ${absExpiryDate}</span></div></td>
                     <td class="py-2.5 px-1 text-center">${statusBadge}</td>
                 `;
                 tbody.appendChild(tr);
@@ -664,21 +669,27 @@
         function copyPromotionMessage() {
             const keyText = document.getElementById('generatedKey').textContent;
             const name = document.getElementById('adminCustName').value.trim().toUpperCase();
-            const dur = document.getElementById('adminDuration').value;
-            const unit = document.getElementById('adminUnit').value === "days" ? "วัน" : "ชั่วโมง";
+            
+            const selectPack = document.getElementById('adminPackage');
+            const opt = selectPack.options[selectPack.selectedIndex];
+            const dur = opt.value;
+            const expiryDays = opt.dataset.expiry;
+            
             const currentURL = window.location.href;
-            const template = `ยินดีต้อนรับคุณ ${name} เข้าสู่ระบบ Quantum Analytics\nนี่คือรหัสเปิดสิทธิ์เข้าใช้งานของคุณ (มีอายุ ${dur} ${unit})\n\n🔑 รหัสเข้าใช้งาน: ${keyText}\n🌐 ลิงก์เข้าใช้งาน: ${currentURL}\n\n*โปรดระมัดระวังห้ามส่งต่อรหัสเนื่องจากคีย์จะผูกกับระบบการทำสถิติ*`;
+            const template = `ยินดีต้อนรับคุณ ${name} เข้าสู่ระบบ Quantum Analytics\nนี่คือรหัสเปิดสิทธิ์เข้าใช้งานของคุณ\n\n📌 จำนวนเวลาใช้งาน: ${dur} ชั่วโมง\n⏳ คีย์มีอายุ: ${expiryDays} วัน (นับจากวันนี้)\n\n🔑 รหัสเข้าใช้งาน:\n${keyText}\n\n🌐 ลิงก์เข้าใช้งาน:\n${currentURL}\n\n*ระบบเป็นแบบ Pause Time หากไม่ใช้งานให้กด "ออกจากระบบ" เวลาก็จะหยุดเดินครับ แต่คีย์จะหมดสภาพทันทีเมื่อเลยวันหมดอายุคีย์ข้างต้น*`;
+            
             navigator.clipboard.writeText(template);
             playTone('click');
         }
 
-        // ตรวจสอบความถูกต้องของคีย์ฝั่งลูกค้าก่อนเปิดโปรแกรม (พร้อมลอจิก Resume เวลาหยุดถอยหลังสะสม)
+        // ตรวจสอบความถูกต้องของคีย์ 5 ส่วน ฝั่งลูกค้า (New Key Expiration Policy)
         async function validateLicenseKey() {
             const input = document.getElementById('licenseInput').value.trim().toUpperCase();
             const alertBox = document.getElementById('loginAlert');
             
             const parts = input.split('-');
-            if (parts.length !== 4 || parts[0] !== 'QNT') {
+            // เปลี่ยนเป็นเช็ค 5 ส่วน เพราะรหัสคือ QNT-NAME-HOURS-EXPIRY-SIGN
+            if (parts.length !== 5 || parts[0] !== 'QNT') {
                 alertBox.textContent = "❌ รูปแบบรหัสเข้าใช้งานไม่ถูกต้อง!";
                 alertBox.classList.remove('hidden');
                 playTone('cycleLost');
@@ -686,18 +697,20 @@
             }
 
             const name = parts[1];
-            const b36Time = parts[2];
-            const userSign = parts[3];
-            const expiryTime = parseInt(b36Time, 36);
+            const hours = parseInt(parts[2]);
+            const b36Expiry = parts[3];
+            const userSign = parts[4];
+            
+            const absoluteExpiryTime = parseInt(b36Expiry, 36);
 
-            if (isNaN(expiryTime) || generateChecksum(name, expiryTime) !== userSign) {
+            if (isNaN(hours) || isNaN(absoluteExpiryTime) || generateChecksum(name, absoluteExpiryTime) !== userSign) {
                 alertBox.textContent = "❌ ตรวจพบความพยายามแก้ไขโครงสร้างรหัส (Fake Key)";
                 alertBox.classList.remove('hidden');
                 playTone('cycleLost');
                 return;
             }
 
-            // เช็คในฐานข้อมูลประวัติเครื่องว่าโดนสั่งระงับสิทธิ์ (Revoked) กลางคันตามข้อ 5 หรือไม่
+            // เช็คการระงับสิทธิ์ (Revoked)
             let customerDB = JSON.parse(localStorage.getItem('qnt_customer_db'));
             const matchingRecord = customerDB.find(item => item.licenseKey === input);
             if (matchingRecord && matchingRecord.status === 'REVOKED') {
@@ -715,43 +728,44 @@
                 var currentDate = new Date();
             }
 
-            const now = currentDate.getTime();
+            const currentMs = currentDate.getTime();
 
-            // ตรวจสอบระบบดึงเวลาหยุดค้าง (Pause) ที่ถอยหลังค้างสะสมไว้ในระบบ
-            const pausedTimeStr = localStorage.getItem('qnt_paused_time_' + input);
-            let calculatedExpiry = expiryTime;
-
-            if (pausedTimeStr) {
-                // หากเคยกดหยุดเวลาไว้ ตัวแอปจะนำเวลาคงเหลือ (Paused Milliseconds) มาต่อเวลาให้ใหม่จากวินาทีนี้
-                const remainingMs = parseInt(pausedTimeStr);
-                if (remainingMs <= 0) {
-                    alertBox.textContent = `❌ ขออภัยสิทธิ์การใช้งานคีย์นี้หมดเวลาลงแล้ว!`;
-                    alertBox.classList.remove('hidden');
-                    return;
-                }
-                calculatedExpiry = now + remainingMs;
-            } else if (now > expiryTime) {
-                alertBox.textContent = `❌ รหัสผ่านของคุณ ${name} หมดเวลาใช้งานแล้ว!`;
+            // 1. เช็คอายุขัยของคีย์ (Key Expiration Policy)
+            if (currentMs > absoluteExpiryTime) {
+                alertBox.textContent = `❌ สิ้นสุดอายุขัย! คีย์ของ ${name} หมดอายุแล้วตามเงื่อนไขแพ็กเกจ (Key Expired)`;
                 alertBox.classList.remove('hidden');
                 playTone('cycleLost');
                 return;
             }
 
-            // ผ่านการตรวจสอบ -> เข้าสู่การใช้งาน
+            // 2. เช็คเวลาชั่วโมงทำงาน (Pause / Resume Working Hours)
+            const pausedTimeStr = localStorage.getItem('qnt_paused_time_' + input);
+            let remainingMs = hours * 3600 * 1000; // แปลงชั่วโมงเป็นมิลลิวินาที (ค่าตั้งต้น)
+
+            if (pausedTimeStr) {
+                remainingMs = parseInt(pausedTimeStr);
+                if (remainingMs <= 0) {
+                    alertBox.textContent = `❌ ขออภัยสิทธิ์ "ชั่วโมงใช้งาน" ของคุณหมดลงแล้ว!`;
+                    alertBox.classList.remove('hidden');
+                    return;
+                }
+            }
+
+            // ผ่านการตรวจสอบทั้งหมด -> เข้าสู่การใช้งาน
             alertBox.classList.add('hidden');
             document.getElementById('loginGateway').classList.add('hidden');
             document.getElementById('mainWorkspace').classList.remove('hidden');
             document.getElementById('greetUserName').textContent = `คุณ ${name} (VIP)`;
             
-            activeSessionKey = input; // บันทึกกุญแจหลักเพื่อความปลอดภัยในการ auto-save
-            globalExpiryTimestamp = calculatedExpiry;
+            activeSessionKey = input;
+            globalExpiryTimestamp = currentMs + remainingMs;
             startCountdownTimer();
             
             playTone('win');
             setTimeout(() => { drawTrendChart(); }, 100);
         }
 
-        // ระบบจับเวลานับถอยหลังหน้าเว็บแบบวินาทีต่อวินาที (Access Countdown) พร้อมระบบ Auto-Save
+        // ระบบจับเวลานับถอยหลัง (Access Countdown) พร้อมระบบ Auto-Save
         function startCountdownTimer() {
             if (activeTimerInterval) clearInterval(activeTimerInterval);
             const timerEl = document.getElementById('timeLeftDisplay');
@@ -761,13 +775,13 @@
                 
                 if (diff <= 0) {
                     clearInterval(activeTimerInterval);
-                    localStorage.setItem('qnt_paused_time_' + activeSessionKey, 0); // เคลียร์เซฟสะสมหมดลง
+                    localStorage.setItem('qnt_paused_time_' + activeSessionKey, 0);
                     timerEl.textContent = "หมดเวลาใช้งาน";
-                    showCustomAlert("สิ้นสุดสิทธิ์", "สิทธิ์การใช้งานของคุณหมดเวลาลงแล้ว โปรดติดต่อต่ออายุโปรโมชั่น Line ID: elite2026", "warning", () => { window.location.reload(); });
+                    showCustomAlert("สิ้นสุดสิทธิ์การทำงาน", "สิทธิ์ชั่วโมงการใช้งานของคุณหมดเวลาลงแล้ว โปรดติดต่อแอดมินเพื่อต่ออายุโปรโมชั่น Line ID: elite2026", "warning", () => { window.location.reload(); });
                     return;
                 }
 
-                // 💾 AUTO-SAVE ตลอดเวลาในทุกๆ วินาที เพื่อป้องกันคนปิดเว็บบราวเซอร์โดยจงใจโกงเวลาหยุดสะสม
+                // 💾 AUTO-SAVE ตลอดเวลาในทุกๆ วินาที เพื่อบันทึกเวลา Pause อย่างแม่นยำ
                 localStorage.setItem('qnt_paused_time_' + activeSessionKey, diff);
                 
                 const totalSec = Math.floor(diff / 1000);
@@ -780,19 +794,16 @@
             activeTimerInterval = setInterval(updateTimer, 1000);
         }
 
-        // ระบบ Logout ป้องกันสิทธิ์ความปลอดภัย และหยุดถอยหลังอย่างสมบูรณ์แบบ
+        // ระบบ Logout หยุดถอยหลังเวลา
         function logoutSession() {
             if (activeTimerInterval) clearInterval(activeTimerInterval);
             
             const remainingTime = globalExpiryTimestamp - Date.now();
             if (remainingTime > 0 && activeSessionKey) {
-                // บันทึกและล็อคเศษมิลลิวินาทีสุดท้ายที่ใช้งานเหลืออยู่
                 localStorage.setItem('qnt_paused_time_' + activeSessionKey, remainingTime);
             }
             
             playTone('cycleLost');
-            
-            // รีเซ็ตการล็อกอินเพื่อถอยกลับ Gateway หน้าแรก
             activeSessionKey = "";
             globalExpiryTimestamp = 0;
             document.getElementById('licenseInput').value = "";
@@ -1036,5 +1047,6 @@
     </script>
 </body>
 </html>
+
 
 ```
