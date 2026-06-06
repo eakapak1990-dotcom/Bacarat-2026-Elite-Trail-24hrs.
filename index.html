@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="th" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quantum Analytics Workspace - Elite Edition</title>
-    <!-- Tailwind CSS (V4) CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kanit:wght@300;400;500;600;700&display=swap');
@@ -63,7 +61,6 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-amber-500/20 selection:text-amber-300 antialiased">
 
-    <!-- CUSTOM MODAL ALERT (ระบบแจ้งเตือนสไตล์พรีเมียม ป้องกันการโดนเบราว์เซอร์บล็อกการทำงาน) -->
     <div id="customAlertModal" class="fixed inset-0 z-[200] bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 hidden animate-fade-in">
         <div class="w-full max-w-sm bg-[var(--bg-card-from)] border border-[var(--border-color)] rounded-3xl p-6 text-center shadow-2xl">
             <div id="customAlertIcon" class="inline-flex p-3.5 rounded-2xl mb-4"></div>
@@ -75,11 +72,9 @@
         </div>
     </div>
 
-    <!-- LOGIN GATEWAY & ADMIN CONSOLE OVERLAY -->
     <div id="loginGateway" class="fixed inset-0 z-[100] bg-[#030712] flex items-center justify-center p-4 overflow-y-auto">
         <div class="w-full max-w-xl bg-[#0f172a] border border-[#1e293b] rounded-3xl p-6 text-center shadow-2xl relative my-auto animate-fade-in">
             
-            <!-- MARKETING CAMPAIGN BANNER -->
             <div class="mb-5 bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-amber-500/20 border border-amber-500/30 rounded-2xl p-4 text-left relative overflow-hidden">
                 <span class="absolute right-2.5 top-2.5 px-2 py-0.5 text-[8px] font-black bg-amber-500 text-slate-950 rounded-full uppercase tracking-wider animate-pulse">Campaign</span>
                 <h4 class="text-xs font-bold text-amber-400 flex items-center gap-1.5 uppercase tracking-wide">
@@ -96,7 +91,6 @@
                 </div>
             </div>
 
-            <!-- GATEWAY CONTENT (หน้าจอหลักสำหรับเข้าสู่ระบบของลูกค้า) -->
             <div id="gateActiveView">
                 <div class="inline-flex bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 p-3 rounded-2xl shadow-xl shadow-amber-500/10 mb-3">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -117,7 +111,6 @@
                 </div>
             </div>
 
-            <!-- ADMIN PASSWORD + 2FA SECURITY GATE (ระบบล็อกความปลอดภัยสองชั้นด้วยรหัสลับ 300333) -->
             <div id="adminAuthView" class="hidden text-left space-y-4 max-w-sm mx-auto">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
                     <h2 class="text-sm font-bold text-amber-500 uppercase tracking-wider flex items-center gap-1">
@@ -140,13 +133,11 @@
                 </div>
             </div>
 
-            <!-- ENHANCED ADMIN GENERATOR & PRIVILEGE WORKSPACE (แผงควบคุมหลักระบบผู้ดูแลระบบ) -->
             <div id="adminActiveView" class="hidden text-left space-y-5">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
                     <h2 class="text-sm font-bold text-amber-500 uppercase tracking-wider flex items-center gap-1.5">
                         ⚙️ Admin Enterprise Panel
                     </h2>
-                    <!-- BUTTON BACK TO HOME หน้าหลัก -->
                     <button onclick="closeAdminConsole()" class="bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 px-3 py-1.5 rounded-xl transition-all cursor-pointer font-bold">
                         ⬅️ กลับหน้าแรก (Home)
                     </button>
@@ -154,10 +145,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
                     
-                    <!-- ฝั่งซ้าย: ฟอร์มออกคีย์ & รีเซ็ตรหัสผ่านแอดมิน -->
                     <div class="md:col-span-5 space-y-4">
                         
-                        <!-- ออกคีย์ใบอนุญาต -->
                         <div class="bg-slate-950/60 p-4 border border-slate-850 rounded-2xl space-y-3">
                             <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">🔑 ออกสิทธิ์ใช้งานใหม่</h3>
                             <div class="space-y-2.5 text-xs">
@@ -177,7 +166,6 @@
                                 <button onclick="generateLicenseKey()" class="w-full cursor-pointer bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl transition-all text-xs uppercase mt-2">สร้างรหัสสิทธิ์</button>
                             </div>
                             
-                            <!-- คีย์เอาต์พุต -->
                             <div id="keyOutputContainer" class="hidden bg-[#020617] border border-slate-800 rounded-xl p-2.5 space-y-2 text-xs">
                                 <div class="flex items-center justify-between bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
                                     <span id="generatedKey" class="font-mono font-bold text-amber-400 text-[10px] tracking-wider select-all"></span>
@@ -187,7 +175,6 @@
                             </div>
                         </div>
 
-                        <!-- ฟังก์ชันรีเซ็ตรหัสผ่านแอดมิน เพื่อป้องกันภายนอกแฮก -->
                         <div class="bg-slate-950/60 p-4 border border-slate-850 rounded-2xl space-y-3">
                             <h3 class="text-xs font-bold text-rose-400 uppercase tracking-wider">🛡️ รีเซ็ตรหัสผ่านผู้ดูแลระบบ</h3>
                             <div class="space-y-2.5 text-xs">
@@ -201,21 +188,18 @@
 
                     </div>
 
-                    <!-- ฝั่งขวา: ตารางบันทึกและระบบปฏิทินย้อนหลัง 30 วัน -->
                     <div class="md:col-span-7 space-y-4">
                         <div class="bg-slate-950/60 p-4 border border-slate-850 rounded-2xl space-y-3">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2">
                                 <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
                                     📋 ประวัติออกคีย์ย้อนหลัง 30 วัน
                                 </h3>
-                                <!-- ระบบปฏิทินเลือกตรวจสอบย้อนหลัง -->
                                 <div class="flex items-center gap-1.5 text-xs">
                                     <span class="text-slate-500 text-[10px] uppercase">กรองวันที่:</span>
                                     <input type="date" id="adminHistoryCalendar" onchange="renderHistoryTable()" class="bg-[#020617] border border-slate-800 rounded-lg p-1 text-slate-300 text-xs focus:outline-none focus:border-amber-500 cursor-pointer">
                                 </div>
                             </div>
 
-                            <!-- ส่วนตารางบันทึกข้อมูลลูกค้า -->
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-[11px] text-slate-300 min-w-[360px]">
                                     <thead>
@@ -227,8 +211,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="historyTableBody">
-                                        <!-- ข้อมูลถูกแทรกด้วย JavaScript -->
-                                    </tbody>
+                                        </tbody>
                                 </table>
                             </div>
                         </div>
@@ -239,9 +222,7 @@
         </div>
     </div>
 
-    <!-- MAIN APP WORKSPACE (ซ่อนอยู่จนกว่าจะป้อนกุญแจผ่านสิทธิ์) -->
     <div id="mainWorkspace" class="hidden flex-1 flex flex-col justify-between">
-        <!-- Header -->
         <header class="border-b border-[var(--border-color)] bg-[var(--bg-card-from)]/80 backdrop-blur-md sticky top-0 z-50 transition-colors">
             <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
                 <div class="flex items-center gap-3">
@@ -265,7 +246,6 @@
                         <svg id="themeMoon" class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     </button>
                     
-                    <!-- BUTTON LOGOUT (ออกจากระบบและหยุดนับเวลาสะสมชั่วคราว) -->
                     <button onclick="logoutSession()" class="flex items-center gap-1 bg-rose-600/10 hover:bg-rose-600/20 px-3 py-1.5 rounded-xl border border-rose-500/20 text-xs font-bold text-rose-500 cursor-pointer transition-all active:scale-95" title="ออกจากระบบเพื่อหยุดเวลา">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                         <span class="hidden sm:inline">ออกจากระบบ (Pause)</span>
@@ -274,11 +254,9 @@
             </div>
         </header>
 
-        <!-- Main Workspace Layout Grid -->
         <main class="max-w-5xl mx-auto w-full px-4 py-5 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 animate-fade-in">
             <section class="lg:col-span-5 space-y-5">
                 
-                <!-- Welcome Tier User Card -->
                 <div class="custom-card rounded-2xl p-4.5 bg-gradient-to-r from-amber-500/10 to-transparent border-l-4 border-l-amber-500 flex items-center justify-between">
                     <div>
                         <span class="text-[10px] text-amber-500 font-bold uppercase tracking-wider heading-track block">ผู้ใช้งานความลับระบบ</span>
@@ -308,9 +286,10 @@
                             บันทึกผลการออกหน้างาน
                         </h2>
                     </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="recordHand('B')" class="cursor-pointer relative overflow-hidden group bg-gradient-to-b from-red-500 to-red-600 dark:from-red-600 dark:to-rose-700 text-white font-bold py-4 rounded-xl shadow-md active:scale-[0.98] transition-all flex flex-col items-center">BANKER (แดง)</button>
-                        <button onclick="recordHand('P')" class="cursor-pointer relative overflow-hidden group bg-gradient-to-b from-blue-500 to-blue-600 dark:from-blue-600 dark:to-indigo-700 text-white font-bold py-4 rounded-xl shadow-md active:scale-[0.98] transition-all flex flex-col items-center">PLAYER (น้ำเงิน)</button>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="recordHand('P')" class="cursor-pointer relative overflow-hidden group bg-gradient-to-b from-blue-500 to-blue-600 dark:from-blue-600 dark:to-indigo-700 text-white font-bold py-3 rounded-xl shadow-md active:scale-[0.98] transition-all flex flex-col items-center">PLAYER<span class="text-[10px] font-normal opacity-80">(น้ำเงิน)</span></button>
+                        <button onclick="recordHand('T')" class="cursor-pointer relative overflow-hidden group bg-gradient-to-b from-emerald-500 to-emerald-600 dark:from-emerald-600 dark:to-green-700 text-white font-bold py-3 rounded-xl shadow-md active:scale-[0.98] transition-all flex flex-col items-center">TIE<span class="text-[10px] font-normal opacity-80">(เสมอ)</span></button>
+                        <button onclick="recordHand('B')" class="cursor-pointer relative overflow-hidden group bg-gradient-to-b from-red-500 to-red-600 dark:from-red-600 dark:to-rose-700 text-white font-bold py-3 rounded-xl shadow-md active:scale-[0.98] transition-all flex flex-col items-center">BANKER<span class="text-[10px] font-normal opacity-80">(แดง)</span></button>
                     </div>
                     <div class="grid grid-cols-2 gap-2.5 pt-0.5">
                         <button onclick="popLastRecord()" class="cursor-pointer bg-[var(--bg-inner)] text-[var(--text-main)] font-semibold py-2.5 rounded-xl border border-[var(--border-color)] text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95">ย้อนกลับ (Undo)</button>
@@ -330,7 +309,6 @@
                 </div>
             </section>
 
-            <!-- RIGHT ANALYTICS MONITOR -->
             <section class="lg:col-span-7 flex flex-col justify-between space-y-5">
                 <div class="custom-card rounded-2xl p-4.5 flex flex-col justify-between min-h-[170px] relative overflow-hidden">
                     <div class="flex justify-between items-center border-b border-[var(--border-color)] pb-2">
@@ -404,7 +382,6 @@
         </main>
     </div>
 
-    <!-- Crypto & Application Core Scripts Engine -->
     <script>
         const SECRET_CIPHER_SALT = "QNT_CRYPTO_HASH_2026";
         const DOUBLE_FA_KEY = "300333"; // รหัสลับยืนยันความปลอดภัยตามเงื่อนไขข้อ 3
@@ -474,7 +451,6 @@
             document.getElementById('gateActiveView').classList.remove('hidden');
         }
 
-        // ข้อ 3: การล็อกความปลอดภัยแอดมินสองชั้น (Password + รหัสลับ 300333)
         function submitAdminPassword() {
             const pInput = document.getElementById('adminPasswordInput').value.trim();
             const faInput = document.getElementById('admin2FAInput').value.trim();
@@ -487,7 +463,6 @@
                 document.getElementById('adminAuthView').classList.add('hidden');
                 document.getElementById('adminActiveView').classList.remove('hidden');
                 
-                // โหลดปฏิทินตั้งค่าวันที่ปัจจุบันเป็น Default สำหรับตรวจข้อมูลย้อนหลัง 30 วัน
                 const todayStr = new Date().toISOString().split('T')[0];
                 document.getElementById('adminHistoryCalendar').value = todayStr;
                 renderHistoryTable();
@@ -498,14 +473,12 @@
             }
         }
 
-        // ข้อ 4: ปุ่มย้อนกลับจากหน้าจอควบคุมหลักแอดมิน ไปหน้า Home ล็อกอินหลัก
         function closeAdminConsole() {
             playTone('click');
             document.getElementById('adminActiveView').classList.add('hidden');
             document.getElementById('gateActiveView').classList.remove('hidden');
         }
 
-        // ข้อ 2: ฟังก์ชันรีเซ็ตรหัสผ่านแอดมิน บันทึกถาวรลงฐานความจำส่วนตัว
         function resetAdminPassword() {
             const newPass = document.getElementById('adminNewPassword').value.trim();
             if (newPass.length < 4) {
@@ -518,7 +491,6 @@
             showCustomAlert("บันทึกข้อมูลเรียบร้อย", "🛡️ รีเซ็ตรหัสผ่านระบบควบคุมแอดมินหลักเรียบร้อยแล้ว! ข้อมูลถูกบันทึกสำเร็จ", "success");
         }
 
-        // --- NEW POLICY: บันทึกข้อมูลลูกค้า, สร้างคีย์แบบ 5 ส่วนฝังอายุขัยคีย์ (Key Expiration) ---
         function generateLicenseKey() {
             const rawName = document.getElementById('adminCustName').value.trim().toUpperCase();
             const selectPack = document.getElementById('adminPackage');
@@ -534,36 +506,29 @@
             const now = Date.now();
             let addedHours = duration;
             
-            // ลอจิกข้อ 6: เช็คสถิติสะสมแต้มแถมโบนัส (1,000 + 100 ชม.)
             let customerDB = JSON.parse(localStorage.getItem('qnt_customer_db'));
             let cumulativeHours = 0;
             customerDB.forEach(item => { if (item.customerName === name && item.status !== 'REVOKED') cumulativeHours += item.baseHours; });
             
             if ((cumulativeHours + addedHours) >= 1000) {
-                addedHours += 100; // ทบเวลาโบนัสเข้าไป
+                addedHours += 100;
                 showCustomAlert("🏆 แคมเปญโบนัสทำงาน", `คุณ ${name} มีสถิติสะสมชั่วโมงครบกำหนด ระบบเพิ่มโบนัสให้ฟรี 100 ชั่วโมงเรียบร้อย!`, "success");
             }
 
-            // คำนวณวันหมดอายุขัยคีย์ (Absolute Expiry Timestamp)
             const absoluteExpiryTime = now + (expiryDays * 24 * 60 * 60 * 1000);
             const b36Expiry = absoluteExpiryTime.toString(36).toUpperCase();
-            
-            // สร้างลายเซ็นยืนยัน
             const sign = generateChecksum(name, absoluteExpiryTime);
-            
-            // โครงสร้าง Key ใหม่: QNT-NAME-WORKING_HOURS-EXPIRY_DATE-SIGNATURE
             const rawKey = `QNT-${name}-${addedHours}-${b36Expiry}-${sign}`;
 
-            // บันทึก Log ลงระบบ LocalStorage
             const logEntry = {
                 id: 'ID-' + Math.random().toString(36).substring(2, 7).toUpperCase(),
                 timestamp: now,
                 dateString: new Date().toISOString().split('T')[0],
                 customerName: name,
                 licenseKey: rawKey,
-                baseHours: duration, // ชั่วโมงแพ็กเกจเดิม
-                hoursAwarded: addedHours, // ชั่วโมงรวมโบนัสที่นำไปใช้งาน
-                absoluteExpiryTimestamp: absoluteExpiryTime, // วันหมดอายุคีย์
+                baseHours: duration, 
+                hoursAwarded: addedHours, 
+                absoluteExpiryTimestamp: absoluteExpiryTime, 
                 status: 'ACTIVE'
             };
 
@@ -577,7 +542,6 @@
             renderHistoryTable();
         }
 
-        // ข้อ 1: เรนเดอร์ตารางตรวจสอบย้อนหลัง 30 วัน โชว์อายุขัยคีย์ (Expire Date)
         function renderHistoryTable() {
             const calendarFilter = document.getElementById('adminHistoryCalendar').value;
             const tbody = document.getElementById('historyTableBody');
@@ -601,11 +565,9 @@
                 
                 const formattedDate = new Date(item.timestamp).toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'}) + ' น.';
                 
-                // คำนวณยอดรวมสะสมแต้มของลูกค้ารายนี้เพื่อโชว์ในวงเล็บ
                 let totalAccum = 0;
                 customerDB.forEach(c => { if (c.customerName === item.customerName && c.status !== 'REVOKED') totalAccum += c.baseHours; });
 
-                // เช็คเวลาสะสมการทำงาน (Pause Time) และ อายุขัยคีย์ (Absolute Expiry)
                 const pausedTimeStr = localStorage.getItem('qnt_paused_time_' + item.licenseKey);
                 const isKeyExpired = Date.now() > item.absoluteExpiryTimestamp;
                 
@@ -621,7 +583,6 @@
                     }
                 }
 
-                // แปลงวันหมดอายุคีย์มาแสดงในตาราง
                 const absExpiryDate = new Date(item.absoluteExpiryTimestamp).toLocaleDateString('th-TH', {day:'2-digit', month:'short', year:'2-digit'});
 
                 let statusBadge = '';
@@ -632,7 +593,6 @@
                 } else if (pausedTimeStr && parseInt(pausedTimeStr) <= 0) {
                     statusBadge = `<span class="bg-slate-850 text-slate-500 border border-slate-800 px-1.5 py-0.5 rounded-md text-[9px]">ชั่วโมงหมด</span>`;
                 } else {
-                    // ข้อ 5: สร้างปุ่มกด ยกเลิกสิทธิ์ ของลูกค้า
                     statusBadge = `<button onclick="revokeLicense('${item.id}')" class="bg-rose-600 hover:bg-rose-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-lg cursor-pointer transition-all active:scale-95">🚫 ยกเลิกสิทธิ์</button>`;
                 }
 
@@ -646,7 +606,6 @@
             });
         }
 
-        // ข้อ 5: ฟังก์ชันสั่งตัดและระงับสิทธิ์ลูกค้าแบบถาวรมีผลเรียบลูปทันที
         function revokeLicense(id) {
             if (confirm("⚠️ คุณมั่นใจหรือไม่ที่จะยกเลิกสิทธิ์กุญแจรหัสลูกค้าท่านนี้ในทันที? ระบบจะมีผลล็อกทันทีเมื่อตัวแอปเช็คเวลาสากลรอบถัดไป")) {
                 let customerDB = JSON.parse(localStorage.getItem('qnt_customer_db'));
@@ -682,13 +641,11 @@
             playTone('click');
         }
 
-        // ตรวจสอบความถูกต้องของคีย์ 5 ส่วน ฝั่งลูกค้า (New Key Expiration Policy)
         async function validateLicenseKey() {
             const input = document.getElementById('licenseInput').value.trim().toUpperCase();
             const alertBox = document.getElementById('loginAlert');
             
             const parts = input.split('-');
-            // เปลี่ยนเป็นเช็ค 5 ส่วน เพราะรหัสคือ QNT-NAME-HOURS-EXPIRY-SIGN
             if (parts.length !== 5 || parts[0] !== 'QNT') {
                 alertBox.textContent = "❌ รูปแบบรหัสเข้าใช้งานไม่ถูกต้อง!";
                 alertBox.classList.remove('hidden');
@@ -710,7 +667,6 @@
                 return;
             }
 
-            // เช็คการระงับสิทธิ์ (Revoked)
             let customerDB = JSON.parse(localStorage.getItem('qnt_customer_db'));
             const matchingRecord = customerDB.find(item => item.licenseKey === input);
             if (matchingRecord && matchingRecord.status === 'REVOKED') {
@@ -730,7 +686,6 @@
 
             const currentMs = currentDate.getTime();
 
-            // 1. เช็คอายุขัยของคีย์ (Key Expiration Policy)
             if (currentMs > absoluteExpiryTime) {
                 alertBox.textContent = `❌ สิ้นสุดอายุขัย! คีย์ของ ${name} หมดอายุแล้วตามเงื่อนไขแพ็กเกจ (Key Expired)`;
                 alertBox.classList.remove('hidden');
@@ -738,9 +693,8 @@
                 return;
             }
 
-            // 2. เช็คเวลาชั่วโมงทำงาน (Pause / Resume Working Hours)
             const pausedTimeStr = localStorage.getItem('qnt_paused_time_' + input);
-            let remainingMs = hours * 3600 * 1000; // แปลงชั่วโมงเป็นมิลลิวินาที (ค่าตั้งต้น)
+            let remainingMs = hours * 3600 * 1000; 
 
             if (pausedTimeStr) {
                 remainingMs = parseInt(pausedTimeStr);
@@ -751,7 +705,6 @@
                 }
             }
 
-            // ผ่านการตรวจสอบทั้งหมด -> เข้าสู่การใช้งาน
             alertBox.classList.add('hidden');
             document.getElementById('loginGateway').classList.add('hidden');
             document.getElementById('mainWorkspace').classList.remove('hidden');
@@ -765,7 +718,6 @@
             setTimeout(() => { drawTrendChart(); }, 100);
         }
 
-        // ระบบจับเวลานับถอยหลัง (Access Countdown) พร้อมระบบ Auto-Save
         function startCountdownTimer() {
             if (activeTimerInterval) clearInterval(activeTimerInterval);
             const timerEl = document.getElementById('timeLeftDisplay');
@@ -781,7 +733,6 @@
                     return;
                 }
 
-                // 💾 AUTO-SAVE ตลอดเวลาในทุกๆ วินาที เพื่อบันทึกเวลา Pause อย่างแม่นยำ
                 localStorage.setItem('qnt_paused_time_' + activeSessionKey, diff);
                 
                 const totalSec = Math.floor(diff / 1000);
@@ -794,7 +745,6 @@
             activeTimerInterval = setInterval(updateTimer, 1000);
         }
 
-        // ระบบ Logout หยุดถอยหลังเวลา
         function logoutSession() {
             if (activeTimerInterval) clearInterval(activeTimerInterval);
             
@@ -814,7 +764,6 @@
             showCustomAlert("หยุดบันทึกเวลาชั่วคราว", "🔐 ทำการออกจากระบบและหยุดนับถอยหลังสะสมให้เรียบร้อยแล้ว เมื่อล็อกอินใหม่เวลาจะเริ่มนับต่อทันทีครับ", "success");
         }
 
-        // --- CORE APPLICATION LOGIC (ตรรกะระบบสูตรสู้งานเดิมทั้งหมด) ---
         function toggleTheme() {
             const html = document.documentElement;
             const themeSun = document.getElementById('themeSun'), themeMoon = document.getElementById('themeMoon');
@@ -862,7 +811,7 @@
         };
 
         const fibonacciSequence = [1, 1, 2, 3, 5, 8];
-        let rawRecordHistory = [], beadRecord = [];
+        let rawRecordHistory = [], validRecordHistory = [], beadRecord = [];
         let consecutiveLosses = 0, maxLossStreak = 0, winCount = 0, loseCount = 0;
         let stepWins = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, stopLossCount = 0, totalCycleCount = 0;
         let isBettingMode = false, currentPatternKey = "", currentStep = 0, currentBetTarget = "";
@@ -889,21 +838,33 @@
             consecutiveLosses = 0; maxLossStreak = 0; winCount = 0; loseCount = 0;
             stepWins = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }; stopLossCount = 0; totalCycleCount = 0;
             isBettingMode = false; currentPatternKey = ""; currentStep = 0; currentBetTarget = "";
-            trendHistory = [0]; beadRecord = [];
+            trendHistory = [0]; beadRecord = []; validRecordHistory = [];
 
             for (let i = 0; i < rawRecordHistory.length; i++) {
-                const side = rawRecordHistory[i]; beadRecord.push({ side });
-                if (isBettingMode) { processOutcomeState(side === currentBetTarget); } 
-                else { evaluatePatternState(i); }
+                const side = rawRecordHistory[i]; 
+                beadRecord.push({ side });
+                
+                if (side === 'T') continue; // ข้ามการคำนวณสูตรหากเป็นเสมอ
+
+                validRecordHistory.push(side);
+                const validIndex = validRecordHistory.length - 1;
+                const isLastValid = (i === rawRecordHistory.length - 1);
+
+                if (isBettingMode) { 
+                    processOutcomeState(side === currentBetTarget, validIndex, isLastValid); 
+                } else { 
+                    evaluatePatternState(validIndex); 
+                }
             }
             renderLiveBeadBoard();
             if (isBettingMode) renderPrediction(); else renderWaitingState();
             updateStatsUI(); updateStepStatsUI(); drawTrendChart();
+            updateStreamDots();
         }
 
         function evaluatePatternState(currentIndex) {
             if (currentIndex >= 2) {
-                const lastThree = rawRecordHistory.slice(currentIndex - 2, currentIndex + 1).join('');
+                const lastThree = validRecordHistory.slice(currentIndex - 2, currentIndex + 1).join('');
                 const patternSequence = QUANT_STRATEGIES[strategySelect.value][lastThree];
                 if (patternSequence) {
                     isBettingMode = true; currentPatternKey = lastThree; currentStep = 0; currentBetTarget = patternSequence[0];
@@ -911,22 +872,22 @@
             }
         }
 
-        function processOutcomeState(isWin) {
+        function processOutcomeState(isWin, validIndex, isLastRecord) {
             const prevTrend = trendHistory[trendHistory.length - 1];
             if (isWin) {
                 winCount++; trendHistory.push(prevTrend + 1);
                 stepWins[currentStep + 1]++; totalCycleCount++;
                 consecutiveLosses = 0; currentStep = 0; isBettingMode = false;
-                if (rawRecordHistory.length === trendHistory.length - 1) playTone('win');
-                evaluatePatternState(rawRecordHistory.length - 1);
+                if (isLastRecord) playTone('win');
+                evaluatePatternState(validIndex);
             } else {
                 loseCount++; trendHistory.push(prevTrend - 1); consecutiveLosses++;
                 if (consecutiveLosses > maxLossStreak) maxLossStreak = consecutiveLosses;
-                if (rawRecordHistory.length === trendHistory.length - 1) playTone('lose');
+                if (isLastRecord) playTone('lose');
                 if (currentStep >= 5) {
                     stopLossCount++; totalCycleCount++; consecutiveLosses = 0; currentStep = 0; isBettingMode = false;
-                    if (rawRecordHistory.length === trendHistory.length - 1) playTone('cycleLost');
-                    evaluatePatternState(rawRecordHistory.length - 1);
+                    if (isLastRecord) playTone('cycleLost');
+                    evaluatePatternState(validIndex);
                 } else {
                     currentStep++;
                     const patternSequence = QUANT_STRATEGIES[strategySelect.value][currentPatternKey];
@@ -948,7 +909,6 @@
             document.getElementById('predictionTarget').textContent = targetSide === 'B' ? 'BANKER' : 'PLAYER';
             document.getElementById('predictionTarget').className = `text-4xl font-extrabold my-2 tracking-wider ${targetSide === 'B' ? 'text-rose-500' : 'text-blue-500'}`;
             document.getElementById('fiboValue').textContent = `รอบสู้ไม้ที่ ${currentStep + 1} (Fibo x${fibonacciSequence[currentStep]})`;
-            updateStreamDots();
         }
 
         function renderWaitingState() {
@@ -958,7 +918,6 @@
             document.getElementById('engineStatus').textContent = "รอจับคู่หน้าไพ่"; 
             document.getElementById('stepBadge').textContent = "Idle";
             document.getElementById('stepBadge').className = "bg-[var(--bg-inner)] border border-[var(--border-color)] text-[var(--text-muted)] text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-widest";
-            updateStreamDots();
         }
 
         function popLastRecord() { if (rawRecordHistory.length > 0) { playTone('click'); rawRecordHistory.pop(); recalculateEverything(); } }
@@ -966,7 +925,7 @@
 
         function updateStreamDots() {
             const dotsContainer = document.getElementById('dataStreamDots');
-            dotsContainer.innerHTML = ''; const fill = Math.min(3, rawRecordHistory.length);
+            dotsContainer.innerHTML = ''; const fill = Math.min(3, validRecordHistory.length);
             for (let i = 0; i < 3; i++) {
                 const dot = document.createElement('span');
                 dot.className = i < fill ? "w-1.5 h-1.5 rounded-full bg-emerald-500 border border-emerald-400/45 shadow-md shadow-emerald-500/20" : "w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-800 border border-[var(--border-color)]";
@@ -1035,7 +994,12 @@
             for (let i = 0; i < maxB; i++) {
                 const item = beadRecord[i], b = document.createElement('div');
                 if (item) {
-                    b.className = `w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold tracking-tight text-white ${item.side === 'B' ? 'bg-gradient-to-br from-red-500 to-rose-600' : 'bg-gradient-to-br from-blue-500 to-indigo-600'}`;
+                    let bgClass = '';
+                    if(item.side === 'B') bgClass = 'from-red-500 to-rose-600';
+                    else if(item.side === 'P') bgClass = 'from-blue-500 to-indigo-600';
+                    else bgClass = 'from-emerald-500 to-green-600';
+                    
+                    b.className = `w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold tracking-tight text-white bg-gradient-to-br ${bgClass}`;
                     b.textContent = item.side;
                 } else {
                     b.className = "w-7 h-7 rounded-full bg-[var(--bg-bead-empty)]/40 border border-[var(--border-color)] flex items-center justify-center";
@@ -1047,6 +1011,3 @@
     </script>
 </body>
 </html>
-
-
-```
