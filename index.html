@@ -3,436 +3,485 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Analytics Workspace - Elite Edition</title>
+    <title>Quantum Analytics - Premium Executive Dashboard</title>
     <!-- Tailwind CSS (V4) CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kanit:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kanit:wght@200;300;400;500;600&display=swap');
         
         :root {
-            --bg-body: #f8fafc;
-            --bg-card-from: #ffffff;
-            --bg-card-to: #f8fafc;
-            --bg-inner: #f1f5f9;
-            --bg-bead-empty: #e2e8f0;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --shadow-strength: rgba(15, 23, 42, 0.04);
-        }
+            /* Luxury Color System */
+            --bg-deep-black: #0A0A0A;
+            --bg-charcoal: #121212;
+            --bg-graphite: #181818;
+            --accent-gold: #D4AF37;
+            --accent-gold-glow: rgba(212, 175, 55, 0.15);
+            --accent-champagne: #E5C76B;
+            --text-pure: #FFFFFF;
+            --text-silver: #B5B5B5;
+            --text-muted: #737373;
+            --border-premium: #262626;
+            
+            /* Status Colors */
+            --status-success: #10b981;
+            --status-warning: #f59e0b;
+            --status-danger: #e11d48;
 
-        .dark {
-            --bg-body: #030712;
-            --bg-card-from: #0f172a;
-            --bg-card-to: #0b0f19;
-            --bg-inner: #020617;
-            --bg-bead-empty: #1e293b;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border-color: #1e293b;
-            --shadow-strength: rgba(0, 0, 0, 0.5);
+            /* Premium Baccarat Colors */
+            --bac-banker: #C8102E; /* Crimson Red */
+            --bac-player: #00205B; /* Deep Navy */
+            --bac-tie: #00594C;    /* Racing Green */
         }
 
         body {
             font-family: 'Inter', 'Kanit', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            transition: background-color 0.25s ease, color 0.25s ease;
-            letter-spacing: -0.01em;
+            background-color: var(--bg-deep-black);
+            color: var(--text-pure);
+            letter-spacing: 0.01em;
         }
 
-        .custom-card {
-            background: linear-to-b from-[var(--bg-card-from)] to-[var(--bg-card-to)];
-            border: 1px solid var(--border-color);
-            box-shadow: 0 12px 30px -10px var(--shadow-strength);
+        /* Executive Cards */
+        .premium-card {
+            background-color: var(--bg-graphite);
+            border: 1px solid var(--border-premium);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
-        .custom-inner {
-            background-color: var(--bg-inner);
-            border: 1px solid var(--border-color);
+        /* Subtle Gold Glow on Hover */
+        .premium-card:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 8px 32px var(--accent-gold-glow);
+            transition: all 0.4s ease;
         }
 
-        .heading-track { letter-spacing: 0.05em; text-transform: uppercase; }
-        .num-track { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+        .premium-inner {
+            background-color: var(--bg-charcoal);
+            border: 1px solid var(--border-premium);
+            border-radius: 8px;
+        }
 
-        ::-webkit-scrollbar { height: 6px; width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-inner); border-radius: 8px; }
-        ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 8px; opacity: 0.5; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-main); }
+        /* Typography Tools */
+        .luxury-title {
+            color: var(--accent-gold);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .num-track { 
+            font-feature-settings: "tnum"; 
+            font-variant-numeric: tabular-nums; 
+        }
+
+        /* Scrollbar Premium */
+        ::-webkit-scrollbar { height: 4px; width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg-charcoal); }
+        ::-webkit-scrollbar-thumb { background: #333333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-gold); }
+
+        /* Custom Inputs */
+        .premium-input {
+            background-color: var(--bg-charcoal);
+            border: 1px solid var(--border-premium);
+            color: var(--text-pure);
+            transition: all 0.3s ease;
+        }
+        .premium-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 1px var(--accent-gold);
+        }
+
+        /* Smooth Fade In */
+        .animate-fade-in { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500/20 selection:text-amber-300 antialiased relative overflow-x-hidden">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#D4AF37]/20 selection:text-[#E5C76B] antialiased">
 
-    <!-- TOAST NOTIFICATION (Pop-up Win/Lose แบบไม่บล็อกหน้าจอ) -->
-    <div id="toastNotification" class="fixed top-20 right-5 z-[300] transform transition-all duration-300 translate-x-full opacity-0 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border pointer-events-none">
-        <div id="toastIcon" class="w-6 h-6 flex-shrink-0"></div>
+    <!-- PREMIUM TOAST NOTIFICATION -->
+    <div id="toastNotification" class="fixed top-24 right-6 z-[300] transform transition-all duration-500 translate-x-full opacity-0 flex items-start gap-4 p-4 rounded-xl shadow-2xl border bg-[#121212] pointer-events-none min-w-[300px]">
+        <div id="toastIcon" class="mt-0.5"></div>
         <div>
-            <span id="toastTitle" class="block font-bold text-sm tracking-wide heading-track uppercase"></span>
-            <span id="toastDesc" class="block text-[11px] font-medium opacity-90"></span>
+            <span id="toastTitle" class="block font-bold text-xs tracking-widest uppercase mb-1"></span>
+            <span id="toastDesc" class="block text-[11px] font-light text-[var(--text-silver)] leading-relaxed"></span>
         </div>
     </div>
 
-    <!-- CUSTOM MODAL ALERT -->
-    <div id="customAlertModal" class="fixed inset-0 z-[200] bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 hidden animate-fade-in">
-        <div class="w-full max-w-sm bg-[var(--bg-card-from)] border border-[var(--border-color)] rounded-3xl p-6 text-center shadow-2xl">
-            <div id="customAlertIcon" class="inline-flex p-3.5 rounded-2xl mb-4"></div>
-            <h3 id="customAlertTitle" class="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider mb-2">แจ้งเตือน</h3>
-            <p id="customAlertMessage" class="text-xs text-[var(--text-muted)] leading-relaxed mb-5 px-2"></p>
-            <button onclick="closeCustomAlert()" class="w-full cursor-pointer bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white font-semibold py-3 rounded-xl text-xs transition-all active:scale-95 shadow-lg">
-                ตกลง (Confirm)
+    <!-- PREMIUM MODAL ALERT -->
+    <div id="customAlertModal" class="fixed inset-0 z-[200] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden animate-fade-in">
+        <div class="w-full max-w-sm bg-[#181818] border border-[var(--accent-gold)]/30 rounded-2xl p-7 text-center shadow-[0_0_50px_rgba(212,175,55,0.05)]">
+            <div id="customAlertIcon" class="inline-flex p-3 rounded-full mb-4 bg-[#121212] border border-[#262626]"></div>
+            <h3 id="customAlertTitle" class="text-xs font-bold text-[var(--accent-gold)] uppercase tracking-[0.2em] mb-2">SYSTEM NOTIFICATION</h3>
+            <p id="customAlertMessage" class="text-[11px] font-light text-[var(--text-silver)] leading-relaxed mb-6"></p>
+            <button onclick="closeCustomAlert()" class="w-full cursor-pointer bg-transparent border border-[var(--accent-gold)] text-[var(--accent-gold)] hover:bg-[var(--accent-gold)] hover:text-black font-semibold py-3 rounded-lg text-xs transition-all tracking-wider uppercase active:scale-[0.98]">
+                Acknowledge
             </button>
         </div>
     </div>
 
-    <!-- LOGIN GATEWAY & ADMIN CONSOLE OVERLAY -->
-    <div id="loginGateway" class="fixed inset-0 z-[100] bg-[#030712] flex items-center justify-center p-4 overflow-y-auto">
-        <div class="w-full max-w-xl bg-[#0f172a] border border-[#1e293b] rounded-3xl p-6 text-center shadow-2xl relative my-auto animate-fade-in">
+    <!-- LOGIN GATEWAY / ADMIN CONSOLE -->
+    <div id="loginGateway" class="fixed inset-0 z-[100] bg-[var(--bg-deep-black)] flex items-center justify-center p-4 overflow-y-auto">
+        <div class="w-full max-w-lg premium-card p-8 text-center shadow-2xl relative my-auto animate-fade-in border-[#D4AF37]/20">
             
-            <div class="mb-5 bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-amber-500/20 border border-amber-500/30 rounded-2xl p-4 text-left relative overflow-hidden">
-                <span class="absolute right-2.5 top-2.5 px-2 py-0.5 text-[8px] font-black bg-amber-500 text-slate-950 rounded-full uppercase tracking-wider animate-pulse">Campaign</span>
-                <h4 class="text-xs font-bold text-amber-400 flex items-center gap-1.5 uppercase tracking-wide">
-                    👑 สถิติสะสมแต้มแคมเปญสมาชิกระดับพรีเมียม
+            <div class="mb-8 border border-[var(--border-premium)] bg-[#121212] rounded-xl p-5 text-left relative">
+                <span class="absolute -top-2.5 right-4 px-2 py-0.5 text-[8px] font-bold bg-[var(--accent-gold)] text-black rounded uppercase tracking-widest">VIP Privilege</span>
+                <h4 class="text-xs font-bold text-[var(--text-pure)] flex items-center gap-2 uppercase tracking-widest mb-2">
+                    <svg class="w-3.5 h-3.5 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    Elite Membership Program
                 </h4>
-                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
-                    ระบบจะทำการเก็บบันทึกและประเมินสถิติชั่วโมงการใช้งานของลูกค้าแต่ละท่านโดยอัตโนมัติ สำหรับท่านที่ใช้บริการ <span class="text-emerald-400 font-bold">สะสมครบทุกๆ 1,000 ชั่วโมง</span> ระบบจะทำการ <span class="text-amber-400 font-bold">แถมโบนัสสิทธิ์ให้ท่านเพิ่มฟรีทันทีอีก 100 ชั่วโมง!</span>
+                <p class="text-[10px] font-light text-[var(--text-silver)] leading-relaxed">
+                    Exclusive campaign for professional analysts. Accumulate 1,000 active hours to instantly receive a <span class="text-[var(--accent-gold)] font-medium">100-Hour Bonus Credit</span> automatically applied to your account.
                 </p>
-                <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-xs">
-                    <span class="text-slate-400 text-[10px] uppercase font-semibold">ติดต่อสมัคร/ต่ออายุโปรโมชั่น:</span>
-                    <div class="inline-flex items-center gap-2 bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-lg text-amber-400 font-mono font-bold tracking-wider">
-                        <span>LINE ID : elite2026</span>
-                    </div>
+                <div class="mt-4 pt-4 border-t border-[var(--border-premium)] flex items-center justify-between text-[10px]">
+                    <span class="text-[var(--text-muted)] uppercase tracking-wider">Concierge Service:</span>
+                    <span class="text-[var(--accent-champagne)] font-mono tracking-widest">LINE: elite2026</span>
                 </div>
             </div>
 
-            <div id="gateActiveView">
-                <div class="inline-flex bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 p-3 rounded-2xl shadow-xl shadow-amber-500/10 mb-3">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                    </svg>
+            <div id="gateActiveView" class="space-y-6">
+                <div>
+                    <h1 class="text-sm font-light text-[var(--text-silver)] uppercase tracking-[0.3em] mb-1">Quantum</h1>
+                    <h2 class="text-xl font-bold text-[var(--accent-gold)] uppercase tracking-widest">Analytics</h2>
+                    <div class="w-8 h-px bg-[var(--accent-gold)]/50 mx-auto mt-4"></div>
                 </div>
-                <h1 class="text-lg font-bold text-amber-500 uppercase heading-track">Quantum Analytics Workspace</h1>
-                <div class="mt-5 space-y-4 text-left max-w-sm mx-auto">
+                
+                <div class="space-y-4 text-left">
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase tracking-wider">กรอกรหัสเข้าใช้งาน (License Key)</label>
-                        <input type="text" id="licenseInput" placeholder="QNT-XXXX-24-XXXX-XXXX" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl p-3 text-sm text-center text-slate-200 font-semibold uppercase focus:outline-none focus:border-amber-500 tracking-widest transition-colors shadow-inner">
+                        <label class="block text-[9px] font-medium text-[var(--text-muted)] mb-1.5 uppercase tracking-widest">Enter Authorization Key</label>
+                        <input type="text" id="licenseInput" placeholder="QNT-XXXX-XX-XXXX-XXXX" class="w-full premium-input rounded-lg p-3.5 text-sm text-center font-mono tracking-[0.15em] uppercase">
                     </div>
-                    <div id="loginAlert" class="hidden text-xs font-medium text-rose-400 bg-rose-500/10 border border-rose-500/20 p-2.5 rounded-xl text-center"></div>
-                    <button onclick="validateLicenseKey()" class="w-full cursor-pointer bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg shadow-amber-500/20 transition-all text-sm uppercase active:scale-[0.98]">ตรวจสอบสิทธิ์เข้าใช้งาน</button>
-                    <div class="pt-3 text-center">
-                        <button onclick="showAdminAuthView()" class="text-[9px] text-slate-500 hover:text-amber-500 transition-colors cursor-pointer uppercase tracking-widest font-bold">— ผู้ดูแลระบบ (Admin Console) —</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ADMIN PASSWORD + 2FA SECURITY GATE -->
-            <div id="adminAuthView" class="hidden text-left space-y-4 max-w-sm mx-auto">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
-                    <h2 class="text-sm font-bold text-amber-500 uppercase tracking-wider flex items-center gap-1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                        🔒 Admin Authentication
-                    </h2>
-                    <button onclick="closeAdminAuthView()" class="text-xs text-slate-500 hover:text-rose-400 cursor-pointer font-bold">ย้อนกลับ</button>
-                </div>
-                <div class="space-y-3.5">
-                    <div>
-                        <label class="block text-slate-400 mb-1 font-bold text-[10px] uppercase tracking-wider">รหัสผ่านผู้ดูแลระบบ (Admin Password)</label>
-                        <input type="password" id="adminPasswordInput" placeholder="••••••••" class="w-full bg-[#020617] border border-slate-800 rounded-xl p-2.5 text-center text-sm font-bold tracking-widest text-slate-200 focus:outline-none focus:border-amber-500 shadow-inner">
-                    </div>
-                    <div>
-                        <label class="block text-slate-400 mb-1 font-bold text-[10px] uppercase tracking-wider">รหัสลับยืนยันความปลอดภัย (2-Factor Key)</label>
-                        <input type="text" id="admin2FAInput" placeholder="กรอกรหัสลับ 6 หลัก" class="w-full bg-[#020617] border border-slate-800 rounded-xl p-2.5 text-center text-sm font-bold tracking-widest text-slate-200 focus:outline-none focus:border-amber-500 shadow-inner">
-                    </div>
-                    <div id="adminAuthAlert" class="hidden text-xs font-medium text-rose-400 bg-rose-500/10 border border-rose-500/20 p-2.5 rounded-xl text-center"></div>
-                    <button onclick="submitAdminPassword()" class="w-full cursor-pointer bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-lg shadow-amber-500/20 text-xs uppercase tracking-wider active:scale-[0.98]">ยืนยันการเข้าระบบ</button>
-                </div>
-            </div>
-
-            <!-- ENHANCED ADMIN GENERATOR & PRIVILEGE WORKSPACE -->
-            <div id="adminActiveView" class="hidden text-left space-y-5">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
-                    <h2 class="text-sm font-bold text-amber-500 uppercase tracking-wider flex items-center gap-1.5">
-                        ⚙️ Admin Enterprise Panel
-                    </h2>
-                    <button onclick="closeAdminConsole()" class="bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 px-3 py-1.5 rounded-xl transition-all cursor-pointer font-bold shadow-md">
-                        ⬅️ กลับหน้าแรก (Home)
+                    <div id="loginAlert" class="hidden text-[10px] font-medium text-rose-400 bg-rose-500/10 border border-rose-500/20 p-3 rounded-lg text-center tracking-wider"></div>
+                    <button onclick="validateLicenseKey()" class="w-full cursor-pointer bg-[var(--accent-gold)] hover:bg-[var(--accent-champagne)] text-black font-bold py-3.5 rounded-lg transition-all text-[11px] uppercase tracking-[0.2em] shadow-[0_4px_14px_rgba(212,175,55,0.2)] active:scale-[0.98]">
+                        Authenticate
                     </button>
+                    <div class="pt-4 text-center">
+                        <button onclick="showAdminAuthView()" class="text-[9px] text-[var(--text-muted)] hover:text-[var(--text-pure)] transition-colors cursor-pointer uppercase tracking-[0.2em]">System Administrator</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADMIN AUTH GATE -->
+            <div id="adminAuthView" class="hidden text-left space-y-5">
+                <div class="flex items-center justify-between border-b border-[var(--border-premium)] pb-3">
+                    <h2 class="text-xs font-bold text-[var(--text-pure)] uppercase tracking-[0.15em] flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Terminal Access
+                    </h2>
+                    <button onclick="closeAdminAuthView()" class="text-[9px] text-[var(--text-muted)] hover:text-[var(--text-pure)] cursor-pointer uppercase tracking-widest transition-colors">Return</button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-[var(--text-muted)] mb-1.5 text-[9px] uppercase tracking-widest">Master Password</label>
+                        <input type="password" id="adminPasswordInput" placeholder="••••••••" class="w-full premium-input rounded-lg p-3 text-center text-sm font-mono tracking-widest">
+                    </div>
+                    <div>
+                        <label class="block text-[var(--text-muted)] mb-1.5 text-[9px] uppercase tracking-widest">2FA Security Token</label>
+                        <input type="text" id="admin2FAInput" placeholder="000000" class="w-full premium-input rounded-lg p-3 text-center text-sm font-mono tracking-widest">
+                    </div>
+                    <div id="adminAuthAlert" class="hidden text-[10px] text-rose-400 bg-rose-500/10 border border-rose-500/20 p-3 rounded-lg text-center tracking-wider"></div>
+                    <button onclick="submitAdminPassword()" class="w-full cursor-pointer bg-[var(--text-pure)] hover:bg-gray-200 text-black font-bold py-3.5 rounded-lg transition-all text-[11px] uppercase tracking-[0.2em] active:scale-[0.98]">Authorize</button>
+                </div>
+            </div>
+
+            <!-- ENHANCED ADMIN PANEL -->
+            <div id="adminActiveView" class="hidden text-left space-y-6">
+                <div class="flex items-center justify-between border-b border-[var(--border-premium)] pb-3">
+                    <h2 class="text-xs font-bold text-[var(--accent-gold)] uppercase tracking-[0.15em]">Admin Enterprise Portal</h2>
+                    <button onclick="closeAdminConsole()" class="text-[9px] text-[var(--text-silver)] border border-[var(--border-premium)] hover:bg-[#121212] px-3 py-1.5 rounded transition-colors cursor-pointer uppercase tracking-widest">Close Portal</button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-                    <div class="md:col-span-5 space-y-4">
-                        <div class="bg-slate-950/60 p-4 border border-slate-850 rounded-2xl space-y-3 shadow-inner">
-                            <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">🔑 ออกสิทธิ์ใช้งานใหม่</h3>
-                            <div class="space-y-2.5 text-xs">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <div class="md:col-span-5 space-y-5">
+                        <div class="bg-[#121212] p-5 border border-[var(--border-premium)] rounded-xl space-y-4">
+                            <h3 class="text-[10px] font-bold text-[var(--text-pure)] uppercase tracking-[0.15em] border-b border-[#262626] pb-2">Generate License</h3>
+                            <div class="space-y-3">
                                 <div>
-                                    <label class="block text-slate-400 mb-1 text-[10px] uppercase">ชื่อลูกค้า (ภาษาอังกฤษ/ตัวเลข)</label>
-                                    <input type="text" id="adminCustName" placeholder="เช่น CLIENT01" class="w-full bg-[#020617] border border-slate-800 rounded-xl p-2.5 font-bold uppercase text-slate-200 focus:outline-none focus:border-amber-500 shadow-inner">
+                                    <label class="block text-[var(--text-muted)] mb-1 text-[9px] uppercase tracking-wider">Client Identifier</label>
+                                    <input type="text" id="adminCustName" placeholder="e.g. VIP01" class="w-full premium-input rounded-md p-2.5 font-mono uppercase text-xs">
                                 </div>
                                 <div>
-                                    <label class="block text-slate-400 mb-1 text-[10px] uppercase">เลือกแพ็กเกจ (ชั่วโมงทำงาน & อายุคีย์)</label>
-                                    <select id="adminPackage" class="w-full bg-[#020617] border border-slate-800 rounded-xl p-2.5 font-bold text-amber-500 focus:outline-none focus:border-amber-500 cursor-pointer shadow-inner">
-                                        <option value="24" data-expiry="3">24 ชั่วโมง (อายุคีย์ 72 ชม. / 3 วัน)</option>
-                                        <option value="168" data-expiry="14">7 วัน (อายุคีย์ 14 วัน)</option>
-                                        <option value="336" data-expiry="25">14 วัน (อายุคีย์ 25 วัน)</option>
-                                        <option value="720" data-expiry="45">30 วัน (อายุคีย์ 45 วัน)</option>
+                                    <label class="block text-[var(--text-muted)] mb-1 text-[9px] uppercase tracking-wider">Service Tier (Hours / Expiry)</label>
+                                    <select id="adminPackage" class="w-full premium-input rounded-md p-2.5 font-mono text-[11px] cursor-pointer text-[var(--accent-champagne)]">
+                                        <option value="24" data-expiry="3">24 Hours (72H Expiry)</option>
+                                        <option value="168" data-expiry="14">7 Days (14D Expiry)</option>
+                                        <option value="336" data-expiry="25">14 Days (25D Expiry)</option>
+                                        <option value="720" data-expiry="45">30 Days (45D Expiry)</option>
                                     </select>
                                 </div>
-                                <button onclick="generateLicenseKey()" class="w-full cursor-pointer bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl transition-all text-xs uppercase mt-2 shadow-lg shadow-amber-500/20 active:scale-[0.98]">สร้างรหัสสิทธิ์</button>
+                                <button onclick="generateLicenseKey()" class="w-full cursor-pointer bg-[var(--accent-gold)] text-black font-bold py-2.5 rounded-md transition-all text-[10px] uppercase tracking-widest mt-2 active:scale-[0.98]">Issue Key</button>
                             </div>
                             
-                            <div id="keyOutputContainer" class="hidden bg-[#020617] border border-slate-800 rounded-xl p-2.5 space-y-2 text-xs shadow-inner">
-                                <div class="flex items-center justify-between bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
-                                    <span id="generatedKey" class="font-mono font-bold text-amber-400 text-[10px] tracking-wider select-all"></span>
-                                    <button onclick="copyGeneratedKey()" class="text-[10px] text-slate-400 hover:text-white underline cursor-pointer">คัดลอก</button>
+                            <div id="keyOutputContainer" class="hidden bg-[#0A0A0A] border border-[#262626] rounded-lg p-3 space-y-3 mt-4">
+                                <div class="flex items-center justify-between bg-[#181818] px-3 py-2 rounded border border-[#333]">
+                                    <span id="generatedKey" class="font-mono text-[var(--accent-gold)] text-[10px] tracking-widest select-all"></span>
+                                    <button onclick="copyGeneratedKey()" class="text-[9px] text-[var(--text-muted)] hover:text-white uppercase tracking-wider cursor-pointer">Copy</button>
                                 </div>
-                                <button onclick="copyPromotionMessage()" class="w-full bg-slate-900 border border-slate-800 text-[10px] text-slate-300 py-1.5 rounded-lg font-medium cursor-pointer hover:bg-slate-800">📋 คัดลอกเซ็ตข้อความสำหรับแชร์</button>
+                                <button onclick="copyPromotionMessage()" class="w-full bg-transparent border border-[var(--text-silver)] text-[var(--text-silver)] hover:bg-[var(--text-pure)] hover:text-black py-2 rounded text-[9px] uppercase tracking-widest transition-colors cursor-pointer">Copy Handover Template</button>
                             </div>
                         </div>
 
-                        <div class="bg-slate-950/60 p-4 border border-slate-850 rounded-2xl space-y-3 shadow-inner">
-                            <h3 class="text-xs font-bold text-rose-400 uppercase tracking-wider">🛡️ รีเซ็ตรหัสผ่านผู้ดูแลระบบ</h3>
-                            <div class="space-y-2.5 text-xs">
+                        <div class="bg-[#121212] p-5 border border-[var(--border-premium)] rounded-xl space-y-4">
+                            <h3 class="text-[10px] font-bold text-rose-500 uppercase tracking-[0.15em] border-b border-[#262626] pb-2">Security Override</h3>
+                            <div class="space-y-3">
                                 <div>
-                                    <label class="block text-slate-400 mb-1 text-[10px]">รหัสผ่านใหม่ที่ต้องการตั้ง</label>
-                                    <input type="password" id="adminNewPassword" placeholder="กรอกรหัสแอดมินตัวใหม่" class="w-full bg-[#020617] border border-slate-800 rounded-xl p-2 text-slate-200 focus:outline-none focus:border-rose-500 shadow-inner">
+                                    <label class="block text-[var(--text-muted)] mb-1 text-[9px] uppercase tracking-wider">New Master Password</label>
+                                    <input type="password" id="adminNewPassword" placeholder="Enter new key" class="w-full premium-input rounded-md p-2.5 text-xs">
                                 </div>
-                                <button onclick="resetAdminPassword()" class="w-full cursor-pointer bg-rose-600 hover:bg-rose-500 text-white font-bold py-2.5 rounded-xl transition-all text-xs uppercase shadow-lg shadow-rose-500/20 active:scale-[0.98]">อัปเดตรหัสผ่านใหม่</button>
+                                <button onclick="resetAdminPassword()" class="w-full cursor-pointer bg-transparent border border-rose-500/50 text-rose-500 hover:bg-rose-500 hover:text-white font-bold py-2.5 rounded-md transition-all text-[10px] uppercase tracking-widest">Update Security</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="md:col-span-7 space-y-4">
-                        <div class="bg-slate-950/60 p-4 border border-slate-850 rounded-2xl space-y-3 shadow-inner">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2">
-                                <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
-                                    📋 ประวัติออกคีย์ย้อนหลัง 30 วัน
-                                </h3>
-                                <div class="flex items-center gap-1.5 text-xs">
-                                    <span class="text-slate-500 text-[10px] uppercase">กรองวันที่:</span>
-                                    <input type="date" id="adminHistoryCalendar" onchange="renderHistoryTable()" class="bg-[#020617] border border-slate-800 rounded-lg p-1 text-slate-300 text-xs focus:outline-none focus:border-amber-500 cursor-pointer shadow-inner">
+                        <div class="bg-[#121212] p-5 border border-[var(--border-premium)] rounded-xl h-full flex flex-col">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#262626] pb-3 mb-3">
+                                <h3 class="text-[10px] font-bold text-[var(--text-pure)] uppercase tracking-[0.15em]">Terminal Logs</h3>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[var(--text-muted)] text-[9px] uppercase tracking-widest">Filter:</span>
+                                    <input type="date" id="adminHistoryCalendar" onchange="renderHistoryTable()" class="premium-input rounded p-1.5 text-[10px] font-mono cursor-pointer">
                                 </div>
                             </div>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left text-[11px] text-slate-300 min-w-[360px]">
+                            <div class="overflow-x-auto flex-1 custom-scrollbar">
+                                <table class="w-full text-left text-[10px] text-[var(--text-silver)] min-w-[400px]">
                                     <thead>
-                                        <tr class="border-b border-slate-800 text-slate-500 uppercase tracking-wider text-[10px]">
-                                            <th class="py-2 px-1">วันที่ออกคีย์</th>
-                                            <th class="py-2 px-1">ชื่อลูกค้า (ชั่วโมงสะสม)</th>
-                                            <th class="py-2 px-1">คีย์ / เวลาที่เหลือ</th>
-                                            <th class="py-2 px-1 text-center">สิทธิ์การใช้งาน</th>
+                                        <tr class="border-b border-[#262626] text-[var(--text-muted)] uppercase tracking-wider">
+                                            <th class="py-2.5 px-2 font-normal">Timestamp</th>
+                                            <th class="py-2.5 px-2 font-normal">Client (Total Hrs)</th>
+                                            <th class="py-2.5 px-2 font-normal">Key / Allocation</th>
+                                            <th class="py-2.5 px-2 text-right font-normal">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="historyTableBody">
-                                        <!-- ข้อมูลถูกแทรกด้วย JavaScript -->
+                                    <tbody id="historyTableBody" class="font-mono divide-y divide-[#262626]">
+                                        <!-- Data injected via JS -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MAIN APP WORKSPACE -->
-    <div id="mainWorkspace" class="hidden flex-1 flex flex-col justify-between">
-        <header class="border-b border-[var(--border-color)] bg-[var(--bg-card-from)]/90 backdrop-blur-md sticky top-0 z-50 transition-colors shadow-sm">
-            <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 p-2 rounded-xl shadow-lg shadow-amber-500/20">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
+    <!-- MAIN EXECUTIVE WORKSPACE -->
+    <div id="mainWorkspace" class="hidden flex-1 flex flex-col">
+        <!-- Luxury Navbar -->
+        <header class="border-b border-[var(--border-premium)] bg-[var(--bg-deep-black)]/90 backdrop-blur-xl sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-8 h-8 rounded bg-[var(--bg-graphite)] border border-[var(--accent-gold)]/30 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
                     <div>
-                        <span class="font-bold text-sm tracking-wider text-amber-500 uppercase heading-track block">Quantum Analytics</span>
-                        <span class="text-[10px] font-medium block text-[var(--text-muted)] -mt-0.5 tracking-wider">CLOSED-LOOP DUAL ENGINE</span>
+                        <span class="font-light text-xs tracking-[0.3em] text-[var(--text-silver)] uppercase block mb-0.5">Quantum</span>
+                        <span class="text-[11px] font-bold text-[var(--accent-gold)] uppercase tracking-[0.2em] block leading-none">Analytics Terminal</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button id="soundToggle" onclick="toggleSound()" class="flex items-center gap-1.5 bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1.5 rounded-xl border border-slate-700 transition-all text-xs font-medium cursor-pointer shadow-sm">
-                        <span id="soundDot" class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_5px_rgba(52,211,153,0.5)]"></span>
-                        <span id="soundText" class="hidden sm:inline">ปิดเสียง</span>
+                <div class="flex items-center gap-3">
+                    <button id="soundToggle" onclick="toggleSound()" class="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-pure)] px-3 py-1.5 transition-all text-[10px] uppercase tracking-widest cursor-pointer">
+                        <span id="soundDot" class="w-1.5 h-1.5 rounded-full bg-[var(--status-success)]"></span>
+                        <span id="soundText" class="hidden sm:inline">Audio On</span>
                     </button>
-                    <button onclick="toggleTheme()" class="bg-slate-800 text-slate-300 hover:bg-slate-700 p-2 rounded-xl border border-slate-700 cursor-pointer transition-all shadow-sm">
-                        <svg id="themeSun" class="w-4 h-4 text-amber-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
-                        <svg id="themeMoon" class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
-                    
-                    <button onclick="logoutSession()" class="flex items-center gap-1 bg-rose-600 hover:bg-rose-500 px-3 py-1.5 rounded-xl border border-rose-500 shadow-lg shadow-rose-500/20 text-xs font-bold text-white cursor-pointer transition-all active:scale-95" title="ออกจากระบบเพื่อหยุดเวลา">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                        <span class="hidden sm:inline">ออกจากระบบ (Pause)</span>
+                    <div class="w-px h-4 bg-[var(--border-premium)]"></div>
+                    <button onclick="logoutSession()" class="flex items-center gap-1.5 text-[var(--text-silver)] hover:text-[var(--text-pure)] px-3 py-1.5 transition-all text-[10px] uppercase tracking-widest cursor-pointer">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        <span class="hidden sm:inline">Terminate Session</span>
                     </button>
                 </div>
             </div>
         </header>
 
-        <main class="max-w-5xl mx-auto w-full px-4 py-5 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 animate-fade-in">
-            <section class="lg:col-span-5 space-y-5">
+        <main class="max-w-6xl mx-auto w-full px-5 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 animate-fade-in">
+            <!-- LEFT COLUMN: CONTROLS -->
+            <section class="lg:col-span-5 flex flex-col gap-6">
                 
-                <div class="custom-card rounded-2xl p-4.5 bg-gradient-to-r from-amber-500/10 to-transparent border-l-4 border-l-amber-500 flex items-center justify-between">
+                <!-- Client Info Card -->
+                <div class="premium-card p-5 border-l-2 border-l-[var(--accent-gold)] flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] text-amber-500 font-bold uppercase tracking-wider heading-track block">ผู้ใช้งานความลับระบบ</span>
-                        <span id="greetUserName" class="text-base font-bold text-[var(--text-main)]">คุณ GUEST</span>
+                        <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.2em] block mb-1">Authorized Profile</span>
+                        <span id="greetUserName" class="text-xs font-medium text-[var(--text-pure)] tracking-wider uppercase">GUEST</span>
                     </div>
                     <div class="text-right">
-                        <span class="text-[9px] text-[var(--text-muted)] font-bold block uppercase tracking-wider">เวลาสิทธิ์คงเหลือ</span>
-                        <span id="timeLeftDisplay" class="text-xs font-bold text-emerald-500 dark:text-emerald-400 num-track bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">--:--:--</span>
+                        <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.2em] block mb-1">Session Remaining</span>
+                        <span id="timeLeftDisplay" class="text-sm font-light text-[var(--text-pure)] num-track tracking-wider">--:--:--</span>
                     </div>
                 </div>
 
-                <div class="custom-card rounded-2xl p-4.5 relative overflow-hidden">
-                    <h2 class="text-[11px] font-bold text-amber-500 uppercase tracking-widest mb-3 flex items-center gap-1.5 heading-track">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
-                        ระบบประมวลผลกลยุทธ์
+                <!-- Engine Selection -->
+                <div class="premium-card p-5">
+                    <h2 class="text-[10px] font-bold text-[var(--accent-gold)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                        Strategy Algorithm
                     </h2>
-                    <!-- แก้ไข UI ให้คมชัดขึ้น -->
                     <div class="relative">
-                        <select id="strategySelect" onchange="changeStrategy()" class="w-full bg-white dark:bg-[#020617] border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors cursor-pointer shadow-sm appearance-none pr-8">
-                            <option value="strat1">Alpha Engine (ตามกระแสสั้น + ตัดมังกรยาว)</option>
-                            <option value="strat2">Beta Engine (เกาะกระแสมังกรไหลต่อเนื่อง)</option>
+                        <select id="strategySelect" onchange="changeStrategy()" class="w-full premium-input rounded-lg p-3.5 text-[11px] font-medium text-[var(--text-pure)] tracking-wider appearance-none cursor-pointer">
+                            <option value="strat1">ALPHA [Reversal & Short Trend Analysis]</option>
+                            <option value="strat2">BETA [Continuous Trend Following]</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[var(--accent-gold)]">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
                         </div>
                     </div>
                 </div>
 
-                <div class="custom-card rounded-2xl p-4.5 space-y-3.5">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-[11px] font-bold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 heading-track">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                            บันทึกผลการออกหน้างาน
-                        </h2>
+                <!-- Input Console -->
+                <div class="premium-card p-5 flex-1 flex flex-col">
+                    <div class="flex justify-between items-center mb-5 border-b border-[var(--border-premium)] pb-3">
+                        <h2 class="text-[10px] font-bold text-[var(--text-pure)] uppercase tracking-[0.15em]">Data Entry Terminal</h2>
                     </div>
-                    <!-- แก้ไข UI ปุ่มหลักให้โดดเด่นแบบ High Contrast -->
-                    <div class="grid grid-cols-3 gap-2.5">
-                        <button onclick="recordHand('P')" class="cursor-pointer relative overflow-hidden group bg-blue-600 hover:bg-blue-500 border border-blue-500 shadow-lg shadow-blue-500/30 text-white font-bold py-3.5 rounded-xl active:scale-[0.97] transition-all flex flex-col items-center ring-1 ring-blue-400/50">
-                            <span class="text-sm tracking-wider">PLAYER</span><span class="text-[9px] font-medium opacity-90">(น้ำเงิน)</span>
+                    
+                    <!-- High-End Minimalist Buttons -->
+                    <div class="grid grid-cols-3 gap-3 mb-4">
+                        <button onclick="recordHand('P')" class="group relative overflow-hidden bg-[var(--bg-charcoal)] border border-[var(--border-premium)] hover:border-[var(--bac-player)] py-4 rounded-xl transition-all active:scale-95 flex flex-col items-center justify-center gap-1">
+                            <div class="absolute inset-0 bg-gradient-to-b from-[var(--bac-player)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <span class="text-sm font-bold text-[var(--text-pure)] tracking-widest relative z-10">PLAYER</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-[var(--bac-player)] relative z-10"></div>
                         </button>
-                        <button onclick="recordHand('T')" class="cursor-pointer relative overflow-hidden group bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 shadow-lg shadow-emerald-500/30 text-white font-bold py-3.5 rounded-xl active:scale-[0.97] transition-all flex flex-col items-center ring-1 ring-emerald-400/50">
-                            <span class="text-sm tracking-wider">TIE</span><span class="text-[9px] font-medium opacity-90">(เสมอ)</span>
+                        <button onclick="recordHand('T')" class="group relative overflow-hidden bg-[var(--bg-charcoal)] border border-[var(--border-premium)] hover:border-[var(--bac-tie)] py-4 rounded-xl transition-all active:scale-95 flex flex-col items-center justify-center gap-1">
+                            <div class="absolute inset-0 bg-gradient-to-b from-[var(--bac-tie)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <span class="text-sm font-bold text-[var(--text-pure)] tracking-widest relative z-10">TIE</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-[var(--bac-tie)] relative z-10"></div>
                         </button>
-                        <button onclick="recordHand('B')" class="cursor-pointer relative overflow-hidden group bg-rose-600 hover:bg-rose-500 border border-rose-500 shadow-lg shadow-rose-500/30 text-white font-bold py-3.5 rounded-xl active:scale-[0.97] transition-all flex flex-col items-center ring-1 ring-rose-400/50">
-                            <span class="text-sm tracking-wider">BANKER</span><span class="text-[9px] font-medium opacity-90">(แดง)</span>
+                        <button onclick="recordHand('B')" class="group relative overflow-hidden bg-[var(--bg-charcoal)] border border-[var(--border-premium)] hover:border-[var(--bac-banker)] py-4 rounded-xl transition-all active:scale-95 flex flex-col items-center justify-center gap-1">
+                            <div class="absolute inset-0 bg-gradient-to-b from-[var(--bac-banker)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <span class="text-sm font-bold text-[var(--text-pure)] tracking-widest relative z-10">BANKER</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-[var(--bac-banker)] relative z-10"></div>
                         </button>
                     </div>
-                    <!-- แก้ไขปุ่มล่างให้เห็นชัดกว่าเดิม -->
-                    <div class="grid grid-cols-2 gap-2.5 pt-1">
-                        <button onclick="popLastRecord()" class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-xl border border-slate-600 shadow-md text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95">
-                            ย้อนกลับ (Undo)
-                        </button>
-                        <button onclick="resetSystem()" class="cursor-pointer bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 font-bold py-3 rounded-xl border border-rose-500/50 shadow-md text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95">
-                            ล้างกระดาน (Reset)
-                        </button>
+
+                    <!-- Action Secondary Buttons -->
+                    <div class="grid grid-cols-2 gap-3 mt-auto">
+                        <button onclick="popLastRecord()" class="bg-transparent border border-[var(--border-premium)] text-[var(--text-silver)] hover:text-white hover:bg-[var(--bg-charcoal)] py-2.5 rounded-lg text-[10px] uppercase tracking-[0.2em] transition-all">Revert</button>
+                        <button onclick="resetSystem()" class="bg-transparent border border-[var(--status-danger)]/30 text-[var(--status-danger)] hover:bg-[var(--status-danger)] hover:text-white py-2.5 rounded-lg text-[10px] uppercase tracking-[0.2em] transition-all">Clear Data</button>
                     </div>
                 </div>
 
-                <div class="custom-inner rounded-xl p-3.5 grid grid-cols-2 gap-2 text-center shadow-inner">
-                    <div>
-                        <span class="text-[9px] font-bold text-[var(--text-muted)] block uppercase tracking-wider">อัตราชนะของสูตร</span>
-                        <span id="winRateDisplay" class="num-font text-xl font-bold text-amber-500 num-track drop-shadow-sm">0.0%</span>
+                <!-- Key Metrics -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="premium-inner p-4 text-center">
+                        <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.2em] block mb-1">Win Probability</span>
+                        <span id="winRateDisplay" class="text-xl font-light text-[var(--accent-champagne)] num-track tracking-wider">0.0%</span>
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold text-[var(--text-muted)] block uppercase tracking-wider">เสียติดต่อกันสูงสุด</span>
-                        <span id="maxLossStreakDisplay" class="num-font text-xl font-bold text-rose-500 num-track drop-shadow-sm">0</span>
+                    <div class="premium-inner p-4 text-center">
+                        <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.2em] block mb-1">Max Drawdown</span>
+                        <span id="maxLossStreakDisplay" class="text-xl font-light text-[var(--status-danger)] num-track tracking-wider">0</span>
                     </div>
                 </div>
             </section>
 
-            <!-- RIGHT ANALYTICS MONITOR -->
-            <section class="lg:col-span-7 flex flex-col justify-between space-y-5">
-                <div class="custom-card rounded-2xl p-4.5 flex flex-col justify-between min-h-[170px] relative overflow-hidden">
-                    <div class="flex justify-between items-center border-b border-[var(--border-color)] pb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400" id="enginePulse"></span>
-                            <span class="text-xs text-[var(--text-muted)] font-bold tracking-wide" id="engineStatus">รอตรวจจับรูปแบบไพ่</span>
+            <!-- RIGHT COLUMN: ANALYTICS -->
+            <section class="lg:col-span-7 flex flex-col gap-6">
+                
+                <!-- Main Target Monitor -->
+                <div class="premium-card p-6 flex flex-col justify-between min-h-[190px]">
+                    <div class="flex justify-between items-center border-b border-[var(--border-premium)] pb-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-[var(--text-muted)]" id="enginePulse"></span>
+                            <span class="text-[10px] text-[var(--text-silver)] uppercase tracking-[0.15em]" id="engineStatus">Awaiting Data</span>
                         </div>
-                        <span id="stepBadge" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-[var(--text-muted)] text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase num-font tracking-widest shadow-sm">Idle</span>
+                        <span id="stepBadge" class="bg-[var(--bg-charcoal)] border border-[var(--border-premium)] text-[var(--text-muted)] text-[9px] px-3 py-1 rounded font-mono uppercase tracking-widest">Idle</span>
                     </div>
-                    <div id="emptyEngineState" class="text-center py-4 flex flex-col items-center justify-center my-auto opacity-70">
-                        <h3 class="text-xs font-bold text-[var(--text-main)]">ระบบสแตนด์บายตรวจจับสัญญาณ</h3>
+
+                    <div id="emptyEngineState" class="text-center flex-1 flex flex-col items-center justify-center opacity-40">
+                        <h3 class="text-[10px] uppercase tracking-[0.2em] text-[var(--text-silver)] font-light">System Standby</h3>
                     </div>
-                    <div id="activeEnginePanel" class="hidden text-center py-2 my-auto animate-fade-in">
-                        <span class="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest block heading-track">เป้าหมายที่ต้องเดิมพันในตาถัดไป</span>
-                        <div id="predictionTarget" class="text-4xl font-extrabold my-1 tracking-wider uppercase drop-shadow-md">-</div>
-                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--bg-inner)] border border-[var(--border-color)] shadow-inner">
-                            <span id="fiboValue" class="text-[11px] text-emerald-500 font-bold tracking-wide">รอบสู้ตาถัดไป</span>
+
+                    <div id="activeEnginePanel" class="hidden text-center flex-1 flex flex-col items-center justify-center animate-fade-in">
+                        <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.3em] block mb-2">Target Variable</span>
+                        <div id="predictionTarget" class="text-5xl font-light tracking-[0.1em] uppercase mb-3 text-[var(--text-pure)]">-</div>
+                        <div class="inline-flex items-center px-4 py-1.5 rounded bg-[var(--bg-charcoal)] border border-[var(--border-premium)]">
+                            <span id="fiboValue" class="text-[10px] text-[var(--accent-champagne)] font-mono tracking-widest">Multiplier Sequence</span>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center bg-[var(--bg-inner)] px-3 py-1.5 rounded-xl border border-[var(--border-color)] shadow-inner">
-                        <span class="text-[10px] font-bold text-[var(--text-muted)] tracking-wider">ชุดข้อมูลตรวจจับรูปแบบ</span>
-                        <div class="flex gap-1.5" id="dataStreamDots"></div>
+
+                    <div class="flex justify-between items-center pt-3 mt-2 border-t border-[var(--border-premium)]">
+                        <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.2em]">Pattern Match Stream</span>
+                        <div class="flex gap-2" id="dataStreamDots"></div>
                     </div>
                 </div>
 
-                <div class="custom-card rounded-2xl p-4">
-                    <div id="beadBoard" class="grid grid-flow-col auto-cols-max grid-rows-6 gap-1.5 bg-[var(--bg-inner)] p-2.5 rounded-xl border border-[var(--border-color)] overflow-x-auto min-h-[92px] shadow-inner custom-scrollbar"></div>
+                <!-- Bead Road Map -->
+                <div class="premium-card p-5">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.2em]">Historical Roadmap</h3>
+                    </div>
+                    <div id="beadBoard" class="grid grid-flow-col auto-cols-max grid-rows-6 gap-1 bg-[#121212] p-3 rounded-lg border border-[var(--border-premium)] overflow-x-auto min-h-[110px] custom-scrollbar"></div>
                 </div>
 
-                <div class="custom-card rounded-2xl p-4.5 space-y-1.5">
+                <!-- Trend Chart -->
+                <div class="premium-card p-5">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.2em]">Performance Trajectory</h3>
+                    </div>
                     <canvas id="trendCanvas" class="w-full h-[120px] block"></canvas>
                 </div>
 
-                <!-- ตารางบันทึกการเล่นแต่ละรอบ (Cycle History Table) แทรกไว้ตรงนี้ -->
-                <div class="custom-card rounded-2xl p-4.5 space-y-3">
-                    <div class="flex justify-between items-center border-b border-[var(--border-color)] pb-2">
-                        <h3 class="text-[10px] font-bold text-amber-500 uppercase tracking-widest heading-track flex items-center gap-1">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            บันทึกผลการเดินเงิน (Cycle History)
-                        </h3>
-                        <span class="text-[9px] text-[var(--text-muted)] font-bold bg-[var(--bg-inner)] px-2 py-0.5 rounded-md border border-[var(--border-color)]">แสดงผลแบบ Real-time</span>
+                <!-- Two-Column Bottom Section (History & Distribution) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Cycle History -->
+                    <div class="premium-card p-5 flex flex-col max-h-[250px]">
+                        <div class="flex justify-between items-center border-b border-[var(--border-premium)] pb-3 mb-3">
+                            <h3 class="text-[9px] text-[var(--accent-gold)] uppercase tracking-[0.2em]">Cycle History</h3>
+                            <span class="text-[8px] text-[var(--text-muted)] uppercase tracking-widest border border-[var(--border-premium)] px-1.5 py-0.5 rounded">Live</span>
+                        </div>
+                        <div class="overflow-y-auto flex-1 custom-scrollbar pr-2">
+                            <table class="w-full text-left text-[10px]">
+                                <tbody id="cycleHistoryBody" class="space-y-1.5 font-mono">
+                                    <tr><td class="text-center py-6 text-[var(--text-muted)] font-light tracking-widest uppercase text-[9px]">No Closed Cycles</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="overflow-x-auto max-h-[160px] overflow-y-auto pr-1 custom-scrollbar">
-                        <table class="w-full text-left text-[11px] text-[var(--text-main)] min-w-[280px]">
-                            <tbody id="cycleHistoryBody" class="space-y-1">
-                                <tr><td class="text-center py-4 text-[var(--text-muted)] opacity-60 font-medium">ยังไม่มีข้อมูลการปิดรอบสูตร</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
-                <div class="custom-card rounded-2xl p-4.5 space-y-3">
-                    <div class="flex justify-between items-center border-b border-[var(--border-color)] pb-2">
-                        <h3 class="text-[10px] font-bold text-amber-500 uppercase tracking-widest heading-track">สถิติสัดส่วนความสำเร็จแยกไม้</h3>
-                        <span class="text-[10px] text-[var(--text-muted)] font-medium">สแกนรวม: <span id="totalCyclesDisplay" class="text-[var(--text-main)] font-bold">0</span> รอบ</span>
+                    <!-- Step Distribution -->
+                    <div class="premium-card p-5 flex flex-col">
+                        <div class="flex justify-between items-center border-b border-[var(--border-premium)] pb-3 mb-4">
+                            <h3 class="text-[9px] text-[var(--text-pure)] uppercase tracking-[0.2em]">Distribution Analysis</h3>
+                            <span class="text-[9px] text-[var(--text-muted)] tracking-wider">Total: <span id="totalCyclesDisplay" class="text-[var(--accent-champagne)] font-medium">0</span></span>
+                        </div>
+                        <div class="space-y-3 flex-1 text-[10px] font-mono">
+                            <!-- Steps 1-6 -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[var(--text-silver)]"><span>Step 1</span><span id="step1Percent" class="text-[var(--text-pure)]">0.0%</span></div>
+                                <div class="w-full bg-[#121212] h-1 rounded overflow-hidden"><div id="step1Bar" class="bg-[var(--text-pure)] h-full" style="width: 0%"></div></div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[var(--text-silver)]"><span>Step 2</span><span id="step2Percent" class="text-[var(--text-pure)]">0.0%</span></div>
+                                <div class="w-full bg-[#121212] h-1 rounded overflow-hidden"><div id="step2Bar" class="bg-[var(--text-pure)] h-full opacity-90" style="width: 0%"></div></div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[var(--text-silver)]"><span>Step 3</span><span id="step3Percent" class="text-[var(--text-pure)]">0.0%</span></div>
+                                <div class="w-full bg-[#121212] h-1 rounded overflow-hidden"><div id="step3Bar" class="bg-[var(--text-pure)] h-full opacity-80" style="width: 0%"></div></div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[var(--text-silver)]"><span>Step 4</span><span id="step4Percent" class="text-[var(--text-pure)]">0.0%</span></div>
+                                <div class="w-full bg-[#121212] h-1 rounded overflow-hidden"><div id="step4Bar" class="bg-[var(--text-pure)] h-full opacity-70" style="width: 0%"></div></div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[var(--text-silver)]"><span>Step 5</span><span id="step5Percent" class="text-[var(--text-pure)]">0.0%</span></div>
+                                <div class="w-full bg-[#121212] h-1 rounded overflow-hidden"><div id="step5Bar" class="bg-[var(--text-pure)] h-full opacity-60" style="width: 0%"></div></div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[var(--text-silver)]"><span>Step 6</span><span id="step6Percent" class="text-[var(--text-pure)]">0.0%</span></div>
+                                <div class="w-full bg-[#121212] h-1 rounded overflow-hidden"><div id="step6Bar" class="bg-[var(--text-pure)] h-full opacity-50" style="width: 0%"></div></div>
+                            </div>
+                            <!-- Stop Loss -->
+                            <div class="space-y-1 pt-2 border-t border-[var(--border-premium)]">
+                                <div class="flex justify-between text-[var(--status-danger)]"><span>Drawdown (Loss)</span><span id="stopLossPercent">0.0%</span></div>
+                                <div class="w-full bg-[#121212] h-1 rounded overflow-hidden"><div id="stopLossBar" class="bg-[var(--status-danger)] h-full" style="width: 0%"></div></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2.5 text-xs">
-                        <div class="space-y-1">
-                            <div class="flex justify-between text-[11px] font-medium"><span>ชนะไม้ 1</span><span class="num-font font-bold text-emerald-500" id="step1Percent">0.0%</span></div>
-                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)] shadow-inner"><div id="step1Bar" class="bg-emerald-500 h-full transition-all" style="width: 0%"></div></div>
-                        </div>
-                        <div class="space-y-1">
-                            <div class="flex justify-between text-[11px] font-medium"><span>ชนะไม้ 2</span><span class="num-font font-bold text-teal-500" id="step2Percent">0.0%</span></div>
-                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)] shadow-inner"><div id="step2Bar" class="bg-teal-500 h-full transition-all" style="width: 0%"></div></div>
-                        </div>
-                        <div class="space-y-1">
-                            <div class="flex justify-between text-[11px] font-medium"><span>ชนะไม้ 3</span><span class="num-font font-bold text-cyan-500" id="step3Percent">0.0%</span></div>
-                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)] shadow-inner"><div id="step3Bar" class="bg-cyan-500 h-full transition-all" style="width: 0%"></div></div>
-                        </div>
-                        <div class="space-y-1">
-                            <div class="flex justify-between text-[11px] font-medium"><span>ชนะไม้ 4</span><span class="num-font font-bold text-sky-500" id="step4Percent">0.0%</span></div>
-                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)] shadow-inner"><div id="step4Bar" class="bg-sky-500 h-full transition-all" style="width: 0%"></div></div>
-                        </div>
-                        <div class="space-y-1">
-                            <div class="flex justify-between text-[11px] font-medium"><span>ชนะไม้ 5</span><span class="num-font font-bold text-amber-500" id="step5Percent">0.0%</span></div>
-                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)] shadow-inner"><div id="step5Bar" class="bg-amber-500 h-full transition-all" style="width: 0%"></div></div>
-                        </div>
-                        <div class="space-y-1">
-                            <div class="flex justify-between text-[11px] font-medium"><span>ชนะไม้ 6</span><span class="num-font font-bold text-orange-500" id="step6Percent">0.0%</span></div>
-                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)] shadow-inner"><div id="step6Bar" class="bg-orange-500 h-full transition-all" style="width: 0%"></div></div>
-                        </div>
-                        <div class="space-y-1 sm:col-span-2 pt-2 border-t border-[var(--border-color)]">
-                            <div class="flex justify-between text-[11px] font-bold"><span class="text-rose-500">หลุดรอบเดินสูตร (เสีย 6 ไม้)</span><span class="num-font font-bold text-rose-500" id="stopLossPercent">0.0%</span></div>
-                            <div class="w-full bg-[var(--bg-inner)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)] shadow-inner"><div id="stopLossBar" class="bg-rose-600 h-full transition-all" style="width: 0%"></div></div>
-                        </div>
-                    </div>
+
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Crypto & Application Core Scripts Engine -->
+    <!-- CORE SCRIPTS (Logic Unchanged, UI Binding Updated) -->
     <script>
         const SECRET_CIPHER_SALT = "QNT_CRYPTO_HASH_2026";
         const DOUBLE_FA_KEY = "300333";
@@ -445,7 +494,7 @@
         if (!localStorage.getItem('qnt_admin_password')) { localStorage.setItem('qnt_admin_password', 'ADMIN999'); }
         if (!localStorage.getItem('qnt_customer_db')) { localStorage.setItem('qnt_customer_db', JSON.stringify([])); }
 
-        // --- NEW TOAST NOTIFICATION SYSTEM (Goal 1) ---
+        // --- LUXURY TOAST NOTIFICATION ---
         function showToast(title, desc, type) {
             const toast = document.getElementById('toastNotification');
             const icon = document.getElementById('toastIcon');
@@ -453,20 +502,27 @@
             const tDesc = document.getElementById('toastDesc');
 
             if(type === 'win') {
-                toast.className = "fixed top-24 right-5 z-[300] transform transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-500/10 dark:border-emerald-500/30 dark:text-emerald-400 backdrop-blur-md translate-x-0 opacity-100";
-                icon.innerHTML = `<svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                toast.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                icon.innerHTML = `<svg class="w-5 h-5 text-[var(--status-success)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                tTitle.style.color = 'var(--status-success)';
             } else {
-                toast.className = "fixed top-24 right-5 z-[300] transform transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border bg-rose-50 border-rose-200 text-rose-800 dark:bg-rose-500/10 dark:border-rose-500/30 dark:text-rose-400 backdrop-blur-md translate-x-0 opacity-100";
-                icon.innerHTML = `<svg class="w-6 h-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                toast.style.borderColor = 'rgba(225, 29, 72, 0.3)';
+                icon.innerHTML = `<svg class="w-5 h-5 text-[var(--status-danger)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                tTitle.style.color = 'var(--status-danger)';
             }
             
             tTitle.textContent = title;
             tDesc.textContent = desc;
 
             setTimeout(() => {
+                toast.classList.remove('translate-x-full', 'opacity-0');
+                toast.classList.add('translate-x-0', 'opacity-100');
+            }, 10);
+
+            setTimeout(() => {
                 toast.classList.remove('translate-x-0', 'opacity-100');
                 toast.classList.add('translate-x-full', 'opacity-0');
-            }, 2500);
+            }, 3000);
         }
 
         function showCustomAlert(title, message, type = 'info', callback = null) {
@@ -476,16 +532,18 @@
             const iconEl = document.getElementById('customAlertIcon');
             alertCallback = callback;
 
+            let iconColor = 'var(--accent-gold)';
+            let svgPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>';
+
             if (type === 'success') {
-                iconEl.className = "inline-flex p-3.5 rounded-2xl mb-4 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20";
-                iconEl.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>`;
-            } else if (type === 'error') {
-                iconEl.className = "inline-flex p-3.5 rounded-2xl mb-4 bg-rose-500/10 text-rose-500 border border-rose-500/20";
-                iconEl.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>`;
-            } else {
-                iconEl.className = "inline-flex p-3.5 rounded-2xl mb-4 bg-amber-500/10 text-amber-500 border border-amber-500/20";
-                iconEl.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
+                iconColor = 'var(--status-success)';
+                svgPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"></path>';
+            } else if (type === 'error' || type === 'warning') {
+                iconColor = 'var(--status-danger)';
+                svgPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>';
             }
+            
+            iconEl.innerHTML = `<svg class="w-6 h-6" style="color: ${iconColor}" fill="none" stroke="currentColor" viewBox="0 0 24 24">${svgPath}</svg>`;
             modal.classList.remove('hidden');
         }
 
@@ -536,7 +594,7 @@
                 renderHistoryTable();
             } else {
                 playTone('cycleLost');
-                alertBox.textContent = "❌ รหัสผ่าน หรือ รหัสลับความปลอดภัย 2FA ไม่ถูกต้อง!";
+                alertBox.textContent = "AUTHORIZATION FAILED";
                 alertBox.classList.remove('hidden');
             }
         }
@@ -550,13 +608,13 @@
         function resetAdminPassword() {
             const newPass = document.getElementById('adminNewPassword').value.trim();
             if (newPass.length < 4) {
-                showCustomAlert("ระงับการทำรายการ", "กรุณาตั้งรหัสผ่านแอดมินความยาวอย่างน้อย 4 ตัวอักษรขึ้นไปเพื่อความปลอดภัย", "warning");
+                showCustomAlert("Action Restricted", "Master password must be at least 4 characters.", "warning");
                 return;
             }
             localStorage.setItem('qnt_admin_password', newPass);
             document.getElementById('adminNewPassword').value = '';
             playTone('win');
-            showCustomAlert("บันทึกข้อมูลเรียบร้อย", "🛡️ รีเซ็ตรหัสผ่านระบบควบคุมแอดมินหลักเรียบร้อยแล้ว! ข้อมูลถูกบันทึกสำเร็จ", "success");
+            showCustomAlert("Security Updated", "Master password has been successfully reset.", "success");
         }
 
         function generateLicenseKey() {
@@ -567,7 +625,7 @@
 
             const name = rawName.replace(/[^A-Z0-9]/g, "");
             if (name.length < 2) {
-                showCustomAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุชื่อบัญชีลูกค้าภาษาอังกฤษอย่างน้อย 2 หลัก", "warning");
+                showCustomAlert("Invalid Input", "Client identifier requires minimum 2 alphanumeric characters.", "warning");
                 return;
             }
 
@@ -580,7 +638,7 @@
             
             if ((cumulativeHours + addedHours) >= 1000) {
                 addedHours += 100;
-                showCustomAlert("🏆 แคมเปญโบนัสทำงาน", `คุณ ${name} มีสถิติสะสมชั่วโมงครบกำหนด ระบบเพิ่มโบนัสให้ฟรี 100 ชั่วโมงเรียบร้อย!`, "success");
+                showCustomAlert("Campaign Triggered", `Client ${name} qualified for 100-Hour Bonus Credit.`, "success");
             }
 
             const absoluteExpiryTime = now + (expiryDays * 24 * 60 * 60 * 1000);
@@ -623,57 +681,56 @@
             });
 
             if (filteredData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-500">📁 ไม่มีประวัติการบันทึกข้อมูลในวันนี้</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-[var(--text-muted)] text-[9px] uppercase tracking-widest">No entries found</td></tr>`;
                 return;
             }
 
             filteredData.forEach(item => {
                 const tr = document.createElement('tr');
-                tr.className = "border-b border-slate-900/60 hover:bg-slate-900/30";
                 
-                const formattedDate = new Date(item.timestamp).toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'}) + ' น.';
+                const formattedDate = new Date(item.timestamp).toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'});
                 let totalAccum = 0;
                 customerDB.forEach(c => { if (c.customerName === item.customerName && c.status !== 'REVOKED') totalAccum += c.baseHours; });
 
                 const pausedTimeStr = localStorage.getItem('qnt_paused_time_' + item.licenseKey);
                 const isKeyExpired = Date.now() > item.absoluteExpiryTimestamp;
                 
-                let timeDescriptor = `<span class="text-emerald-400 font-bold">${item.hoursAwarded} ชม.</span>`;
+                let timeDescriptor = `<span class="text-[var(--text-pure)]">${item.hoursAwarded}H</span>`;
                 if (pausedTimeStr) {
                     const remainingMs = parseInt(pausedTimeStr);
                     if (remainingMs <= 0) {
-                        timeDescriptor = `<span class="text-slate-500">ใช้ครบแล้ว</span>`;
+                        timeDescriptor = `<span class="text-[var(--text-muted)]">Depleted</span>`;
                     } else {
                         const remHrs = Math.floor(remainingMs / (3600 * 1000));
                         const remMins = Math.floor((remainingMs % (3600 * 1000)) / (60 * 1000));
-                        timeDescriptor = `<span class="text-amber-500 font-bold">⏸️ เหลือ: ${remHrs}ชม. ${remMins}น.</span>`;
+                        timeDescriptor = `<span class="text-[var(--accent-champagne)]">${remHrs}H ${remMins}M</span>`;
                     }
                 }
 
-                const absExpiryDate = new Date(item.absoluteExpiryTimestamp).toLocaleDateString('th-TH', {day:'2-digit', month:'short', year:'2-digit'});
+                const absExpiryDate = new Date(item.absoluteExpiryTimestamp).toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'2-digit'});
                 let statusBadge = '';
                 if (item.status === 'REVOKED') {
-                    statusBadge = `<span class="bg-rose-500/15 text-rose-400 border border-rose-500/20 px-1.5 py-0.5 rounded-md text-[9px] font-bold">ยกเลิกสิทธิ์แล้ว</span>`;
+                    statusBadge = `<span class="text-[var(--status-danger)] text-[9px] uppercase tracking-wider">Revoked</span>`;
                 } else if (isKeyExpired) {
-                    statusBadge = `<span class="bg-slate-850 text-slate-500 border border-slate-800 px-1.5 py-0.5 rounded-md text-[9px]">หมดอายุขัยคีย์</span>`;
+                    statusBadge = `<span class="text-[var(--text-muted)] text-[9px] uppercase tracking-wider">Expired</span>`;
                 } else if (pausedTimeStr && parseInt(pausedTimeStr) <= 0) {
-                    statusBadge = `<span class="bg-slate-850 text-slate-500 border border-slate-800 px-1.5 py-0.5 rounded-md text-[9px]">ชั่วโมงหมด</span>`;
+                    statusBadge = `<span class="text-[var(--text-muted)] text-[9px] uppercase tracking-wider">Depleted</span>`;
                 } else {
-                    statusBadge = `<button onclick="revokeLicense('${item.id}')" class="bg-rose-600 hover:bg-rose-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-lg cursor-pointer transition-all active:scale-95">🚫 ยกเลิกสิทธิ์</button>`;
+                    statusBadge = `<button onclick="revokeLicense('${item.id}')" class="text-[var(--status-danger)] hover:text-white border border-[var(--status-danger)]/50 hover:bg-[var(--status-danger)] px-2 py-1 rounded text-[8px] uppercase tracking-widest transition-colors cursor-pointer">Revoke</button>`;
                 }
 
                 tr.innerHTML = `
-                    <td class="py-2.5 px-1 font-mono text-[10px] text-slate-400">${item.dateString}<br>${formattedDate}</td>
-                    <td class="py-2.5 px-1 font-bold text-slate-200">${item.customerName}<br><span class="text-slate-500 font-normal text-[9px]">สะสม: ${totalAccum} ชม.</span></td>
-                    <td class="py-2.5 px-1 font-mono text-[9px] text-slate-300 select-all">${item.licenseKey}<br><div class="flex flex-col gap-0.5 mt-0.5"><span class="text-[9px] font-sans leading-none">${timeDescriptor}</span><span class="text-rose-400 text-[9px] font-sans leading-none">หมดอายุ: ${absExpiryDate}</span></div></td>
-                    <td class="py-2.5 px-1 text-center">${statusBadge}</td>
+                    <td class="py-3 px-2 text-[10px] text-[var(--text-silver)]">${item.dateString} ${formattedDate}</td>
+                    <td class="py-3 px-2 text-[10px] text-[var(--text-pure)]">${item.customerName} <span class="text-[var(--text-muted)] ml-1">(${totalAccum}H)</span></td>
+                    <td class="py-3 px-2 text-[9px]"><span class="text-[var(--accent-gold)]">${item.licenseKey}</span><br><div class="mt-1 text-[var(--text-muted)] tracking-wider">BAL: ${timeDescriptor} | EXP: ${absExpiryDate}</div></td>
+                    <td class="py-3 px-2 text-right">${statusBadge}</td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
         function revokeLicense(id) {
-            if (confirm("⚠️ คุณมั่นใจหรือไม่ที่จะยกเลิกสิทธิ์กุญแจรหัสลูกค้าท่านนี้ในทันที? ระบบจะมีผลล็อกทันทีเมื่อตัวแอปเช็คเวลาสากลรอบถัดไป")) {
+            if (confirm("Confirm immediate revocation of this license key?")) {
                 let customerDB = JSON.parse(localStorage.getItem('qnt_customer_db'));
                 const index = customerDB.findIndex(item => item.id === id);
                 if (index !== -1) {
@@ -699,7 +756,8 @@
             const dur = opt.value;
             const expiryDays = opt.dataset.expiry;
             const currentURL = window.location.href;
-            const template = `ยินดีต้อนรับคุณ ${name} เข้าสู่ระบบ Quantum Analytics\nนี่คือรหัสเปิดสิทธิ์เข้าใช้งานของคุณ\n\n📌 จำนวนเวลาใช้งาน: ${dur} ชั่วโมง\n⏳ คีย์มีอายุ: ${expiryDays} วัน (นับจากวันนี้)\n\n🔑 รหัสเข้าใช้งาน:\n${keyText}\n\n🌐 ลิงก์เข้าใช้งาน:\n${currentURL}\n\n*ระบบเป็นแบบ Pause Time หากไม่ใช้งานให้กด "ออกจากระบบ" เวลาก็จะหยุดเดินครับ แต่คีย์จะหมดสภาพทันทีเมื่อเลยวันหมดอายุคีย์ข้างต้น*`;
+            
+            const template = `=== QUANTUM ANALYTICS ===\nWelcome, ${name}.\n\nAllocation: ${dur} Hours\nValidity: ${expiryDays} Days\n\nAccess Key:\n${keyText}\n\nPortal: ${currentURL}\n\n*Note: Use 'Terminate Session' to pause your hour consumption. Key expires exactly on validity date regardless of hours remaining.*`;
             
             navigator.clipboard.writeText(template);
             playTone('click');
@@ -711,7 +769,7 @@
             
             const parts = input.split('-');
             if (parts.length !== 5 || parts[0] !== 'QNT') {
-                alertBox.textContent = "❌ รูปแบบรหัสเข้าใช้งานไม่ถูกต้อง!";
+                alertBox.textContent = "INVALID KEY STRUCTURE";
                 alertBox.classList.remove('hidden');
                 playTone('cycleLost');
                 return;
@@ -721,11 +779,10 @@
             const hours = parseInt(parts[2]);
             const b36Expiry = parts[3];
             const userSign = parts[4];
-            
             const absoluteExpiryTime = parseInt(b36Expiry, 36);
 
             if (isNaN(hours) || isNaN(absoluteExpiryTime) || generateChecksum(name, absoluteExpiryTime) !== userSign) {
-                alertBox.textContent = "❌ ตรวจพบความพยายามแก้ไขโครงสร้างรหัส (Fake Key)";
+                alertBox.textContent = "SECURITY SIGNATURE MISMATCH";
                 alertBox.classList.remove('hidden');
                 playTone('cycleLost');
                 return;
@@ -734,7 +791,7 @@
             let customerDB = JSON.parse(localStorage.getItem('qnt_customer_db'));
             const matchingRecord = customerDB.find(item => item.licenseKey === input);
             if (matchingRecord && matchingRecord.status === 'REVOKED') {
-                alertBox.textContent = "❌ ขออภัย รหัสนี้ถูกระงับสิทธิ์เข้าใช้งานเนื่องจากทำผิดกฎระบบ!";
+                alertBox.textContent = "ACCESS DENIED (REVOKED)";
                 alertBox.classList.remove('hidden');
                 playTone('cycleLost');
                 return;
@@ -750,7 +807,7 @@
             const currentMs = currentDate.getTime();
 
             if (currentMs > absoluteExpiryTime) {
-                alertBox.textContent = `❌ สิ้นสุดอายุขัย! คีย์ของ ${name} หมดอายุแล้วตามเงื่อนไขแพ็กเกจ (Key Expired)`;
+                alertBox.textContent = "LICENSE EXPIRED";
                 alertBox.classList.remove('hidden');
                 playTone('cycleLost');
                 return;
@@ -762,7 +819,7 @@
             if (pausedTimeStr) {
                 remainingMs = parseInt(pausedTimeStr);
                 if (remainingMs <= 0) {
-                    alertBox.textContent = `❌ ขออภัยสิทธิ์ "ชั่วโมงใช้งาน" ของคุณหมดลงแล้ว!`;
+                    alertBox.textContent = "ALLOCATION DEPLETED";
                     alertBox.classList.remove('hidden');
                     return;
                 }
@@ -771,7 +828,7 @@
             alertBox.classList.add('hidden');
             document.getElementById('loginGateway').classList.add('hidden');
             document.getElementById('mainWorkspace').classList.remove('hidden');
-            document.getElementById('greetUserName').textContent = `คุณ ${name} (VIP)`;
+            document.getElementById('greetUserName').textContent = `${name}`;
             
             activeSessionKey = input;
             globalExpiryTimestamp = currentMs + remainingMs;
@@ -790,8 +847,8 @@
                 if (diff <= 0) {
                     clearInterval(activeTimerInterval);
                     localStorage.setItem('qnt_paused_time_' + activeSessionKey, 0);
-                    timerEl.textContent = "หมดเวลาใช้งาน";
-                    showCustomAlert("สิ้นสุดสิทธิ์การทำงาน", "สิทธิ์ชั่วโมงการใช้งานของคุณหมดเวลาลงแล้ว โปรดติดต่อแอดมินเพื่อต่ออายุโปรโมชั่น Line ID: elite2026", "warning", () => { window.location.reload(); });
+                    timerEl.textContent = "DEPLETED";
+                    showCustomAlert("Session Terminated", "Hourly allocation depleted. Contact concierge for renewal.", "warning", () => { window.location.reload(); });
                     return;
                 }
                 localStorage.setItem('qnt_paused_time_' + activeSessionKey, diff);
@@ -812,25 +869,13 @@
             if (remainingTime > 0 && activeSessionKey) {
                 localStorage.setItem('qnt_paused_time_' + activeSessionKey, remainingTime);
             }
-            playTone('cycleLost');
+            playTone('click');
             activeSessionKey = "";
             globalExpiryTimestamp = 0;
             document.getElementById('licenseInput').value = "";
             
             document.getElementById('mainWorkspace').classList.add('hidden');
             document.getElementById('loginGateway').classList.remove('hidden');
-            showCustomAlert("หยุดบันทึกเวลาชั่วคราว", "🔐 ทำการออกจากระบบและหยุดนับถอยหลังสะสมให้เรียบร้อยแล้ว เมื่อล็อกอินใหม่เวลาจะเริ่มนับต่อทันทีครับ", "success");
-        }
-
-        function toggleTheme() {
-            const html = document.documentElement;
-            const themeSun = document.getElementById('themeSun'), themeMoon = document.getElementById('themeMoon');
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark'); themeSun.classList.remove('hidden'); themeMoon.classList.add('hidden');
-            } else {
-                html.classList.add('dark'); themeSun.classList.add('hidden'); themeMoon.classList.remove('hidden');
-            }
-            playTone('click'); drawTrendChart();
         }
 
         let audioCtx = null, soundEnabled = false;
@@ -840,18 +885,20 @@
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
                 osc.connect(gain); gain.connect(audioCtx.destination);
+                
+                // Muted/Premium tones
                 if (type === 'click') {
-                    osc.frequency.setValueAtTime(650, audioCtx.currentTime); gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08); osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+                    osc.frequency.setValueAtTime(400, audioCtx.currentTime); gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05); osc.start(); osc.stop(audioCtx.currentTime + 0.05);
                 } else if (type === 'win') {
-                    osc.type = 'triangle'; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.1);
-                    gain.gain.setValueAtTime(0.04, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25); osc.start(); osc.stop(audioCtx.currentTime + 0.25);
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(440, audioCtx.currentTime); osc.frequency.setValueAtTime(660, audioCtx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.02, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3); osc.start(); osc.stop(audioCtx.currentTime + 0.3);
                 } else if (type === 'lose') {
-                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(180, audioCtx.currentTime); gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                    osc.type = 'triangle'; osc.frequency.setValueAtTime(200, audioCtx.currentTime); gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2); osc.start(); osc.stop(audioCtx.currentTime + 0.2);
                 } else if (type === 'cycleLost') {
-                    osc.type = 'sine'; osc.frequency.setValueAtTime(120, audioCtx.currentTime); osc.frequency.setValueAtTime(80, audioCtx.currentTime + 0.15);
-                    gain.gain.setValueAtTime(0.07, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.45); osc.start(); osc.stop(audioCtx.currentTime + 0.45);
+                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime); osc.frequency.setValueAtTime(100, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.03, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5); osc.start(); osc.stop(audioCtx.currentTime + 0.5);
                 }
             } catch (err) {}
         }
@@ -859,8 +906,8 @@
         function toggleSound() {
             soundEnabled = !soundEnabled;
             const dot = document.getElementById('soundDot'), txt = document.getElementById('soundText');
-            if (soundEnabled) { dot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_5px_rgba(52,211,153,0.5)]"; txt.textContent = "ปิดเสียง"; playTone('click'); }
-            else { dot.className = "w-1.5 h-1.5 rounded-full bg-rose-500 shadow-none"; txt.textContent = "เปิดเสียง"; }
+            if (soundEnabled) { dot.style.backgroundColor = 'var(--status-success)'; txt.textContent = "Audio On"; playTone('click'); }
+            else { dot.style.backgroundColor = 'var(--status-danger)'; txt.textContent = "Audio Off"; }
         }
 
         const QUANT_STRATEGIES = {
@@ -870,7 +917,7 @@
 
         const fibonacciSequence = [1, 1, 2, 3, 5, 8];
         let rawRecordHistory = [], validRecordHistory = [], beadRecord = [];
-        let cycleHistoryData = []; // Array สำหรับเก็บประวัติการเล่นแต่ละรอบ (Goal 2)
+        let cycleHistoryData = [];
         
         let consecutiveLosses = 0, maxLossStreak = 0, winCount = 0, loseCount = 0;
         let stepWins = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, stopLossCount = 0, totalCycleCount = 0;
@@ -878,18 +925,6 @@
         let trendHistory = [0];
 
         const strategySelect = document.getElementById('strategySelect');
-        const enginePulse = document.getElementById('enginePulse');
-        const engineStatus = document.getElementById('engineStatus');
-        const stepBadge = document.getElementById('stepBadge');
-        const emptyEngineState = document.getElementById('emptyEngineState');
-        const activeEnginePanel = document.getElementById('activeEnginePanel');
-        const predictionTarget = document.getElementById('predictionTarget');
-        const fiboValue = document.getElementById('fiboValue');
-        const dataStreamDots = document.getElementById('dataStreamDots');
-        const winRateDisplay = document.getElementById('winRateDisplay');
-        const maxLossStreakDisplay = document.getElementById('maxLossStreakDisplay');
-        const beadBoard = document.getElementById('beadBoard');
-        const totalCyclesDisplay = document.getElementById('totalCyclesDisplay');
 
         function changeStrategy() { playTone('click'); resetSystem(); }
         function recordHand(side) { playTone('click'); rawRecordHistory.push(side); recalculateEverything(); }
@@ -903,21 +938,17 @@
             for (let i = 0; i < rawRecordHistory.length; i++) {
                 const side = rawRecordHistory[i]; 
                 beadRecord.push({ side });
-                
                 if (side === 'T') continue;
 
                 validRecordHistory.push(side);
                 const validIndex = validRecordHistory.length - 1;
                 const isLastValid = (i === rawRecordHistory.length - 1);
 
-                if (isBettingMode) { 
-                    processOutcomeState(side === currentBetTarget, validIndex, isLastValid); 
-                } else { 
-                    evaluatePatternState(validIndex); 
-                }
+                if (isBettingMode) { processOutcomeState(side === currentBetTarget, validIndex, isLastValid); } 
+                else { evaluatePatternState(validIndex); }
             }
             renderLiveBeadBoard();
-            renderCycleHistoryUI(); // อัปเดตตารางประวัติรอบ
+            renderCycleHistoryUI();
             if (isBettingMode) renderPrediction(); else renderWaitingState();
             updateStatsUI(); updateStepStatsUI(); drawTrendChart();
             updateStreamDots();
@@ -938,14 +969,9 @@
             if (isWin) {
                 winCount++; trendHistory.push(prevTrend + 1);
                 stepWins[currentStep + 1]++; totalCycleCount++;
-                
-                // บันทึกประวัติรอบการเล่น WIN
                 cycleHistoryData.push({ status: 'WIN', step: currentStep + 1, cycleNum: totalCycleCount });
                 
-                if (isLastRecord) {
-                    playTone('win');
-                    showToast('ชนะเดิมพัน (WIN)', `บันทึกข้อมูลถูกต้อง: ปิดรอบสำเร็จในไม้ที่ ${currentStep + 1}`, 'win');
-                }
+                if (isLastRecord) { playTone('win'); showToast('Target Achieved', `Cycle ${totalCycleCount} cleared at step ${currentStep + 1}.`, 'win'); }
                 
                 consecutiveLosses = 0; currentStep = 0; isBettingMode = false;
                 evaluatePatternState(validIndex);
@@ -956,14 +982,9 @@
                 
                 if (currentStep >= 5) {
                     stopLossCount++; totalCycleCount++; 
-                    
-                    // บันทึกประวัติรอบการเล่น LOSE
                     cycleHistoryData.push({ status: 'LOSE', step: 6, cycleNum: totalCycleCount });
 
-                    if (isLastRecord) {
-                        playTone('cycleLost');
-                        showToast('หลุดรอบ (STOP LOSS)', `บันทึกข้อมูลถูกต้อง: เสียติดต่อกัน 6 ไม้ติด`, 'lose');
-                    }
+                    if (isLastRecord) { playTone('cycleLost'); showToast('Drawdown Triggered', `Cycle ${totalCycleCount} terminated (6 steps lost).`, 'lose'); }
                     
                     consecutiveLosses = 0; currentStep = 0; isBettingMode = false;
                     evaluatePatternState(validIndex);
@@ -975,33 +996,27 @@
             }
         }
 
-        // --- NEW: Render Cycle History Table (Goal 2) ---
         function renderCycleHistoryUI() {
             const tbody = document.getElementById('cycleHistoryBody');
             tbody.innerHTML = '';
 
             if (cycleHistoryData.length === 0) {
-                tbody.innerHTML = `<tr><td class="text-center py-4 text-[var(--text-muted)] opacity-60 font-medium">ยังไม่มีข้อมูลการปิดรอบสูตร</td></tr>`;
+                tbody.innerHTML = `<tr><td class="text-center py-6 text-[var(--text-muted)] font-light tracking-widest uppercase text-[9px]">No Closed Cycles</td></tr>`;
                 return;
             }
 
-            // นำข้อมูลล่าสุดขึ้นก่อน (Reverse) เพื่อให้ดูง่าย
             const reversedData = [...cycleHistoryData].reverse();
-
             reversedData.forEach(item => {
                 const tr = document.createElement('tr');
-                tr.className = "border-b border-[var(--border-color)] last:border-0 hover:bg-[var(--bg-inner)] transition-colors";
+                tr.className = "border-b border-[#262626] last:border-0";
                 
-                let statusUI = '';
-                if (item.status === 'WIN') {
-                    statusUI = `<div class="flex items-center gap-2 text-emerald-500 font-bold"><span class="bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 text-[10px]">WIN</span> ชนะด้วยไม้ที่ ${item.step}</div>`;
-                } else {
-                    statusUI = `<div class="flex items-center gap-2 text-rose-500 font-bold"><span class="bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20 text-[10px]">LOSE</span> หลุดสูตร (เสีย ${item.step} ไม้)</div>`;
-                }
+                let statusUI = item.status === 'WIN' 
+                    ? `<span class="text-[var(--status-success)] flex items-center gap-2"><span class="text-[8px] border border-[var(--status-success)]/30 px-1 rounded uppercase tracking-wider">WIN</span> Step ${item.step}</span>`
+                    : `<span class="text-[var(--status-danger)] flex items-center gap-2"><span class="text-[8px] border border-[var(--status-danger)]/30 px-1 rounded uppercase tracking-wider">LOSS</span> Triggered</span>`;
 
                 tr.innerHTML = `
-                    <td class="py-2.5 px-2 font-medium text-[var(--text-muted)] w-24">รอบที่ ${item.cycleNum}</td>
-                    <td class="py-2.5 px-2">${statusUI}</td>
+                    <td class="py-2.5 px-2 text-[var(--text-silver)] w-20">Cycle ${item.cycleNum}</td>
+                    <td class="py-2.5 px-2 font-medium">${statusUI}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -1013,22 +1028,25 @@
             const targetSide = patternSequence[currentStep];
             document.getElementById('emptyEngineState').classList.add('hidden'); 
             document.getElementById('activeEnginePanel').classList.remove('hidden');
-            document.getElementById('enginePulse').className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)]";
-            document.getElementById('engineStatus').textContent = "จับคู่รูปแบบสำเร็จ";
-            document.getElementById('stepBadge').textContent = `ไม้สู้ที่ ${currentStep + 1} / 6`;
-            document.getElementById('stepBadge').className = "bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-widest shadow-sm";
-            document.getElementById('predictionTarget').textContent = targetSide === 'B' ? 'BANKER' : 'PLAYER';
-            document.getElementById('predictionTarget').className = `text-4xl font-extrabold my-2 tracking-wider drop-shadow-md ${targetSide === 'B' ? 'text-rose-500' : 'text-blue-500'}`;
-            document.getElementById('fiboValue').textContent = `รอบสู้ไม้ที่ ${currentStep + 1} (Fibo x${fibonacciSequence[currentStep]})`;
+            
+            document.getElementById('enginePulse').style.backgroundColor = 'var(--status-success)';
+            document.getElementById('engineStatus').textContent = "Pattern Locked";
+            document.getElementById('stepBadge').textContent = `Step ${currentStep + 1}/6`;
+            
+            const pTarget = document.getElementById('predictionTarget');
+            pTarget.textContent = targetSide === 'B' ? 'BANKER' : 'PLAYER';
+            pTarget.style.color = targetSide === 'B' ? 'var(--bac-banker)' : 'var(--bac-player)';
+            
+            document.getElementById('fiboValue').textContent = `Fibo Multiplier x${fibonacciSequence[currentStep]}`;
         }
 
         function renderWaitingState() {
             document.getElementById('activeEnginePanel').classList.add('hidden'); 
             document.getElementById('emptyEngineState').classList.remove('hidden');
-            document.getElementById('enginePulse').className = "w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-600 shadow-none";
-            document.getElementById('engineStatus').textContent = "รอจับคู่หน้าไพ่"; 
+            
+            document.getElementById('enginePulse').style.backgroundColor = 'var(--text-muted)';
+            document.getElementById('engineStatus').textContent = "Awaiting Data"; 
             document.getElementById('stepBadge').textContent = "Idle";
-            document.getElementById('stepBadge').className = "bg-[var(--bg-inner)] border border-[var(--border-color)] text-[var(--text-muted)] text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-widest";
         }
 
         function popLastRecord() { if (rawRecordHistory.length > 0) { playTone('click'); rawRecordHistory.pop(); recalculateEverything(); } }
@@ -1039,7 +1057,7 @@
             dotsContainer.innerHTML = ''; const fill = Math.min(3, validRecordHistory.length);
             for (let i = 0; i < 3; i++) {
                 const dot = document.createElement('span');
-                dot.className = i < fill ? "w-1.5 h-1.5 rounded-full bg-emerald-500 border border-emerald-400/45 shadow-sm shadow-emerald-500/30" : "w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-800 border border-[var(--border-color)]";
+                dot.className = i < fill ? "w-1 h-1 rounded-full bg-[var(--accent-gold)]" : "w-1 h-1 rounded-full bg-[#333]";
                 dotsContainer.appendChild(dot);
             }
         }
@@ -1054,10 +1072,10 @@
             document.getElementById('totalCyclesDisplay').textContent = totalCycleCount;
             const calcP = (count) => totalCycleCount === 0 ? "0.0" : ((count / totalCycleCount) * 100).toFixed(1);
             for (let i = 1; i <= 6; i++) {
-                document.getElementById(`step${i}Percent`).innerHTML = `${calcP(stepWins[i])}% <span class='text-[var(--text-muted)] font-normal text-[10px]'>(${stepWins[i]})</span>`;
+                document.getElementById(`step${i}Percent`).textContent = `${calcP(stepWins[i])}%`;
                 document.getElementById(`step${i}Bar`).style.width = `${calcP(stepWins[i])}%`;
             }
-            document.getElementById(`stopLossPercent`).innerHTML = `${calcP(stopLossCount)}% <span class='text-[var(--text-muted)] font-normal text-[10px]'>(${stopLossCount})</span>`;
+            document.getElementById(`stopLossPercent`).textContent = `${calcP(stopLossCount)}%`;
             document.getElementById(`stopLossBar`).style.width = `${calcP(stopLossCount)}%`;
         }
 
@@ -1066,54 +1084,55 @@
             const ctx = canvas.getContext('2d'), dpr = window.devicePixelRatio || 1, rect = canvas.getBoundingClientRect();
             canvas.width = rect.width * dpr; canvas.height = rect.height * dpr; ctx.scale(dpr, dpr);
             const width = rect.width, height = rect.height; ctx.clearRect(0, 0, width, height);
-            const isDark = document.documentElement.classList.contains('dark');
-            ctx.strokeStyle = isDark ? '#1e293b' : '#e2e8f0'; ctx.lineWidth = 1;
+            
+            ctx.strokeStyle = '#262626'; ctx.lineWidth = 1;
             for (let i = 1; i <= 3; i++) { ctx.beginPath(); ctx.moveTo(0, (height / 4) * i); ctx.lineTo(width, (height / 4) * i); ctx.stroke(); }
+            
             if (trendHistory.length < 2) {
-                ctx.fillStyle = isDark ? '#475569' : '#94a3b8'; ctx.font = '500 11px Inter, Kanit'; ctx.textAlign = 'center';
-                ctx.fillText('ป้อนข้อมูลเพื่อเริ่มต้นการแสดงเทรนความสำเร็จ', width / 2, height / 2 + 3); return;
+                ctx.fillStyle = '#737373'; ctx.font = '300 9px Inter'; ctx.textAlign = 'center';
+                ctx.fillText('INSUFFICIENT DATA TO RENDER TRAJECTORY', width / 2, height / 2 + 3); return;
             }
+            
             let minVal = Math.min(...trendHistory), maxVal = Math.max(...trendHistory);
             if (maxVal === minVal) { maxVal += 2; minVal -= 2; } else { const b = (maxVal - minVal) * 0.15; maxVal += b; minVal -= b; }
             const getX = (index) => (width / (trendHistory.length - 1)) * index, getY = (val) => height - ((val - minVal) / (maxVal - minVal)) * height;
-            ctx.fillStyle = isDark ? '#475569' : '#94a3b8'; ctx.font = '600 9px Inter'; ctx.textAlign = 'right';
-            ctx.fillText(`+${maxVal.toFixed(0)} U`, width - 8, 12); ctx.fillText(`${minVal.toFixed(0)} U`, width - 8, height - 6);
-            const grad = ctx.createLinearGradient(0, 0, width, 0); grad.addColorStop(0, '#38bdf8'); grad.addColorStop(0.5, '#10b981'); grad.addColorStop(1, '#f59e0b');
+            
+            ctx.fillStyle = '#737373'; ctx.font = '400 9px Inter'; ctx.textAlign = 'right';
+            ctx.fillText(`+${maxVal.toFixed(0)}`, width - 4, 10); ctx.fillText(`${minVal.toFixed(0)}`, width - 4, height - 4);
+            
+            // Premium Gold Stroke
             ctx.beginPath(); ctx.moveTo(getX(0), getY(trendHistory[0])); for (let i = 1; i < trendHistory.length; i++) ctx.lineTo(getX(i), getY(trendHistory[i]));
-            ctx.strokeStyle = grad; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
+            ctx.strokeStyle = '#D4AF37'; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
+            
+            // Subtle Gradient Fill
             ctx.beginPath(); ctx.moveTo(getX(0), height); ctx.lineTo(getX(0), getY(trendHistory[0])); for (let i = 1; i < trendHistory.length; i++) ctx.lineTo(getX(i), getY(trendHistory[i]));
             ctx.lineTo(getX(trendHistory.length - 1), height); ctx.closePath();
-            const fGrad = ctx.createLinearGradient(0, 0, 0, height); fGrad.addColorStop(0, 'rgba(16, 185, 129, 0.15)'); fGrad.addColorStop(1, 'rgba(16, 185, 129, 0)');
+            const fGrad = ctx.createLinearGradient(0, 0, 0, height); fGrad.addColorStop(0, 'rgba(212, 175, 55, 0.15)'); fGrad.addColorStop(1, 'rgba(212, 175, 55, 0)');
             ctx.fillStyle = fGrad; ctx.fill();
+            
             const lIdx = trendHistory.length - 1, lX = getX(lIdx), lY = getY(trendHistory[lIdx]);
-            ctx.beginPath(); ctx.arc(lX, lY, 4, 0, 2 * Math.PI); ctx.fillStyle = trendHistory[lIdx] >= trendHistory[Math.max(0, lIdx - 1)] ? '#10b981' : '#f43f5e';
-            ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#ffffff'; ctx.stroke();
+            ctx.beginPath(); ctx.arc(lX, lY, 3.5, 0, 2 * Math.PI); 
+            ctx.fillStyle = '#D4AF37';
+            ctx.fill(); 
+            ctx.lineWidth = 1; ctx.strokeStyle = '#0A0A0A'; ctx.stroke();
         }
 
-        function buildBeadBoardPlaceholder() {
-            const board = document.getElementById('beadBoard');
-            board.innerHTML = '';
-            for (let i = 0; i < 36; i++) {
-                const b = document.createElement('div'); b.className = "w-7 h-7 rounded-full bg-[var(--bg-bead-empty)]/40 border border-[var(--border-color)] flex items-center justify-center";
-                board.appendChild(b);
-            }
-        }
-        
         function renderLiveBeadBoard() {
             const board = document.getElementById('beadBoard');
-            board.innerHTML = ''; const maxB = Math.max(36, Math.ceil(beadRecord.length / 6) * 6);
+            board.innerHTML = ''; const maxB = Math.max(48, Math.ceil(beadRecord.length / 6) * 6);
             for (let i = 0; i < maxB; i++) {
                 const item = beadRecord[i], b = document.createElement('div');
                 if (item) {
-                    let bgClass = '';
-                    if(item.side === 'B') bgClass = 'from-red-500 to-rose-600 shadow-rose-500/40';
-                    else if(item.side === 'P') bgClass = 'from-blue-500 to-indigo-600 shadow-blue-500/40';
-                    else bgClass = 'from-emerald-500 to-green-600 shadow-emerald-500/40';
+                    let bgColor = '';
+                    if(item.side === 'B') bgColor = 'var(--bac-banker)';
+                    else if(item.side === 'P') bgColor = 'var(--bac-player)';
+                    else bgColor = 'var(--bac-tie)';
                     
-                    b.className = `w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold tracking-tight text-white bg-gradient-to-br shadow-sm ${bgClass}`;
+                    b.className = `w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white`;
+                    b.style.backgroundColor = bgColor;
                     b.textContent = item.side;
                 } else {
-                    b.className = "w-7 h-7 rounded-full bg-[var(--bg-bead-empty)]/40 border border-[var(--border-color)] flex items-center justify-center";
+                    b.className = "w-6 h-6 rounded-full border border-[#262626] bg-transparent";
                 }
                 board.appendChild(b);
             }
