@@ -327,18 +327,18 @@
                     </div>
                 </div>
 
-                <!-- Engine Selection (NEW DUAL TOGGLE UI) -->
+                <!-- Engine Selection (DUAL TOGGLE UI) -->
                 <div class="premium-card p-5">
                     <h2 class="text-[10px] font-bold text-[var(--accent-gold)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
                         Active Algorithm Selection
                     </h2>
                     <div class="grid grid-cols-2 gap-3">
-                        <button id="btnStrat1" onclick="setActiveStrategy('strat1')" class="group relative overflow-hidden bg-[var(--bg-charcoal)] border border-[var(--accent-gold)] py-3 rounded-lg transition-all active:scale-95 flex flex-col items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.1)] cursor-pointer">
+                        <button id="btnStrat1" onclick="setActiveStrategy('strat1')" class="group relative overflow-hidden bg-[var(--bg-charcoal)] border border-[var(--accent-gold)] py-3 rounded-lg transition-all active:scale-95 flex flex-col items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.15)] cursor-pointer">
                             <span class="text-[9px] text-[var(--text-silver)] uppercase tracking-widest block mb-1 transition-colors">ALPHA [Reversal]</span>
                             <span id="strat1WinRateBtn" class="text-lg font-bold text-[var(--accent-champagne)] num-track transition-colors">0.0%</span>
                         </button>
-                        <button id="btnStrat2" onclick="setActiveStrategy('strat2')" class="group relative overflow-hidden bg-[var(--bg-deep-black)] border border-[var(--border-premium)] hover:border-[var(--text-muted)] py-3 rounded-lg transition-all active:scale-95 flex flex-col items-center justify-center opacity-70 hover:opacity-100 cursor-pointer">
+                        <button id="btnStrat2" onclick="setActiveStrategy('strat2')" class="group relative overflow-hidden bg-[var(--bg-deep-black)] border border-[var(--border-premium)] hover:border-[var(--text-muted)] py-3 rounded-lg transition-all active:scale-95 flex flex-col items-center justify-center opacity-60 hover:opacity-100 cursor-pointer">
                             <span class="text-[9px] text-[var(--text-muted)] group-hover:text-[var(--text-silver)] uppercase tracking-widest block mb-1 transition-colors">BETA [Trend]</span>
                             <span id="strat2WinRateBtn" class="text-lg font-bold text-[var(--text-muted)] group-hover:text-[var(--text-silver)] num-track transition-colors">0.0%</span>
                         </button>
@@ -412,7 +412,7 @@
                         <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.3em] block mb-3">Target Variable</span>
                         <div id="predictionTarget" class="text-5xl sm:text-6xl font-semibold tracking-[0.15em] uppercase mb-4 transition-colors duration-300">-</div>
                         <div class="inline-flex items-center px-4 py-1.5 rounded bg-[var(--bg-charcoal)] border border-[var(--border-premium)]">
-                            <span id="fiboValue" class="text-[10px] text-[var(--accent-champagne)] font-mono tracking-widest">Multiplier Sequence</span>
+                            <span id="fiboValue" class="text-[10px] text-[var(--accent-champagne)] font-mono tracking-widest">Allocation Sequence</span>
                         </div>
                     </div>
 
@@ -879,7 +879,7 @@
             startCountdownTimer();
             
             playTone('win');
-            setTimeout(() => { drawTrendChart(); }, 100);
+            setTimeout(() => { recalculateEverything(); }, 100);
         }
 
         function startCountdownTimer() {
@@ -953,26 +953,26 @@
             else { dot.style.backgroundColor = 'var(--status-danger)'; txt.textContent = "Audio Off"; }
         }
 
+        // --- NEW DYNAMIC STRATEGY DEFINITIONS ---
+        // By omitting certain patterns, we force the engine into a WAIT STATE.
         const QUANT_STRATEGIES = {
-            strat1: { 'BBB': ['B', 'P', 'P', 'B', 'B', 'P'], 'PPP': ['P', 'B', 'B', 'P', 'P', 'B'], 'BBP': ['B', 'P', 'B', 'P', 'B', 'P'], 'PPB': ['P', 'B', 'P', 'B', 'P', 'B'], 'BPB': ['P', 'B', 'P', 'B', 'P', 'B'], 'PBP': ['B', 'P', 'B', 'P', 'B', 'P'], 'BPP': ['P', 'B', 'B', 'P', 'P', 'B'], 'PBB': ['B', 'P', 'P', 'B', 'B', 'P'] },
-            strat2: { 'BBB': ['B', 'B', 'B', 'B', 'P', 'P'], 'PPP': ['P', 'P', 'P', 'P', 'B', 'B'], 'BPP': ['P', 'P', 'P', 'B', 'B', 'B'], 'PBB': ['B', 'B', 'B', 'P', 'P', 'P'], 'BBP': ['P', 'P', 'B', 'B', 'P', 'P'], 'PPB': ['B', 'B', 'P', 'P', 'B', 'B'], 'BPB': ['B', 'B', 'P', 'P', 'B', 'B'], 'PBP': ['P', 'P', 'B', 'B', 'P', 'P'] }
+            strat1: { 'BBB': 'P', 'PPP': 'B', 'BBP': 'B', 'PPB': 'P', 'BPB': 'B', 'PBP': 'P' }, // Omitted BPP, PBB triggers WAIT
+            strat2: { 'BBB': 'B', 'PPP': 'P', 'BPP': 'B', 'PBB': 'P', 'BBP': 'P', 'PPB': 'B' }  // Omitted BPB, PBP triggers WAIT
         };
 
-        const fibonacciSequence = [1, 1, 2, 3, 5, 8];
-        
-        // --- NEW PARALLEL ENGINE ARCHITECTURE ---
+        // --- NEW PARALLEL DYNAMIC ENGINE ---
         let rawRecordHistory = [];
         let beadRecord = [];
         let validRecordHistory = [];
         
-        let activeStrategy = 'strat1'; // Default Strategy
+        let activeStrategy = 'strat1';
         let engineStates = { strat1: getBaseState(), strat2: getBaseState() };
 
         function getBaseState() {
             return {
                 winCount: 0, loseCount: 0, maxLossStreak: 0, consecutiveLosses: 0,
                 stepWins: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, stopLossCount: 0, totalCycleCount: 0,
-                isBettingMode: false, currentPatternKey: "", currentStep: 0, currentBetTarget: "",
+                isBettingMode: false, isWaiting: false, currentPatternKey: "", currentStep: 0, currentBetTarget: "",
                 trendHistory: [0], cycleHistoryData: [], winRate: "0.0"
             };
         }
@@ -993,7 +993,6 @@
             rate1.textContent = engineStates.strat1.winRate + '%';
             rate2.textContent = engineStates.strat2.winRate + '%';
 
-            // Active State UI
             if (activeStrategy === 'strat1') {
                 btn1.className = "group relative overflow-hidden bg-[var(--bg-charcoal)] border border-[var(--accent-gold)] py-3 rounded-lg transition-all active:scale-95 flex flex-col items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.15)] cursor-pointer";
                 btn1.querySelector('span:first-child').className = "text-[9px] text-[var(--text-pure)] uppercase tracking-widest block mb-1 transition-colors";
@@ -1019,22 +1018,20 @@
         function recalculateEverything() {
             beadRecord = []; validRecordHistory = [];
 
-            // 1. Prepare Arrays
             for (let i = 0; i < rawRecordHistory.length; i++) {
                 beadRecord.push({ side: rawRecordHistory[i] });
                 if (rawRecordHistory[i] !== 'T') validRecordHistory.push(rawRecordHistory[i]);
             }
 
-            // 2. Simulate Both Engines (Parallel)
             engineStates.strat1 = simulateEngine('strat1', validRecordHistory, activeStrategy === 'strat1');
             engineStates.strat2 = simulateEngine('strat2', validRecordHistory, activeStrategy === 'strat2');
 
-            // 3. Update Global UIs
             renderLiveBeadBoard();
             updateStrategySelectorUI();
             renderActiveStrategyUI();
         }
 
+        // --- THE DYNAMIC RECALCULATION & WAIT LOGIC ---
         function simulateEngine(stratName, historyArr, triggerAlerts) {
             let state = getBaseState();
 
@@ -1043,7 +1040,8 @@
                 const isLastRecord = (i === historyArr.length - 1);
                 const shouldAlert = triggerAlerts && isLastRecord;
 
-                if (state.isBettingMode) {
+                // 1. Process Bet Outcome (Only if we had an active bet on this turn)
+                if (state.isBettingMode && !state.isWaiting && state.currentBetTarget !== "") {
                     const prevTrend = state.trendHistory[state.trendHistory.length - 1];
                     if (side === state.currentBetTarget) { // WIN
                         state.winCount++; state.trendHistory.push(prevTrend + 1);
@@ -1052,29 +1050,56 @@
                         
                         if (shouldAlert) { playTone('win'); showToast('Target Achieved', `Cycle ${state.totalCycleCount} cleared at step ${state.currentStep + 1}.`, 'win'); }
                         
-                        state.consecutiveLosses = 0; state.currentStep = 0; state.isBettingMode = false;
-                        evaluatePatternState(state, stratName, historyArr, i);
+                        // Reset for next cycle
+                        state.isBettingMode = false; state.isWaiting = false;
+                        state.currentStep = 0; state.consecutiveLosses = 0; state.currentBetTarget = "";
                     } else { // LOSE
                         state.loseCount++; state.trendHistory.push(prevTrend - 1); state.consecutiveLosses++;
                         if (state.consecutiveLosses > state.maxLossStreak) state.maxLossStreak = state.consecutiveLosses;
                         if (shouldAlert) playTone('lose');
                         
-                        if (state.currentStep >= 5) { // STOP LOSS
+                        if (state.currentStep >= 5) { // Stop Loss Hit (6 steps lost)
                             state.stopLossCount++; state.totalCycleCount++; 
                             state.cycleHistoryData.push({ status: 'LOSE', step: 6, cycleNum: state.totalCycleCount });
 
                             if (shouldAlert) { playTone('cycleLost'); showToast('Drawdown Triggered', `Cycle ${state.totalCycleCount} terminated (6 steps lost).`, 'lose'); }
                             
-                            state.consecutiveLosses = 0; state.currentStep = 0; state.isBettingMode = false;
-                            evaluatePatternState(state, stratName, historyArr, i);
+                            // Reset for next cycle
+                            state.isBettingMode = false; state.isWaiting = false;
+                            state.currentStep = 0; state.consecutiveLosses = 0; state.currentBetTarget = "";
                         } else {
-                            state.currentStep++;
-                            const patternSequence = QUANT_STRATEGIES[stratName][state.currentPatternKey];
-                            if (patternSequence) state.currentBetTarget = patternSequence[state.currentStep];
+                            state.currentStep++; // Move to next step (Target will be recalculated below)
+                        }
+                    }
+                }
+
+                // 2. Dynamic Recalculation for NEXT bet (Rolling Window of 3)
+                if (i >= 2) {
+                    const rollingWindow = historyArr.slice(i - 2, i + 1).join('');
+                    const nextTarget = QUANT_STRATEGIES[stratName][rollingWindow];
+                    
+                    if (nextTarget) {
+                        // Enter Betting Mode or Update Target
+                        if (!state.isBettingMode) {
+                            state.isBettingMode = true; 
+                            state.currentStep = 0; 
+                        }
+                        state.isWaiting = false;
+                        state.currentPatternKey = rollingWindow;
+                        state.currentBetTarget = nextTarget;
+                    } else {
+                        // Pattern breaks -> Trigger Wait State if we are in a cycle
+                        if (state.isBettingMode) {
+                            state.isWaiting = true;
+                            state.currentBetTarget = "";
+                        } else {
+                            state.isWaiting = false;
+                            state.currentBetTarget = "";
                         }
                     }
                 } else {
-                    evaluatePatternState(state, stratName, historyArr, i);
+                    state.isWaiting = false;
+                    state.currentBetTarget = "";
                 }
             }
             
@@ -1083,53 +1108,58 @@
             return state;
         }
 
-        function evaluatePatternState(stateObj, stratName, historyArr, currentIndex) {
-            if (currentIndex >= 2) {
-                const lastThree = historyArr.slice(currentIndex - 2, currentIndex + 1).join('');
-                const patternSequence = QUANT_STRATEGIES[stratName][lastThree];
-                if (patternSequence) {
-                    stateObj.isBettingMode = true; 
-                    stateObj.currentPatternKey = lastThree; 
-                    stateObj.currentStep = 0; 
-                    stateObj.currentBetTarget = patternSequence[0];
-                }
-            }
-        }
-
         function renderActiveStrategyUI() {
             const state = engineStates[activeStrategy];
 
-            // Update Metrics
             document.getElementById('winRateDisplay').textContent = state.winRate + '%';
             document.getElementById('maxLossStreakDisplay').textContent = state.maxLossStreak;
 
-            // Prediction Panel
+            const pTarget = document.getElementById('predictionTarget');
+            const enginePulse = document.getElementById('enginePulse');
+            const engineStatus = document.getElementById('engineStatus');
+            const stepBadge = document.getElementById('stepBadge');
+            const fiboValue = document.getElementById('fiboValue');
+
             if (state.isBettingMode) {
                 document.getElementById('emptyEngineState').classList.add('hidden'); 
                 document.getElementById('activeEnginePanel').classList.remove('hidden');
                 
-                document.getElementById('enginePulse').style.backgroundColor = 'var(--status-success)';
-                document.getElementById('enginePulse').style.boxShadow = '0 0 8px var(--status-success)';
-                document.getElementById('engineStatus').textContent = "Pattern Locked";
-                document.getElementById('stepBadge').textContent = `Step ${state.currentStep + 1}/6`;
-                
-                const pTarget = document.getElementById('predictionTarget');
-                pTarget.textContent = state.currentBetTarget === 'B' ? 'BANKER' : 'PLAYER';
-                pTarget.style.color = state.currentBetTarget === 'B' ? 'var(--bac-banker)' : 'var(--bac-player)';
-                pTarget.style.textShadow = state.currentBetTarget === 'B' ? '0 0 24px rgba(239, 68, 68, 0.4)' : '0 0 24px rgba(59, 130, 246, 0.4)';
-                
-                document.getElementById('fiboValue').textContent = `Fibo Multiplier x${fibonacciSequence[state.currentStep]}`;
+                if (state.isWaiting) {
+                    // DYNAMIC WAIT STATE UI
+                    enginePulse.style.backgroundColor = 'var(--status-warning)';
+                    enginePulse.style.boxShadow = '0 0 8px var(--status-warning)';
+                    engineStatus.textContent = "Hold / Recalculating";
+                    stepBadge.textContent = `Step ${state.currentStep + 1}/6 (PAUSED)`;
+                    
+                    pTarget.textContent = "WAIT / HOLD";
+                    pTarget.style.color = 'var(--status-warning)';
+                    pTarget.style.textShadow = '0 0 24px rgba(245, 158, 11, 0.4)';
+                    
+                    fiboValue.textContent = `Awaiting Pattern Confirmation`;
+                } else {
+                    // DYNAMIC RECALCULATED TARGET UI
+                    enginePulse.style.backgroundColor = 'var(--status-success)';
+                    enginePulse.style.boxShadow = '0 0 8px var(--status-success)';
+                    engineStatus.textContent = "Pattern Locked";
+                    stepBadge.textContent = `Step ${state.currentStep + 1}/6`;
+                    
+                    pTarget.textContent = state.currentBetTarget === 'B' ? 'BANKER' : 'PLAYER';
+                    pTarget.style.color = state.currentBetTarget === 'B' ? 'var(--bac-banker)' : 'var(--bac-player)';
+                    pTarget.style.textShadow = state.currentBetTarget === 'B' ? '0 0 24px rgba(239, 68, 68, 0.4)' : '0 0 24px rgba(59, 130, 246, 0.4)';
+                    
+                    fiboValue.textContent = `Allocation: Step ${state.currentStep + 1} of 6`;
+                }
             } else {
+                // IDLE STATE UI
                 document.getElementById('activeEnginePanel').classList.add('hidden'); 
                 document.getElementById('emptyEngineState').classList.remove('hidden');
                 
-                document.getElementById('enginePulse').style.backgroundColor = 'var(--text-muted)';
-                document.getElementById('enginePulse').style.boxShadow = 'none';
-                document.getElementById('engineStatus').textContent = "Awaiting Data"; 
-                document.getElementById('stepBadge').textContent = "Idle";
+                enginePulse.style.backgroundColor = 'var(--text-muted)';
+                enginePulse.style.boxShadow = 'none';
+                engineStatus.textContent = "Awaiting Data"; 
+                stepBadge.textContent = "Idle";
             }
 
-            // Stream Dots
             const dotsContainer = document.getElementById('dataStreamDots');
             dotsContainer.innerHTML = ''; const fill = Math.min(3, validRecordHistory.length);
             for (let i = 0; i < 3; i++) {
@@ -1138,7 +1168,6 @@
                 dotsContainer.appendChild(dot);
             }
 
-            // Cycle History Table
             const tbody = document.getElementById('cycleHistoryBody');
             tbody.innerHTML = '';
             if (state.cycleHistoryData.length === 0) {
@@ -1161,7 +1190,6 @@
                 });
             }
 
-            // Distribution Stats
             document.getElementById('totalCyclesDisplay').textContent = state.totalCycleCount;
             const calcP = (count) => state.totalCycleCount === 0 ? "0.0" : ((count / state.totalCycleCount) * 100).toFixed(1);
             for (let i = 1; i <= 6; i++) {
@@ -1171,7 +1199,6 @@
             document.getElementById(`stopLossPercent`).textContent = `${calcP(state.stopLossCount)}%`;
             document.getElementById(`stopLossBar`).style.width = `${calcP(state.stopLossCount)}%`;
 
-            // Render Chart
             drawTrendChart(state.trendHistory);
         }
 
@@ -1233,8 +1260,8 @@
             }
             board.scrollLeft = board.scrollWidth;
         }
-
-        // Initialize UI with empty state
+        
+        // Initial setup
         updateStrategySelectorUI();
         renderActiveStrategyUI();
     </script>
