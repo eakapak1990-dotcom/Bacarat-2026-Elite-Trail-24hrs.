@@ -27,10 +27,10 @@
             --status-warning: #f59e0b;
             --status-danger: #e11d48;
 
-            /* Premium Baccarat Colors */
-            --bac-banker: #C8102E; /* Crimson Red */
-            --bac-player: #00205B; /* Deep Navy */
-            --bac-tie: #00594C;    /* Racing Green */
+            /* Premium Neon Baccarat Colors (Updated for High Visibility) */
+            --bac-banker: #EF4444; /* Neon Crimson Red */
+            --bac-player: #3B82F6; /* Neon Bright Blue */
+            --bac-tie: #10B981;    /* Neon Emerald Green */
         }
 
         body {
@@ -50,7 +50,6 @@
             overflow: hidden;
         }
 
-        /* Subtle Gold Glow on Hover */
         .premium-card:hover {
             border-color: rgba(212, 175, 55, 0.3);
             box-shadow: 0 8px 32px var(--accent-gold-glow);
@@ -332,29 +331,29 @@
                         <h2 class="text-[10px] font-bold text-[var(--text-pure)] uppercase tracking-[0.15em]">Data Entry Terminal</h2>
                     </div>
                     
-                    <!-- High-End Minimalist Buttons -->
+                    <!-- High-End Neon Highlight Buttons -->
                     <div class="grid grid-cols-3 gap-3 mb-4">
-                        <button onclick="recordHand('P')" class="group relative overflow-hidden bg-[var(--bg-charcoal)] border border-[var(--border-premium)] hover:border-[var(--bac-player)] py-4 rounded-xl transition-all active:scale-95 flex flex-col items-center justify-center gap-1">
+                        <button onclick="recordHand('P')" class="group relative overflow-hidden bg-[#0A0A0A] border border-[var(--bac-player)]/30 hover:border-[var(--bac-player)] py-4 rounded-xl transition-all active:scale-95 flex flex-col items-center justify-center gap-2 shadow-[inset_0_0_12px_rgba(59,130,246,0.05)] hover:shadow-[0_0_20px_rgba(59,130,246,0.25)]">
                             <div class="absolute inset-0 bg-gradient-to-b from-[var(--bac-player)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <span class="text-sm font-bold text-[var(--text-pure)] tracking-widest relative z-10">PLAYER</span>
-                            <div class="w-1.5 h-1.5 rounded-full bg-[var(--bac-player)] relative z-10"></div>
+                            <span class="text-sm font-bold text-[var(--bac-player)] group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.9)] tracking-widest relative z-10 transition-all">PLAYER</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-[var(--bac-player)] shadow-[0_0_8px_var(--bac-player)] relative z-10 group-hover:scale-150 transition-transform duration-300"></div>
                         </button>
-                        <button onclick="recordHand('T')" class="group relative overflow-hidden bg-[var(--bg-charcoal)] border border-[var(--border-premium)] hover:border-[var(--bac-tie)] py-4 rounded-xl transition-all active:scale-95 flex flex-col items-center justify-center gap-1">
+                        <button onclick="recordHand('T')" class="group relative overflow-hidden bg-[#0A0A0A] border border-[var(--bac-tie)]/30 hover:border-[var(--bac-tie)] py-4 rounded-xl transition-all active:scale-95 flex flex-col items-center justify-center gap-2 shadow-[inset_0_0_12px_rgba(16,185,129,0.05)] hover:shadow-[0_0_20px_rgba(16,185,129,0.25)]">
                             <div class="absolute inset-0 bg-gradient-to-b from-[var(--bac-tie)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <span class="text-sm font-bold text-[var(--text-pure)] tracking-widest relative z-10">TIE</span>
-                            <div class="w-1.5 h-1.5 rounded-full bg-[var(--bac-tie)] relative z-10"></div>
+                            <span class="text-sm font-bold text-[var(--bac-tie)] group-hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.9)] tracking-widest relative z-10 transition-all">TIE</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-[var(--bac-tie)] shadow-[0_0_8px_var(--bac-tie)] relative z-10 group-hover:scale-150 transition-transform duration-300"></div>
                         </button>
-                        <button onclick="recordHand('B')" class="group relative overflow-hidden bg-[var(--bg-charcoal)] border border-[var(--border-premium)] hover:border-[var(--bac-banker)] py-4 rounded-xl transition-all active:scale-95 flex flex-col items-center justify-center gap-1">
+                        <button onclick="recordHand('B')" class="group relative overflow-hidden bg-[#0A0A0A] border border-[var(--bac-banker)]/30 hover:border-[var(--bac-banker)] py-4 rounded-xl transition-all active:scale-95 flex flex-col items-center justify-center gap-2 shadow-[inset_0_0_12px_rgba(239,68,68,0.05)] hover:shadow-[0_0_20px_rgba(239,68,68,0.25)]">
                             <div class="absolute inset-0 bg-gradient-to-b from-[var(--bac-banker)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <span class="text-sm font-bold text-[var(--text-pure)] tracking-widest relative z-10">BANKER</span>
-                            <div class="w-1.5 h-1.5 rounded-full bg-[var(--bac-banker)] relative z-10"></div>
+                            <span class="text-sm font-bold text-[var(--bac-banker)] group-hover:drop-shadow-[0_0_8px_rgba(239,68,68,0.9)] tracking-widest relative z-10 transition-all">BANKER</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-[var(--bac-banker)] shadow-[0_0_8px_var(--bac-banker)] relative z-10 group-hover:scale-150 transition-transform duration-300"></div>
                         </button>
                     </div>
 
                     <!-- Action Secondary Buttons -->
                     <div class="grid grid-cols-2 gap-3 mt-auto">
-                        <button onclick="popLastRecord()" class="bg-transparent border border-[var(--border-premium)] text-[var(--text-silver)] hover:text-white hover:bg-[var(--bg-charcoal)] py-2.5 rounded-lg text-[10px] uppercase tracking-[0.2em] transition-all">Revert</button>
-                        <button onclick="resetSystem()" class="bg-transparent border border-[var(--status-danger)]/30 text-[var(--status-danger)] hover:bg-[var(--status-danger)] hover:text-white py-2.5 rounded-lg text-[10px] uppercase tracking-[0.2em] transition-all">Clear Data</button>
+                        <button onclick="popLastRecord()" class="bg-transparent border border-[var(--border-premium)] text-[var(--text-silver)] hover:text-white hover:bg-[#1A1A1A] py-3 rounded-lg text-[10px] uppercase tracking-[0.2em] transition-all">Revert</button>
+                        <button onclick="resetSystem()" class="bg-transparent border border-[var(--status-danger)]/30 text-[var(--status-danger)] hover:bg-[var(--status-danger)] hover:text-white hover:shadow-[0_0_15px_rgba(225,29,72,0.3)] py-3 rounded-lg text-[10px] uppercase tracking-[0.2em] transition-all">Clear Data</button>
                     </div>
                 </div>
 
@@ -375,7 +374,7 @@
             <section class="lg:col-span-7 flex flex-col gap-6">
                 
                 <!-- Main Target Monitor -->
-                <div class="premium-card p-6 flex flex-col justify-between min-h-[190px]">
+                <div class="premium-card p-6 flex flex-col justify-between min-h-[220px]">
                     <div class="flex justify-between items-center border-b border-[var(--border-premium)] pb-3">
                         <div class="flex items-center gap-2.5">
                             <span class="w-2 h-2 rounded-full bg-[var(--text-muted)]" id="enginePulse"></span>
@@ -388,9 +387,10 @@
                         <h3 class="text-[10px] uppercase tracking-[0.2em] text-[var(--text-silver)] font-light">System Standby</h3>
                     </div>
 
-                    <div id="activeEnginePanel" class="hidden text-center flex-1 flex flex-col items-center justify-center animate-fade-in">
-                        <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.3em] block mb-2">Target Variable</span>
-                        <div id="predictionTarget" class="text-5xl font-light tracking-[0.1em] uppercase mb-3 text-[var(--text-pure)]">-</div>
+                    <div id="activeEnginePanel" class="hidden text-center flex-1 flex flex-col items-center justify-center animate-fade-in py-2">
+                        <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-[0.3em] block mb-3">Target Variable</span>
+                        <!-- เพิ่ม Effect Glow ให้ข้อความและเพิ่มความหนา (font-semibold) -->
+                        <div id="predictionTarget" class="text-5xl sm:text-6xl font-semibold tracking-[0.15em] uppercase mb-4 drop-shadow-lg transition-colors duration-300">-</div>
                         <div class="inline-flex items-center px-4 py-1.5 rounded bg-[var(--bg-charcoal)] border border-[var(--border-premium)]">
                             <span id="fiboValue" class="text-[10px] text-[var(--accent-champagne)] font-mono tracking-widest">Multiplier Sequence</span>
                         </div>
@@ -481,7 +481,7 @@
         </main>
     </div>
 
-    <!-- CORE SCRIPTS (Logic Unchanged, UI Binding Updated) -->
+    <!-- CORE SCRIPTS -->
     <script>
         const SECRET_CIPHER_SALT = "QNT_CRYPTO_HASH_2026";
         const DOUBLE_FA_KEY = "300333";
@@ -503,10 +503,12 @@
 
             if(type === 'win') {
                 toast.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                toast.style.boxShadow = '0 0 30px rgba(16, 185, 129, 0.1)';
                 icon.innerHTML = `<svg class="w-5 h-5 text-[var(--status-success)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
                 tTitle.style.color = 'var(--status-success)';
             } else {
                 toast.style.borderColor = 'rgba(225, 29, 72, 0.3)';
+                toast.style.boxShadow = '0 0 30px rgba(225, 29, 72, 0.1)';
                 icon.innerHTML = `<svg class="w-5 h-5 text-[var(--status-danger)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
                 tTitle.style.color = 'var(--status-danger)';
             }
@@ -1008,15 +1010,15 @@
             const reversedData = [...cycleHistoryData].reverse();
             reversedData.forEach(item => {
                 const tr = document.createElement('tr');
-                tr.className = "border-b border-[#262626] last:border-0";
+                tr.className = "border-b border-[#262626] last:border-0 hover:bg-[#1A1A1A] transition-colors";
                 
                 let statusUI = item.status === 'WIN' 
-                    ? `<span class="text-[var(--status-success)] flex items-center gap-2"><span class="text-[8px] border border-[var(--status-success)]/30 px-1 rounded uppercase tracking-wider">WIN</span> Step ${item.step}</span>`
-                    : `<span class="text-[var(--status-danger)] flex items-center gap-2"><span class="text-[8px] border border-[var(--status-danger)]/30 px-1 rounded uppercase tracking-wider">LOSS</span> Triggered</span>`;
+                    ? `<span class="text-[var(--status-success)] flex items-center gap-2 font-medium"><span class="text-[8px] bg-[var(--status-success)]/10 border border-[var(--status-success)]/30 px-1 rounded uppercase tracking-wider">WIN</span> Cleared at Step ${item.step}</span>`
+                    : `<span class="text-[var(--status-danger)] flex items-center gap-2 font-medium"><span class="text-[8px] bg-[var(--status-danger)]/10 border border-[var(--status-danger)]/30 px-1 rounded uppercase tracking-wider">LOSS</span> Maximum Drawdown</span>`;
 
                 tr.innerHTML = `
-                    <td class="py-2.5 px-2 text-[var(--text-silver)] w-20">Cycle ${item.cycleNum}</td>
-                    <td class="py-2.5 px-2 font-medium">${statusUI}</td>
+                    <td class="py-3 px-3 text-[var(--text-silver)] w-24">Cycle ${item.cycleNum}</td>
+                    <td class="py-3 px-3">${statusUI}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -1033,9 +1035,11 @@
             document.getElementById('engineStatus').textContent = "Pattern Locked";
             document.getElementById('stepBadge').textContent = `Step ${currentStep + 1}/6`;
             
+            // Neon Text Shadow Update
             const pTarget = document.getElementById('predictionTarget');
             pTarget.textContent = targetSide === 'B' ? 'BANKER' : 'PLAYER';
             pTarget.style.color = targetSide === 'B' ? 'var(--bac-banker)' : 'var(--bac-player)';
+            pTarget.style.textShadow = targetSide === 'B' ? '0 0 24px rgba(239, 68, 68, 0.4)' : '0 0 24px rgba(59, 130, 246, 0.4)';
             
             document.getElementById('fiboValue').textContent = `Fibo Multiplier x${fibonacciSequence[currentStep]}`;
         }
@@ -1057,7 +1061,7 @@
             dotsContainer.innerHTML = ''; const fill = Math.min(3, validRecordHistory.length);
             for (let i = 0; i < 3; i++) {
                 const dot = document.createElement('span');
-                dot.className = i < fill ? "w-1 h-1 rounded-full bg-[var(--accent-gold)]" : "w-1 h-1 rounded-full bg-[#333]";
+                dot.className = i < fill ? "w-1.5 h-1.5 rounded-full bg-[var(--accent-gold)] shadow-[0_0_5px_rgba(212,175,55,0.8)]" : "w-1.5 h-1.5 rounded-full bg-[#333]";
                 dotsContainer.appendChild(dot);
             }
         }
@@ -1100,11 +1104,9 @@
             ctx.fillStyle = '#737373'; ctx.font = '400 9px Inter'; ctx.textAlign = 'right';
             ctx.fillText(`+${maxVal.toFixed(0)}`, width - 4, 10); ctx.fillText(`${minVal.toFixed(0)}`, width - 4, height - 4);
             
-            // Premium Gold Stroke
             ctx.beginPath(); ctx.moveTo(getX(0), getY(trendHistory[0])); for (let i = 1; i < trendHistory.length; i++) ctx.lineTo(getX(i), getY(trendHistory[i]));
             ctx.strokeStyle = '#D4AF37'; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
             
-            // Subtle Gradient Fill
             ctx.beginPath(); ctx.moveTo(getX(0), height); ctx.lineTo(getX(0), getY(trendHistory[0])); for (let i = 1; i < trendHistory.length; i++) ctx.lineTo(getX(i), getY(trendHistory[i]));
             ctx.lineTo(getX(trendHistory.length - 1), height); ctx.closePath();
             const fGrad = ctx.createLinearGradient(0, 0, 0, height); fGrad.addColorStop(0, 'rgba(212, 175, 55, 0.15)'); fGrad.addColorStop(1, 'rgba(212, 175, 55, 0)');
@@ -1128,8 +1130,10 @@
                     else if(item.side === 'P') bgColor = 'var(--bac-player)';
                     else bgColor = 'var(--bac-tie)';
                     
-                    b.className = `w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white`;
+                    b.className = `w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-sm`;
                     b.style.backgroundColor = bgColor;
+                    // Neon Glow Bead Update
+                    b.style.boxShadow = `0 0 6px ${bgColor}80`;
                     b.textContent = item.side;
                 } else {
                     b.className = "w-6 h-6 rounded-full border border-[#262626] bg-transparent";
